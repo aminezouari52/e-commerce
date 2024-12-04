@@ -1,0 +1,13 @@
+[role="columnheader"] {
+  background: red !important;
+  background: var(--gray-50, #f9fafb);
+  color: var(--gray-600, #475467);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+.dataTableClass {
+  overflow: initial !important;
+}
