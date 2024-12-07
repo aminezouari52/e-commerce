@@ -90,7 +90,7 @@ const Login = () => {
             token: idTokenResult.token,
             role: res.data.role,
             _id: res.data._id,
-          })
+          }),
         );
         roleBasedRedirect(res);
       } catch (err) {
@@ -127,7 +127,7 @@ const Login = () => {
           token: idTokenResult.token,
           role: res.data.role,
           _id: res.data._id,
-        })
+        }),
       );
       roleBasedRedirect(res);
     } catch (err) {

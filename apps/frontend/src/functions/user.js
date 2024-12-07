@@ -8,7 +8,7 @@ export const updateUser = async (user, body) => {
       headers: {
         authtoken: user.token,
       },
-    }
+    },
   );
 };
 
@@ -20,7 +20,7 @@ export const setUserCart = async (cart, authtoken) => {
       headers: {
         authtoken,
       },
-    }
+    },
   );
   return res;
 };
@@ -47,7 +47,7 @@ export const saveUserAddress = async (authtoken, address) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );
 
 export const saveUserPhoneNumber = async (authtoken, phone) =>
@@ -58,7 +58,7 @@ export const saveUserPhoneNumber = async (authtoken, phone) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );
 
 export const getUserOrders = async (authtoken) =>
@@ -83,7 +83,7 @@ export const removeWishlist = async (productId, authtoken) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );
 
 export const addToWishlist = async (productId, authtoken) => {
@@ -94,6 +94,6 @@ export const addToWishlist = async (productId, authtoken) => {
       headers: {
         authtoken,
       },
-    }
+    },
   );
 };

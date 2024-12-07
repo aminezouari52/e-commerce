@@ -85,7 +85,7 @@ const Shop = () => {
       prevCategoryIds.includes(categoryId)
         ? // if  ID already exists remove it
           prevCategoryIds.filter((id) => id !== categoryId)
-        : [...prevCategoryIds, categoryId]
+        : [...prevCategoryIds, categoryId],
     );
   };
   const handleSubChange = (e) => {
@@ -94,7 +94,7 @@ const Shop = () => {
       prevSubIds.includes(subId)
         ? // if  ID already exists remove it
           prevSubIds.filter((id) => id !== subId)
-        : [...prevSubIds, subId]
+        : [...prevSubIds, subId],
     );
   };
   const handleBrandChange = (e) => {
@@ -103,7 +103,7 @@ const Shop = () => {
       prevBrands.includes(brand)
         ? // if  ID already exists remove it
           prevBrands.filter((id) => id !== brand)
-        : [...prevBrands, brand]
+        : [...prevBrands, brand],
     );
   };
   const handleColorChange = (e) => {
@@ -112,7 +112,7 @@ const Shop = () => {
       prevColors.includes(color)
         ? // if  ID already exists remove it
           prevColors.filter((id) => id !== color)
-        : [...prevColors, color]
+        : [...prevColors, color],
     );
   };
   const handleSlider = (value) => {

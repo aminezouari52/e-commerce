@@ -31,7 +31,7 @@ const Search = () => {
     dispatch(
       setSearchText({
         text: e.target.value,
-      })
+      }),
     );
   };
 

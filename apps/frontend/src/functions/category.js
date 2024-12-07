@@ -22,7 +22,7 @@ export const updateCategory = async (slug, category, authtoken) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );
 
 export const createCategory = async (category, authtoken) =>

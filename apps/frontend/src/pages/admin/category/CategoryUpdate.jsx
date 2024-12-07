@@ -64,7 +64,8 @@ const CategoryUpdate = () => {
           size="sm"
           variant={"link"}
           colorScheme="primary"
-          onClick={() => navigate("/admin/category")}></Button>
+          onClick={() => navigate("/admin/category")}
+        ></Button>
         <Heading size="lg" color="primary.500" my={5}>
           Update a category
         </Heading>

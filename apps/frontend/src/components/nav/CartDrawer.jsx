@@ -93,7 +93,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
     dispatch(
       incrementProductCount({
         _id: product?._id,
-      })
+      }),
     );
   };
 
@@ -110,7 +110,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
     dispatch(
       decrementProductCount({
         _id: product?._id,
-      })
+      }),
     );
   };
 

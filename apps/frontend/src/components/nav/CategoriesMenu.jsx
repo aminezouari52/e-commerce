@@ -32,7 +32,8 @@ function CategoriesMenu() {
         textTransform="uppercase"
         fontSize={{ sm: "sm", lg: "md" }}
         _hover={{ bg: "lightgray" }}
-        _expanded={{ bg: "lightgray" }}>
+        _expanded={{ bg: "lightgray" }}
+      >
         Categories <ChevronDownIcon />
       </MenuButton>
       <MenuList>
@@ -42,7 +43,8 @@ function CategoriesMenu() {
               key={category._id}
               _hover={{
                 bg: "lightgray",
-              }}>
+              }}
+            >
               {category.name}
             </MenuItem>
           );

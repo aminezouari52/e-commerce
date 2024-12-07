@@ -32,12 +32,14 @@ const Header = () => {
         // p={8}
         flexDirection={{ sm: "column", md: "row" }}
         alignItems={{ sm: "center", md: "flex-start" }}
-        gap={{ md: "50px" }}>
+        gap={{ md: "50px" }}
+      >
         <Flex
           gap="10px"
           flexDirection="column"
           p={10}
-          maxWidth={{ sm: "100%", md: "30%" }}>
+          maxWidth={{ sm: "100%", md: "30%" }}
+        >
           <Heading as="h5" pb={4} size="md">
             Newsletter
           </Heading>
@@ -72,7 +74,8 @@ const Header = () => {
             {categories.map((category) => (
               <Text
                 key={category._id}
-                _hover={{ cursor: "pointer", opacity: "0.8" }}>
+                _hover={{ cursor: "pointer", opacity: "0.8" }}
+              >
                 {category.name}
               </Text>
             ))}
@@ -93,7 +96,8 @@ const Header = () => {
             gap="10px"
             flexDirection="column"
             p={10}
-            maxWidth={{ sm: "100%", md: "30%" }}>
+            maxWidth={{ sm: "100%", md: "30%" }}
+          >
             <Heading as="h5" pb={4} size="md">
               Company
             </Heading>
@@ -109,7 +113,8 @@ const Header = () => {
         flexDirection={{ sm: "column-reverse", md: "row" }}
         justifyContent="space-between"
         gap="90px"
-        alignItems="center">
+        alignItems="center"
+      >
         <Text letterSpacing="2px" textTransform="uppercase" fontSize="sm">
           Copyright 2023 © NBZDEV. All rights reserved.
         </Text>

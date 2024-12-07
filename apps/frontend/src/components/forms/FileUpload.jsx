@@ -64,7 +64,7 @@ const FileUpload = ({ values, setValues, setLoading, loading }) => {
           headers: {
             authtoken: user ? user.token : "",
           },
-        }
+        },
       );
 
       setLoading(false);

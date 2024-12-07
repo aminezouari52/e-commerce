@@ -76,7 +76,7 @@ const Checkout = () => {
             count: product.count,
             ...product.product,
           };
-        })
+        }),
       );
       setTotal(cartData.cartTotal);
     } else {

@@ -108,7 +108,8 @@ const ProductCreate = () => {
           size="sm"
           variant={"link"}
           colorScheme="primary"
-          onClick={() => navigate("/admin/products")}></Button>
+          onClick={() => navigate("/admin/products")}
+        ></Button>
         <Heading size="lg" color="primary.500" my={5}>
           Create a product
         </Heading>

@@ -35,7 +35,7 @@ export const updateProduct = async (slug, product, authtoken) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );
 
 export const getProducts = async (sort, order, limit) =>
@@ -53,16 +53,16 @@ export const productStar = async (productId, star, authtoken) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );
 
 export const getRelated = async (productId) =>
   await axios.get(
-    `${import.meta.env.VITE_REACT_APP_API}/product/related/${productId}`
+    `${import.meta.env.VITE_REACT_APP_API}/product/related/${productId}`,
   );
 
 export const fetchProductsByFilter = async (body) =>
   await axios.post(
     `${import.meta.env.VITE_REACT_APP_API}/search/filters`,
-    body
+    body,
   );

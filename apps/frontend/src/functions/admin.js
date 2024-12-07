@@ -15,5 +15,5 @@ export const changeStatus = async (orderId, orderStatus, authtoken) =>
       headers: {
         authtoken,
       },
-    }
+    },
   );

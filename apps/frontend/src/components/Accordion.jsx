@@ -160,7 +160,7 @@ const Accordion = ({
                   >
                     {brand}
                   </Checkbox>
-                )
+                ),
               )}
             </Stack>
           </CheckboxGroup>

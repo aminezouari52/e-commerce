@@ -14,7 +14,6 @@ import {
   CardBody,
 } from "@chakra-ui/react";
 function DataTableDisplay({ columns, data }) {
- 
   return (
     <div>
       <Card my={2}>

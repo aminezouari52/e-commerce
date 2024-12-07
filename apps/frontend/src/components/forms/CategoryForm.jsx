@@ -49,7 +49,8 @@ const CategoryForm = ({
         onChange={handleParentCategory}
         mb={2}
         value={values?.parent}
-        placeholder="Parent Category">
+        placeholder="Parent Category"
+      >
         {categories?.length > 0 &&
           categories?.map((item) => {
             return <option value={item?._id}>{item?.name}</option>;
@@ -71,7 +72,8 @@ const CategoryForm = ({
           isLoading={loading}
           colorScheme="primary"
           my={2}
-          size="sm">
+          size="sm"
+        >
           Save
         </Button>
       </Flex>

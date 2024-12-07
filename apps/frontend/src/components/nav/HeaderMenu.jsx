@@ -78,7 +78,7 @@ const HeaderMenu = () => {
           variant="transparent"
           onClick={() =>
             navigate(
-              user.role === "admin" ? "/admin/dashboard" : "/user/history"
+              user.role === "admin" ? "/admin/dashboard" : "/user/history",
             )
           }
           icon={

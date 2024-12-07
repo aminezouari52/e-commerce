@@ -6,7 +6,7 @@ export default async function DisplayError(
   id,
   path,
   historyHook,
-  timer
+  timer,
 ) {
   const erreurMessage = "Une erreur est survenue ,veuillez réessayer ";
   const linkToDetails = path + id;

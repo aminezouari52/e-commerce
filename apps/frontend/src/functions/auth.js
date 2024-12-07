@@ -8,7 +8,7 @@ export const createOrUpdateUser = async (authtoken) => {
       headers: {
         authtoken,
       },
-    }
+    },
   );
 };
 
@@ -20,7 +20,7 @@ export const currentUser = async (authtoken) => {
       headers: {
         authtoken,
       },
-    }
+    },
   );
 };
 
@@ -32,6 +32,6 @@ export const currentAdmin = async (authtoken) => {
       headers: {
         authtoken,
       },
-    }
+    },
   );
 };

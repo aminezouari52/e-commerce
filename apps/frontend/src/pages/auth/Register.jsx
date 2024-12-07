@@ -61,7 +61,7 @@ const Register = () => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       // get user id token
@@ -77,7 +77,7 @@ const Register = () => {
           token: idTokenResult.token,
           role: res.data.role,
           _id: res.data._id,
-        })
+        }),
       );
 
       // redirect

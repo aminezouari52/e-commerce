@@ -60,7 +60,8 @@ function CreateCategory() {
             size="sm"
             variant={"link"}
             colorScheme="primary"
-            onClick={() => navigate("/admin/category")}></Button>
+            onClick={() => navigate("/admin/category")}
+          ></Button>
           <Heading size="lg" color="primary.500" my={5}>
             Categories
           </Heading>

@@ -53,12 +53,14 @@ const ProductCreateForm = ({
       as="form"
       direction="column"
       alignItems={{ sm: "start", lg: "end" }}
-      onSubmit={handleSubmit}>
+      onSubmit={handleSubmit}
+    >
       <Flex
         w="100%"
         direction={{ sm: "column", lg: "row" }}
         justifyContent="space-between"
-        mb={4}>
+        mb={4}
+      >
         <Box w={{ sm: "90%", lg: "45%" }}>
           <FormControl isRequired>
             <FormLabel color="gray">Title</FormLabel>
@@ -97,7 +99,8 @@ const ProductCreateForm = ({
                   min={0}
                   value={price}
                   name="price"
-                  w="30%">
+                  w="30%"
+                >
                   <NumberInputField onChange={handleChange} />
                   <NumberInputStepper>
                     <NumberIncrementStepper onClick={incrementPrice} />
@@ -114,7 +117,8 @@ const ProductCreateForm = ({
             <Stack
               mt={2}
               direction="row"
-              onChange={(event) => handleChange(event)}>
+              onChange={(event) => handleChange(event)}
+            >
               <Radio value="Yes">Yes</Radio>
               <Radio value="No">No</Radio>
             </Stack>
@@ -132,7 +136,8 @@ const ProductCreateForm = ({
                 min={1}
                 value={quantity}
                 name="quantity"
-                w="30%">
+                w="30%"
+              >
                 <NumberInputField onChange={handleChange} />
                 <NumberInputStepper>
                   <NumberIncrementStepper onClick={incrementQuantity} />
@@ -150,7 +155,8 @@ const ProductCreateForm = ({
               variant="flushed"
               placeholder="Please select"
               onChange={handleChange}
-              value={color}>
+              value={color}
+            >
               {colors.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -167,7 +173,8 @@ const ProductCreateForm = ({
               variant="flushed"
               placeholder="Please select"
               onChange={handleChange}
-              value={brand}>
+              value={brand}
+            >
               {brands.map((b) => (
                 <option key={b} value={b}>
                   {b}
@@ -185,7 +192,8 @@ const ProductCreateForm = ({
               variant="flushed"
               placeholder="Please select"
               onChange={handleCategoryChange}
-              value={selectedCategory ? selectedCategory : category._id}>
+              value={selectedCategory ? selectedCategory : category._id}
+            >
               {categories.length > 0 &&
                 categories.map((c) => (
                   <option key={c._id} value={c._id}>
@@ -202,11 +210,13 @@ const ProductCreateForm = ({
               <CheckboxGroup
                 value={arrayOfSubs}
                 defaultValue={[]}
-                onChange={(value) => setArrayOfSubs(value)}>
+                onChange={(value) => setArrayOfSubs(value)}
+              >
                 <Flex
                   wrap="wrap"
                   justifyContent="space-between"
-                  alignItems="flex-start">
+                  alignItems="flex-start"
+                >
                   {subOptions.map((s) => (
                     <Checkbox key={s._id} value={s._id}>
                       {s.name}

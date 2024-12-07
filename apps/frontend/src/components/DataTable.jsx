@@ -46,7 +46,7 @@ const DataTable = ({ data, renderRow, headers }) => {
           <Tbody>
             {paginatedData?.length > 0 &&
               paginatedData[currentPage]?.map((item, index) =>
-                renderRow(item, index)
+                renderRow(item, index),
               )}
             <Text m={4}>{!paginatedData?.length && "This table is empty"}</Text>
           </Tbody>

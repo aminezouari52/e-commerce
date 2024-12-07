@@ -45,6 +45,8 @@ import UserAccount from "./pages/user/userAccount";
 import Orders from "./pages/user/Orders";
 import CreateCategory from "./pages/admin/category/CreateCategory";
 
+const hi = "";
+
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const App = () => {
               token: idTokenResult.token,
               role: res.data.role,
               _id: res.data._id,
-            })
+            }),
           );
         } catch (err) {
           console.log(err);

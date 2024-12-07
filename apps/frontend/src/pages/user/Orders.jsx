@@ -54,7 +54,7 @@ const Orders = () => {
       <Td>{order?.products?.length} products</Td>
       <Td>
         {DateTime.fromJSDate(new Date(order?.createdAt)).toFormat(
-          "dd-MM-yyyy 'at' HH:mm"
+          "dd-MM-yyyy 'at' HH:mm",
         )}
       </Td>
       <Td>

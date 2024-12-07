@@ -32,7 +32,7 @@ const Carousel = ({ products, loading }) => {
       setCanScrollLeft(container.scrollLeft > 20);
       setCanScrollRight(
         container.scrollWidth >
-          container.clientWidth + container.scrollLeft + 20
+          container.clientWidth + container.scrollLeft + 20,
       );
     }
   };
