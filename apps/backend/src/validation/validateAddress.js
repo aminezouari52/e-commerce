@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
-module.exports = function validateAddressInput(data, type) {
+module.exports = function validateAddressInput(data) {
   let errors = {};
 
   // data.firstname = !isEmpty(data.firstname) ? data.firstname : "";

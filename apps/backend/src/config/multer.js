@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
       new Date().toISOString().replace(/:/g, "-") +
         file.fieldname +
         "." +
-        extension
+        extension,
     );
   },
 });

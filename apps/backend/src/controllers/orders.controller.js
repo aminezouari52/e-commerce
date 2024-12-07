@@ -67,7 +67,7 @@ exports.orders = async (req, res) => {
       })
       .catch((error) => {
         return res.status(400).json({
-          message: errorMessage,
+          // message: errorMessage,
           err: error.message,
           status: "error",
           error: true,
@@ -75,7 +75,7 @@ exports.orders = async (req, res) => {
       });
   } catch (error) {
     return res.status(400).json({
-      message: errorMessage,
+      // message: errorMessage,
       err: error.message,
       status: "error",
       error: true,

@@ -33,7 +33,7 @@ router.post(
   authCheck,
   adminCheck,
   uploader.single("images"),
-  create
+  create,
 );
 router.get("/products/:count", listAll);
 router.delete("/product/:slug", authCheck, adminCheck, remove);

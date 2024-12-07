@@ -45,7 +45,7 @@ exports.listParents = async (req, res) => {
         error: false,
       });
     })
-    ?.catch((err) => {
+    ?.catch(() => {
       return res.status(400).json({
         message: "Fetching categories failed",
         status: "error",
@@ -84,7 +84,6 @@ exports.update = async (req, res) => {
         });
       })
       .catch((err) => {
-
         if (err?.code === 11000) {
           return res.status(400).json({
             message: "Create category failed, Category duplicated",
@@ -123,7 +122,8 @@ exports.remove = async (req, res) => {
     await Sub.deleteMany({ parent: deleted._id });
     await Product.deleteMany({ category: deleted._id });
     res.json(deleted);
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     res.status(400).send("Create delete failed");
   }
 };

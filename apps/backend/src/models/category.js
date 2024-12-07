@@ -26,7 +26,6 @@ const categorySchema = new mongoose.Schema(
     categoryType: {
       type: String,
       enum: ["parent", "child"],
-      default: "parent",
       default: function () {
         return this.parent === null ? "parent" : "child";
       },
@@ -37,7 +36,7 @@ const categorySchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Category", categorySchema);

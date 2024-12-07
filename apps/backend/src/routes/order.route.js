@@ -9,7 +9,7 @@ router.get(
   "/orders/AllOrdersAdmin",
   authCheck,
   adminCheck,
-  orderController.orders
+  orderController.orders,
 );
 
 router.post("/order", orderController.createOrder);

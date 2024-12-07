@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     phone: String,
     wishlist: [{ type: ObjectId, ref: "Product" }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("User", userSchema);

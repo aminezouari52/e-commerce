@@ -36,7 +36,7 @@ async function seedProductCollection() {
             const categories = await Category.find();
             const categoriesIds = categories.map((category) => category._id);
             const categoryIndex = Math.floor(
-              Math.random() * categoriesIds.length
+              Math.random() * categoriesIds.length,
             );
             const randomParam = Math.random();
             const gender = randomParam > 0.3 ? "male" : "female";

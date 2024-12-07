@@ -1,5 +1,4 @@
 const Order = require("../models/order");
-const User = require("../models/user");
 let errorMessage = "An error has accured";
 //orders, orderStatus
 
@@ -23,13 +22,11 @@ exports.orders = async (req, res) => {
       // .limit(limit)
       .exec()
       .then((products) => {
-
         return res
           .status(200)
           .json({ data: products, status: "success", error: false });
       })
       .catch((error) => {
-
         return res.status(400).json({
           message: errorMessage,
           err: error.message,
@@ -38,7 +35,6 @@ exports.orders = async (req, res) => {
         });
       });
   } catch (error) {
-
     return res.status(400).json({
       message: errorMessage,
       err: error.message,
@@ -53,7 +49,7 @@ exports.orderStatus = async (req, res) => {
   let updated = await Order.findByIdAndUpdate(
     orderId,
     { orderStatus },
-    { new: true }
+    { new: true },
   ).exec();
 
   res.json(updated);

@@ -18,7 +18,7 @@ const cartSchema = new mongoose.Schema(
     totalAfterDiscount: Number,
     user: { type: ObjectId, ref: "User" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Cart", cartSchema);

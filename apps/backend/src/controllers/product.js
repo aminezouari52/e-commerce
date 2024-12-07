@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
     let images = [];
     images?.push(path);
     if (data?.images?.length > 0) {
-      images.splice(1, 0, ...data?.images);
+      images.splice(1, 0, ...data.images);
     } else {
       data.images = images;
     }
@@ -45,7 +45,8 @@ exports.remove = async (req, res) => {
       slug: req.params.slug,
     }).exec();
     res.json(deleted);
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     return res.staus(400).send("Product delete failed");
   }
 };
@@ -66,7 +67,7 @@ exports.update = async (req, res) => {
     const updated = await Product.findOneAndUpdate(
       { slug: req.params.slug },
       req.body,
-      { new: true }
+      { new: true },
     ).exec();
     res.json(updated);
   } catch (err) {
@@ -110,7 +111,7 @@ exports.productStar = async (req, res) => {
 
   // Check if the user has already rated this product
   const existingRatingIndex = product.ratings.findIndex(
-    (r) => r.postedBy.toString() === user._id.toString()
+    (r) => r.postedBy.toString() === user._id.toString(),
   );
 
   if (existingRatingIndex === -1) {

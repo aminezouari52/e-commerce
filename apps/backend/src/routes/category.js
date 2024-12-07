@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
 // middlewares
-const { authCheck, adminCheck } = require('../middlewares/auth')
+const { authCheck, adminCheck } = require("../middlewares/auth");
 
 // controller
 const {
@@ -13,15 +13,15 @@ const {
   list,
   getSubs,
   listParents,
-} = require('../controllers/category')
+} = require("../controllers/category");
 
 // routes
-router.post('/category', authCheck, adminCheck, create)
+router.post("/category", authCheck, adminCheck, create);
 router.get("/categories", list);
 router.get("/parentcategories", listParents);
-router.get('/category/:slug', read)
-router.put('/category/:slug', authCheck, adminCheck, update)
-router.delete('/category/:slug', authCheck, adminCheck, remove)
-router.get('/category/subs/:_id', getSubs)
+router.get("/category/:slug", read);
+router.put("/category/:slug", authCheck, adminCheck, update);
+router.delete("/category/:slug", authCheck, adminCheck, remove);
+router.get("/category/subs/:_id", getSubs);
 
-module.exports = router
+module.exports = router;

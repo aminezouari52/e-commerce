@@ -4,6 +4,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const compression = require("compression");
 const os = require("os");
 const formData = require("express-form-data");
+const httpStatus = require("http-status");
 
 const config = require("./config/config");
 const morgan = require("./config/morgan");
@@ -28,6 +29,8 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(mongoSanitize());
 app.use(compression());
+
+console.log("hi");
 
 const options = {
   uploadDir: os.tmpdir(),

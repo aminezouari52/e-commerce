@@ -8,7 +8,8 @@ exports.authCheck = async (req, res, next) => {
       .verifyIdToken(req.headers.authtoken);
     req.user = firebaseUser;
     next();
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     res.status(401).json({
       err: "Invalid or expired token",
     });

@@ -2,6 +2,7 @@ const User = require("../models/user");
 const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
+const ApiError = require("../utils/ApiError");
 
 exports.updateUser = async (req, res) => {
   const id = req.params.id;
@@ -86,7 +87,7 @@ exports.emptyCart = async (req, res) => {
 exports.saveAddress = async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
-    { address: req.body.address }
+    { address: req.body.address },
   ).exec();
 
   res.json({ ok: true });
@@ -95,7 +96,7 @@ exports.saveAddress = async (req, res) => {
 exports.savePhone = async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
-    { phone: req.body.phone }
+    { phone: req.body.phone },
   ).exec();
   res.json({ ok: true });
 };
@@ -144,7 +145,7 @@ exports.addToWishlist = async (req, res) => {
 
   await User.findOneAndUpdate(
     { email: req.user.email },
-    { $addToSet: { wishlist: productId } }
+    { $addToSet: { wishlist: productId } },
   ).exec();
 
   res.json({ ok: true });
@@ -161,9 +162,9 @@ exports.wishlist = async (req, res) => {
 
 exports.removeFromWishlist = async (req, res) => {
   const { productId } = req.params;
-  const user = await User.findOneAndUpdate(
+  await User.findOneAndUpdate(
     { email: req.user.email },
-    { $pull: { wishlist: productId } }
+    { $pull: { wishlist: productId } },
   ).exec();
 
   res.json({ ok: true });
