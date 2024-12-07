@@ -12,7 +12,7 @@
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "seed:product": "node seeders/product.seeder.js",
     "seed:category": "node seeders/category.seeder.js",
-    "lint": "run-p --print-label \"lint:*\"",
+    "lint": "run-s --print-label \"lint:*\"",
     "lint:format": "prettier --color --write .",
     "lint:code": "eslint -f pretty --color"
   },
@@ -68,7 +68,6 @@
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
     "nodemon": "^2.0.22",
-    "prettier": "^3.3.2",
-    "npm-run-all2": "5.0.0"
+    "prettier": "^3.3.2"
   }
 }

@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "run-p --print-label \"lint:*\"",
+    "lint": "run-s --print-label \"lint:*\"",
     "lint:format": "prettier --color --write .",
     "lint:code": "eslint -f pretty --color"
   },
@@ -53,6 +53,6 @@
     "eslint": "^8.0.0",
     "eslint-config-react-app": "^7.0.1",
     "vite-plugin-eslint": "^1.8.1",
-    "npm-run-all2": "5.0.0"
+    "prettier": "^3.3.2"
   }
 }
