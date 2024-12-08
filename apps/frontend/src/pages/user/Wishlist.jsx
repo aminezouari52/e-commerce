@@ -37,7 +37,7 @@ const Wishlist = () => {
     });
 
   const handleRemove = (productId) =>
-    removeWishlist(productId, user.token).then((res) => {
+    removeWishlist(productId, user.token).then(() => {
       loadWishlist();
     });
   return (

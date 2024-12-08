@@ -35,13 +35,9 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const CategoryCreate = () => {
   const user = useSelector((state) => state.userReducer.loggedInUser);
-  const initialState = {
-    name: "",
-    images: [],
-  };
+
   const [categories, setCategories] = useState([]);
   const [categorieSlug, setCategorySlug] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -63,10 +59,8 @@ const CategoryCreate = () => {
   };
 
   const handleRemove = async () => {
-    setLoading(true);
     try {
       const res = await removeCategory(categorieSlug, user.token);
-      setLoading(false);
       toast({
         title: `"${res.data.name}" deleted`,
         status: "error",
@@ -75,7 +69,6 @@ const CategoryCreate = () => {
       });
       loadCategories();
     } catch (err) {
-      setLoading(false);
       toast({
         title: "Failed to remove category",
         status: "error",

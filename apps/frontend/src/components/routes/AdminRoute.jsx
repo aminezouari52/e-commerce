@@ -20,10 +20,10 @@ const AdminRoute = () => {
   useEffect(() => {
     if (user && user.token) {
       currentAdmin(user.token)
-        .then((res) => {
+        .then(() => {
           setOk(true);
         })
-        .catch((err) => {
+        .catch(() => {
           setOk(false);
         });
     }

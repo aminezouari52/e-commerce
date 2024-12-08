@@ -1,7 +1,7 @@
 // HOOKS
 import { useRef } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 
 // COMPONENTS
@@ -27,8 +27,6 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.userReducer.loggedInUser);
   const cart = useSelector((state) => state.cartReducer.cart);
-
-  const location = useLocation();
 
   return (
     <Box position="sticky" top="0" zIndex="11">

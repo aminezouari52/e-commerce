@@ -1,22 +1,7 @@
-import { useSelector } from "react-redux";
-import Resizer from "react-image-file-resizer";
-import axios from "axios";
-
 // STYLE
-import {
-  Flex,
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Avatar,
-  Spinner,
-} from "@chakra-ui/react";
-import { SmallCloseIcon } from "@chakra-ui/icons";
+import { Flex, FormControl, FormLabel, Input, Spinner } from "@chakra-ui/react";
 
-const FileUpload = ({ values, setValues, setLoading, loading }) => {
-  const user = useSelector((state) => state.userReducer.loggedInUser);
-
+const FileUpload = ({ values, setValues, loading }) => {
   const fileUploadAndResize = (e) => {
     let files = e.target.files[0]; // 3
     // let allUploadedFiles = values.images;
@@ -54,29 +39,29 @@ const FileUpload = ({ values, setValues, setLoading, loading }) => {
     // }
   };
 
-  const handleImageRemove = async (public_id) => {
-    setLoading(true);
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_REACT_APP_API}/removeimage`,
-        { public_id },
-        {
-          headers: {
-            authtoken: user ? user.token : "",
-          },
-        },
-      );
+  // const handleImageRemove = async (public_id) => {
+  //   setLoading(true);
+  //   try {
+  //     await axios.post(
+  //       `${import.meta.env.VITE_REACT_APP_API}/removeimage`,
+  //       { public_id },
+  //       {
+  //         headers: {
+  //           authtoken: user ? user.token : "",
+  //         },
+  //       },
+  //     );
 
-      setLoading(false);
-      const { images } = values;
-      let filteredImages = images.filter((item) => {
-        return item.public_id !== public_id;
-      });
-      setValues({ ...values, images: filteredImages });
-    } catch (err) {
-      setLoading(false);
-    }
-  };
+  //     setLoading(false);
+  //     const { images } = values;
+  //     let filteredImages = images.filter((item) => {
+  //       return item.public_id !== public_id;
+  //     });
+  //     setValues({ ...values, images: filteredImages });
+  //   } catch (err) {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <>

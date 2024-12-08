@@ -3,16 +3,13 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
-  Td,
-  TableCaption,
   TableContainer,
-  Flex,
   Card,
   CardBody,
 } from "@chakra-ui/react";
+
 function DataTableDisplay({ columns, data }) {
   return (
     <div>

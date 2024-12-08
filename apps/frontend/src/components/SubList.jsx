@@ -1,9 +1,9 @@
-// HOOKS
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// // HOOKS
+// import { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 
-// FUNCTIONS
-import { getSubs } from "../functions/sub";
+// // FUNCTIONS
+// import { getSubs } from "../functions/sub";
 
 // COMPONENTS
 import { Gallery } from "react-grid-gallery";
@@ -13,25 +13,25 @@ import { Box, Heading, Flex } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 const SubList = () => {
-  const [subs, setSubs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const [subs, setSubs] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
-    getSubs().then((c) => {
-      setSubs(c.data);
-      setLoading(false);
-    });
-    // populate images
-    // subs.map(sub => {
-    //   setImages(prevState => {
-    //     return [...prevState, {
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getSubs().then((c) => {
+  //     setSubs(c.data);
+  //     setLoading(false);
+  //   });
+  //   // populate images
+  //   // subs.map(sub => {
+  //   //   setImages(prevState => {
+  //   //     return [...prevState, {
 
-    //     }]
-    //   })
-    // })
-  }, []);
+  //   //     }]
+  //   //   })
+  //   // })
+  // }, []);
 
   const customOverlay = (
     <Flex
@@ -54,7 +54,9 @@ const SubList = () => {
       width: 620,
       height: 630,
       thumbnailCaption: (
-        <div onClick={() => navigate(`/category/slug`)}>
+        <div
+        // onClick={() => navigate(`/category/slug`)}
+        >
           <div
             style={{
               position: "absolute",
@@ -205,7 +207,9 @@ const SubList = () => {
       width: 620,
       height: 630,
       thumbnailCaption: (
-        <div onClick={() => navigate(`/category/slug`)}>
+        <div
+        // onClick={() => navigate(`/category/slug`)}
+        >
           <div
             style={{
               position: "absolute",

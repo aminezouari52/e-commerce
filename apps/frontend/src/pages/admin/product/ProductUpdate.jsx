@@ -102,7 +102,7 @@ const ProductUpdate = () => {
       productResponse.data.subs.map((s) => {
         arr.push(s._id);
       });
-      setArrayOfSubs((prev) => arr); // required for chakraUI checkbox to work
+      setArrayOfSubs(() => arr); // required for chakraUI checkbox to work
     } catch (err) {
       console.log(err);
     }

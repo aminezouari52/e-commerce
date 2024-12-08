@@ -20,7 +20,7 @@ const AdminDashboard = () => {
     });
 
   const handleStatusChange = (orderId, orderStatus) => {
-    changeStatus(orderId, orderStatus, user.token).then((res) => {
+    changeStatus(orderId, orderStatus, user.token).then(() => {
       toast({
         title: "Status updated.",
         status: "success",

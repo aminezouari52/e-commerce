@@ -52,7 +52,7 @@ const SingleProduct = ({ product, star, onStarClick }) => {
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
-    addToWishlist(product?._id, user.token).then((res) => {
+    addToWishlist(product?._id, user.token).then(() => {
       toast({
         title: "Product added to wishlist.",
         status: "info",

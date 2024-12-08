@@ -50,7 +50,7 @@ const cartSlice = createSlice({
       setLocalStorage("cart", state.cart);
     },
 
-    emptyCart: (state, action) => {
+    emptyCart: (state) => {
       state.cart = [];
       removeLocalStorage("cart");
     },

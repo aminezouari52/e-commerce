@@ -1,4 +1,3 @@
-import { Dropdown } from "bootstrap";
 import React from "react";
 import DataTable from "react-data-table-component";
 
@@ -13,6 +12,7 @@ function DataTableDisplay({ data, columns }) {
             className="rounded-circle me-2"
             width="35"
             height="35"
+            alt=""
           />
           {row?.name?.length > 15
             ? `${row?.name?.substring(0, 15)}...`
@@ -89,7 +89,7 @@ function DataTableDisplay({ data, columns }) {
               // onChange={() => {
               //   enableDisable(row?.id, row?.isEnabled);
               // }}
-              checked={row?.status == "enable"}
+              checked={row?.status === "enable"}
             />
           </label>
         </div>

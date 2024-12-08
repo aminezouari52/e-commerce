@@ -4,8 +4,6 @@ import Thumb from "./Thumb";
 export default function RangeSlider({
   min,
   max,
-  stepToNumber,
-  stepToIndex,
   stepByNumber,
   defaultValue,
   onChangeSlider,

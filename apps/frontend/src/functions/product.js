@@ -3,7 +3,7 @@ import axios from "axios";
 export const createProduct = async (product, authtoken) => {
   const formData = new FormData();
   Object.keys(product).map((key) => {
-    formData.append(key, product[key]);
+    return formData.append(key, product[key]);
   });
 
   await axios.post(`${import.meta.env.VITE_REACT_APP_API}/product`, formData, {

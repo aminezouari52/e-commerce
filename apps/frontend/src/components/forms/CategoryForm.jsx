@@ -1,16 +1,7 @@
-import {
-  Flex,
-  Button,
-  FormLabel,
-  Input,
-  useToast,
-  Select,
-} from "@chakra-ui/react";
+import { Flex, Button, FormLabel, Input, Select } from "@chakra-ui/react";
 import FileUpload from "./FileUpload";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
 import { getParentCategories } from "../../functions/category";
 
 const CategoryForm = ({
@@ -21,11 +12,8 @@ const CategoryForm = ({
   setLoading,
   label,
 }) => {
-  const navigate = useNavigate();
-  const toast = useToast();
   const [categories, setCategories] = useState([]);
 
-  const user = useSelector((state) => state.user.loggedInUser);
   const loadCategories = () => {
     getParentCategories().then((c) => setCategories(c.data?.data));
   };

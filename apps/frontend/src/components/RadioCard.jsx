@@ -69,6 +69,7 @@ const RadioCard = ({ defaultValue, options, fieldMethods }) => {
   const methods = useFormContext();
   const { name } = fieldMethods;
 
+  // eslint-disable-next-line no-unused-vars
   const { onChange, ...restMethods } = fieldMethods;
 
   const { getRootProps, getRadioProps } = useRadioGroup({

@@ -6,7 +6,7 @@ import { Box, Button, Icon, Stack } from "@chakra-ui/react";
 
 // ICONS
 import { AiFillLock, AiOutlineHeart } from "react-icons/ai";
-import { BsClockHistory, BsMouse2 } from "react-icons/bs";
+import { BsClockHistory } from "react-icons/bs";
 // import { FaCubes } from "react-icons/fa";
 // import { MdOutlineSpaceDashboard } from "react-icons/md";
 // import { HiDesktopComputer } from "react-icons/hi";

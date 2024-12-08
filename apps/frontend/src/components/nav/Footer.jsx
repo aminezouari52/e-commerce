@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // FUNCTIONS
 import { getCategories } from "../../functions/category";
-import { getSubs } from "../../functions/sub";
+// import { getSubs } from "../../functions/sub";
 
 // STYLE
 import { Flex, Box, Heading, Text, Input, IconButton } from "@chakra-ui/react";
@@ -13,7 +13,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const Header = () => {
   const [categories, setCategories] = useState([]);
-  const [subs, setSubs] = useState([]);
+  // const [subs, setSubs] = useState([]);
   const loadCategories = async () => {
     const response = await getCategories();
     setCategories(response?.data);
@@ -21,9 +21,9 @@ const Header = () => {
 
   useEffect(() => {
     loadCategories();
-    getSubs().then((c) => {
-      setSubs(c.data);
-    });
+    // getSubs().then((c) => {
+    //   setSubs(c.data);
+    // });
   }, []);
 
   return (

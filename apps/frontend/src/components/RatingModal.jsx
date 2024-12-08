@@ -20,7 +20,7 @@ import {
 
 // ASSETS
 import { AiOutlineStar } from "react-icons/ai";
-const RatingModal = ({ children, confirmStarUpdate }) => {
+const RatingModal = ({ children }) => {
   const navigate = useNavigate();
   const cancelRef = useRef();
   const { slug } = useParams();
