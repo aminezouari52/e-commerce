@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-exports.getRecommendations = async (req, res) => {
+const getRecommendations = async (req, res) => {
   try {
     // Retrieve user information from request
     await User.findOne({ email: "ahmedmohsen@gmail.com" }).exec();
@@ -15,4 +15,8 @@ exports.getRecommendations = async (req, res) => {
     console.log(err);
     res.status(400).send("Failed to get recommendations");
   }
+};
+
+module.exports = {
+  getRecommendations,
 };

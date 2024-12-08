@@ -4,7 +4,7 @@ const Cart = require("../models/cart");
 const Order = require("../models/order");
 const ApiError = require("../utils/ApiError");
 
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   const id = req.params.id;
   const body = req.body;
   const user = await User.findByIdAndUpdate(id, body, {
@@ -18,7 +18,7 @@ exports.updateUser = async (req, res) => {
   res.status(200).send(user);
 };
 
-exports.setUserCart = async (req, res) => {
+const setUserCart = async (req, res) => {
   const { cart } = req.body;
   let products = [];
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -54,7 +54,7 @@ exports.setUserCart = async (req, res) => {
   res.json({ ok: true });
 };
 
-exports.getUserCart = async (req, res) => {
+const getUserCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
 
   let cart = await Cart.findOne({ user: user._id })
@@ -73,7 +73,7 @@ exports.getUserCart = async (req, res) => {
   });
 };
 
-exports.emptyCart = async (req, res) => {
+const emptyCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
 
   if (!user) {
@@ -84,7 +84,7 @@ exports.emptyCart = async (req, res) => {
   res.json(cart);
 };
 
-exports.saveAddress = async (req, res) => {
+const saveAddress = async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
     { address: req.body.address },
@@ -93,7 +93,7 @@ exports.saveAddress = async (req, res) => {
   res.json({ ok: true });
 };
 
-exports.savePhone = async (req, res) => {
+const savePhone = async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
     { phone: req.body.phone },
@@ -101,7 +101,7 @@ exports.savePhone = async (req, res) => {
   res.json({ ok: true });
 };
 
-exports.createOrder = async (req, res) => {
+const createOrder = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
   const { amount } = req.body;
 
@@ -130,7 +130,7 @@ exports.createOrder = async (req, res) => {
   res.json({ ok: true });
 };
 
-exports.orders = async (req, res) => {
+const orders = async (req, res) => {
   let user = await User.findOne({ email: req.user.email }).exec();
 
   let userOrders = await Order.find({ user: user._id })
@@ -140,7 +140,7 @@ exports.orders = async (req, res) => {
   res.json(userOrders);
 };
 
-exports.addToWishlist = async (req, res) => {
+const addToWishlist = async (req, res) => {
   const { productId } = req.body;
 
   await User.findOneAndUpdate(
@@ -151,7 +151,7 @@ exports.addToWishlist = async (req, res) => {
   res.json({ ok: true });
 };
 
-exports.wishlist = async (req, res) => {
+const wishlist = async (req, res) => {
   const list = await User.findOne({ email: req.user.email })
     .select("wishlist")
     .populate("wishlist")
@@ -160,7 +160,7 @@ exports.wishlist = async (req, res) => {
   res.json(list);
 };
 
-exports.removeFromWishlist = async (req, res) => {
+const removeFromWishlist = async (req, res) => {
   const { productId } = req.params;
   await User.findOneAndUpdate(
     { email: req.user.email },
@@ -168,4 +168,18 @@ exports.removeFromWishlist = async (req, res) => {
   ).exec();
 
   res.json({ ok: true });
+};
+
+module.exports = {
+  updateUser,
+  setUserCart,
+  getUserCart,
+  emptyCart,
+  saveAddress,
+  savePhone,
+  createOrder,
+  orders,
+  addToWishlist,
+  wishlist,
+  removeFromWishlist,
 };

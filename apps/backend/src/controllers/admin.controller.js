@@ -2,7 +2,7 @@ const Order = require("../models/order");
 let errorMessage = "An error has accured";
 //orders, orderStatus
 
-// exports.orders = async (req, res) => {
+// const orders = async (req, res) => {
 //   let allOrders = await Order.find({})
 //     .sort("-createdAt")
 //     .populate("products.product")
@@ -11,7 +11,7 @@ let errorMessage = "An error has accured";
 //   res.json(allOrders);
 // };
 
-exports.orders = async (req, res) => {
+const orders = async (req, res) => {
   try {
     // createdAt/updatedAt, desc/asc, 3
     // const { sort, order, limit } = req.params;
@@ -43,7 +43,7 @@ exports.orders = async (req, res) => {
     });
   }
 };
-exports.orderStatus = async (req, res) => {
+const orderStatus = async (req, res) => {
   const { orderId, orderStatus } = req.body;
 
   let updated = await Order.findByIdAndUpdate(
@@ -53,4 +53,9 @@ exports.orderStatus = async (req, res) => {
   ).exec();
 
   res.json(updated);
+};
+
+module.exports = {
+  orders,
+  orderStatus,
 };

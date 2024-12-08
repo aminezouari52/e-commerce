@@ -5,7 +5,7 @@ const Order = require("../models/order");
 const uniqueRef = require("../utils/uniqueRef");
 const isValidObjectId = require("../validation/is-valid-object");
 
-exports.createOrder = async (req, res) => {
+const createOrder = async (req, res) => {
   const { amount, userId, products, email, name, phone } = req.body;
 
   let newOrder = {
@@ -50,7 +50,7 @@ exports.createOrder = async (req, res) => {
   });
 };
 
-exports.orders = async (req, res) => {
+const orders = async (req, res) => {
   try {
     // createdAt/updatedAt, desc/asc, 3
     // const { sort, order, limit } = req.params;
@@ -81,4 +81,9 @@ exports.orders = async (req, res) => {
       error: true,
     });
   }
+};
+
+module.exports = {
+  createOrder,
+  orders,
 };

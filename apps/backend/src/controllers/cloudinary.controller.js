@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 // req.files.file.path
-exports.upload = async (req, res) => {
+const upload = async (req, res) => {
   try {
     let result = await cloudinary.uploader.upload(req.body.image, {
       public_id: `${Date.now()}`,
@@ -24,11 +24,16 @@ exports.upload = async (req, res) => {
   }
 };
 
-exports.remove = (req, res) => {
+const remove = (req, res) => {
   let image_id = req.body.public_id;
 
   cloudinary.uploader.destroy(image_id, (err) => {
     if (err) return res.json({ success: false, err });
     res.send("ok");
   });
+};
+
+module.exports = {
+  upload,
+  remove,
 };

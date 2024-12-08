@@ -3,7 +3,7 @@ const Sub = require("../models/sub");
 const slugify = require("slugify");
 const Product = require("../models/product");
 
-exports.create = async (req, res) => {
+const create = async (req, res) => {
   req.body.slug = slugify(req.body.name);
   const newCategory = new Category(req.body);
   newCategory["status"] = "yes";
@@ -31,9 +31,10 @@ exports.create = async (req, res) => {
     });
 };
 
-exports.list = async (req, res) =>
+const list = async (req, res) =>
   res.json(await Category.find({}).sort({ createdAt: -1 }).exec());
-exports.listParents = async (req, res) => {
+
+const listParents = async (req, res) => {
   await Category.find({ categoryType: "parent" })
     .sort({ createdAt: -1 })
     .exec()
@@ -53,7 +54,7 @@ exports.listParents = async (req, res) => {
       });
     });
 };
-exports.read = async (req, res) => {
+const read = async (req, res) => {
   let category = await Category.findOne({ slug: req.params.slug }).exec();
   // res.json(category);
   const products = await Product.find({ category }).populate("category").exec();
@@ -63,7 +64,7 @@ exports.read = async (req, res) => {
   });
 };
 
-exports.update = async (req, res) => {
+const update = async (req, res) => {
   req.body.slug = slugify(req.body.name);
   if (req.body?.parent === "" || !req?.body?.parent) {
     req.body.parent = null;
@@ -116,7 +117,7 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.remove = async (req, res) => {
+const remove = async (req, res) => {
   try {
     const deleted = await Category.findOneAndDelete({ slug: req.params.slug });
     await Sub.deleteMany({ parent: deleted._id });
@@ -128,11 +129,21 @@ exports.remove = async (req, res) => {
   }
 };
 
-exports.getSubs = async (req, res) => {
+const getSubs = async (req, res) => {
   try {
     const subs = await Sub.find({ parent: req.params._id });
     res.json(subs);
   } catch (err) {
     console.log(err);
   }
+};
+
+module.exports = {
+  create,
+  list,
+  listParents,
+  read,
+  update,
+  remove,
+  getSubs,
 };

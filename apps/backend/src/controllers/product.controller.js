@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const slugify = require("slugify");
 
-exports.create = async (req, res) => {
+const create = async (req, res) => {
   try {
     const data = req.body;
     data.subs = [];
@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
     });
   }
 };
-exports.listAll = async (req, res) => {
+const listAll = async (req, res) => {
   let products = await Product.find({})
     .limit(parseInt(req.params.count))
     .populate("category")
@@ -39,7 +39,7 @@ exports.listAll = async (req, res) => {
   res.json(products);
 };
 
-exports.remove = async (req, res) => {
+const remove = async (req, res) => {
   try {
     const deleted = await Product.findOneAndRemove({
       slug: req.params.slug,
@@ -51,7 +51,7 @@ exports.remove = async (req, res) => {
   }
 };
 
-exports.read = async (req, res) => {
+const read = async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug })
     .populate("category")
     .populate("subs")
@@ -59,7 +59,7 @@ exports.read = async (req, res) => {
   res.json(product);
 };
 
-exports.update = async (req, res) => {
+const update = async (req, res) => {
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
@@ -79,7 +79,7 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.list = async (req, res) => {
+const list = async (req, res) => {
   try {
     // createdAt/updatedAt, desc/asc, 3
     const { sort, order, limit } = req.body;
@@ -96,7 +96,7 @@ exports.list = async (req, res) => {
   }
 };
 
-exports.productStar = async (req, res) => {
+const productStar = async (req, res) => {
   const product = await Product.findOne({ _id: req.params.productId });
   const user = await User.findOne({ email: req.user.email }).exec();
 
@@ -125,7 +125,7 @@ exports.productStar = async (req, res) => {
   res.json({ messageCode: "PRR01", message: "Product Rating Updated" });
 };
 
-exports.listRelated = async (req, res) => {
+const listRelated = async (req, res) => {
   const product = await Product.findById(req.params.productId).exec();
 
   const related = await Product.find({
@@ -140,7 +140,7 @@ exports.listRelated = async (req, res) => {
   res.json(related);
 };
 
-exports.searchFilters = async (req, res) => {
+const searchFilters = async (req, res) => {
   const { query, price, category, sub, shipping, color, brand } = req.body;
 
   const filterOptions = {};
@@ -165,4 +165,16 @@ exports.searchFilters = async (req, res) => {
     .exec();
 
   res.json(products);
+};
+
+module.exports = {
+  create,
+  listAll,
+  remove,
+  read,
+  update,
+  list,
+  productStar,
+  listRelated,
+  searchFilters,
 };
