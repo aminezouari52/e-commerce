@@ -20,7 +20,7 @@ const FileUpload = ({ values, setValues, loading }) => {
     //       async (uri) => {
     //         try {
     //           const res = await axios.post(
-    //             `${import.meta.env.VITE_REACT_APP_API}/uploadimages`,
+    //             `${import.meta.env.VITE_API_V1_URL}/cloudinary/uploadimages`,
     //             { image: uri },
     //             { headers: { authtoken: user ? user.token : "" } }
     //           );
@@ -43,7 +43,7 @@ const FileUpload = ({ values, setValues, loading }) => {
   //   setLoading(true);
   //   try {
   //     await axios.post(
-  //       `${import.meta.env.VITE_REACT_APP_API}/removeimage`,
+  //       `${import.meta.env.VITE_API_V1_URL}/cloudinary/removeimage`,
   //       { public_id },
   //       {
   //         headers: {

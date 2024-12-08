@@ -125,6 +125,8 @@ const AllProducts = () => {
     try {
       setLoading(true);
       const res = await getProductsByCount(100);
+      console.log(res);
+
       setProducts(res.data);
       setLoading(false);
     } catch (err) {

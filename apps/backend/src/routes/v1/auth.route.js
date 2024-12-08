@@ -3,9 +3,9 @@ const express = require("express");
 const router = express.Router();
 
 // middlewares
-const { authCheck, adminCheck } = require("../middlewares/auth");
+const { authCheck, adminCheck } = require("../../middlewares/auth");
 
-const authController = require("../controllers/auth.controller");
+const authController = require("../../controllers/auth.controller");
 
 router.post(
   "/create-or-update-user",

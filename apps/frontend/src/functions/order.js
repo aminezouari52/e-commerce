@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const createOrder = async (body) =>
-  await axios.post(`${import.meta.env.VITE_REACT_APP_API}/order`, body);
+  await axios.post(`${import.meta.env.VITE_API_V1_URL}/order`, body);
 
 // export async function getAllDevis(save, sort, order, limit) {
 //   let sortData = sort ?? "createdAt";

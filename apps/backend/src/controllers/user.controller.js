@@ -137,6 +137,8 @@ const orders = async (req, res) => {
     .populate("products.product")
     .exec();
 
+  console.log(userOrders);
+
   res.json(userOrders);
 };
 

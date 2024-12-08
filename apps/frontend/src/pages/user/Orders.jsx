@@ -22,6 +22,7 @@ const Orders = () => {
   }, []);
   function getData() {
     getUserOrders(user.token).then((res) => {
+      console.log(res.data);
       setOrders(res.data);
     });
   }

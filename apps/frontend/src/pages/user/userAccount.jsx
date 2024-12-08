@@ -7,12 +7,14 @@ import { getUserOrders } from "../../functions/user";
 function UserAccount() {
   const [orders, setOrders] = useState([]);
   const user = useSelector((state) => state.userReducer.loggedInUser);
+
   useEffect(() => {
     getData();
   }, []);
+
   function getData() {
-    getUserOrders(user.token).then((res) => {
-      setOrders(res.data);
+    getUserOrders(user.token).then(() => {
+      setOrders([]);
     });
   }
 

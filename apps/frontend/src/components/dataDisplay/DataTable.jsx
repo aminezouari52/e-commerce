@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   Thead,
@@ -11,6 +11,10 @@ import {
 } from "@chakra-ui/react";
 
 function DataTableDisplay({ columns, data }) {
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
   return (
     <div>
       <Card my={2}>
@@ -26,13 +30,14 @@ function DataTableDisplay({ columns, data }) {
                 </Tr>
               </Thead>
               <Tbody>
-                {data?.map((item) => (
-                  <Tr>
-                    {columns?.map((column) => (
-                      <Th>{column?.selector(item)}</Th>
-                    ))}
-                  </Tr>
-                ))}
+                {data?.length !== 0 &&
+                  data?.map((item) => (
+                    <Tr>
+                      {columns?.map((column) => (
+                        <Th>{column?.selector(item)}</Th>
+                      ))}
+                    </Tr>
+                  ))}
               </Tbody>
               {/* <Tfoot>
             <Tr>

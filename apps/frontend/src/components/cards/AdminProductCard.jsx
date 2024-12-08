@@ -45,7 +45,7 @@ const AdminProductCard = ({
             <Image
               src={
                 images && images.length
-                  ? `${import.meta.env.VITE_REACT_APP}${images[0]}`
+                  ? `${import.meta.env.VITE_API_BASE_URL}${images[0]}`
                   : laptop
               }
               alt="product image"
