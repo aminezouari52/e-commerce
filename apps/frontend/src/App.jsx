@@ -1,8 +1,6 @@
 // HOOKS
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 // FIREBASE
 import { auth } from "./firebase";
@@ -45,12 +43,8 @@ import UserAccount from "./pages/user/userAccount";
 import Orders from "./pages/user/Orders";
 import CreateCategory from "./pages/admin/category/CreateCategory";
 
-const hi = "";
-
 const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const toast = useToast();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
