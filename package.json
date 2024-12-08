@@ -6,6 +6,7 @@
     "build": "turbo build",
     "prepare": "husky && husky install",
     "lint": "run-s --print-label \"lint:*\"",
+    "lint:format": "prettier --color --write .",
     "lint:backend": "pnpm -F=backend lint",
     "lint:frontend": "pnpm -F=frontend lint"
   },
