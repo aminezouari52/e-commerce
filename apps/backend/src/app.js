@@ -30,8 +30,6 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(mongoSanitize());
 app.use(compression());
 
-console.log("hi");
-
 const options = {
   uploadDir: os.tmpdir(),
   autoClean: true,
