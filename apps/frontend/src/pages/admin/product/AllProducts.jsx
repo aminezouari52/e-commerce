@@ -4,7 +4,6 @@ import {
   useToast,
   useDisclosure,
   Image,
-  AbsoluteCenter,
   Button,
   Icon,
   AlertDialog,
@@ -22,9 +21,6 @@ import { useSelector } from "react-redux";
 
 // FUNCTIONS
 import { getProductsByCount, removeProduct } from "../../../functions/product";
-
-// COMPONENTS
-import AdminProductCard from "../../../components/cards/AdminProductCard";
 
 // STYLE
 import { Flex, Box, Heading, Center, Spinner, Text } from "@chakra-ui/react";
@@ -136,7 +132,7 @@ const AllProducts = () => {
     }
   };
 
-  const handleRemove = async (slug) => {
+  const handleRemove = async () => {
     if (selectedId && selectedId !== null) {
       setLoading(true);
       try {
