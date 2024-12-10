@@ -1,6 +1,7 @@
 // HOOKS
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 // FUNCTIONS
 import { getCategories } from "../functions/category";
 import { getSubs } from "../functions/sub";
@@ -8,9 +9,13 @@ import {
   getProductsByCount,
   fetchProductsByFilter,
 } from "../functions/product";
+
 // COMPONENTS
-import ProductCard from "../components/cards/ProductCard";
-import Accordion from "../components/Accordion";
+import ProductCard from "@/components/cards/ProductCard";
+import Accordion from "@/components/Accordion";
+import Header from "@/components/nav/Header";
+import Footer from "@/components/nav/Footer";
+
 // STYLE
 import {
   Heading,
@@ -135,46 +140,50 @@ const Shop = () => {
           <Spinner size="xl" color="primary.500" />
         </Center>
       )}
-      <Flex direction={{ sm: "column", md: "row" }} minHeight="100vh">
-        <Accordion
-          handleSlider={handleSlider}
-          categories={categories}
-          categoryIds={categoryIds}
-          handleCategoryChange={handleCategoryChange}
-          subs={subs}
-          subIds={subIds}
-          handleSubChange={handleSubChange}
-          brands={brands}
-          handleBrandChange={handleBrandChange}
-          colors={colors}
-          handleColorChange={handleColorChange}
-          handleShippingchange={handleShippingchange}
-        />
-        <Box w="100%" overflowX="hidden" bg="#e9ecef">
-          <Box overflowY="hidden">
-            <Heading size="lg" color="primary.500" p={10}>
-              Products
-            </Heading>
-            {products?.length ? (
-              <SimpleGrid
-                minChildWidth={{
-                  sm: "cardWidth.sm",
-                  md: "cardWidth.md",
-                  lg: "cardWidth.lg",
-                }}
-                spacing={10}
-                pe={10}
-              >
-                {products?.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
-              </SimpleGrid>
-            ) : (
-              <Text p={10}>No products found</Text>
-            )}
+      <>
+        <Header />
+        <Flex direction={{ sm: "column", md: "row" }} minHeight="100vh">
+          <Accordion
+            handleSlider={handleSlider}
+            categories={categories}
+            categoryIds={categoryIds}
+            handleCategoryChange={handleCategoryChange}
+            subs={subs}
+            subIds={subIds}
+            handleSubChange={handleSubChange}
+            brands={brands}
+            handleBrandChange={handleBrandChange}
+            colors={colors}
+            handleColorChange={handleColorChange}
+            handleShippingchange={handleShippingchange}
+          />
+          <Box w="100%" overflowX="hidden" bg="#e9ecef">
+            <Box overflowY="hidden">
+              <Heading size="lg" color="primary.500" p={10}>
+                Products
+              </Heading>
+              {products?.length ? (
+                <SimpleGrid
+                  minChildWidth={{
+                    sm: "cardWidth.sm",
+                    md: "cardWidth.md",
+                    lg: "cardWidth.lg",
+                  }}
+                  spacing={10}
+                  pe={10}
+                >
+                  {products?.map((product) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+                </SimpleGrid>
+              ) : (
+                <Text p={10}>No products found</Text>
+              )}
+            </Box>
           </Box>
-        </Box>
-      </Flex>
+        </Flex>
+        <Footer />
+      </>
     </>
   );
 };

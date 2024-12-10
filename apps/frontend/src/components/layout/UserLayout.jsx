@@ -9,7 +9,7 @@ import LoadingToRedirect from "./LoadingToRedirect";
 import SideBar from "../nav/SideBar";
 import { Flex, Box } from "@chakra-ui/react";
 
-const UserRoute = () => {
+export const UserLayout = () => {
   const user = useSelector((state) => state.userReducer.loggedInUser);
 
   return user && user.token ? (
@@ -27,5 +27,3 @@ const UserRoute = () => {
     <LoadingToRedirect />
   );
 };
-
-export default UserRoute;

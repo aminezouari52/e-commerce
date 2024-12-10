@@ -1,7 +1,4 @@
-const User = require("../models/user");
-const Product = require("../models/product");
-const Cart = require("../models/cart");
-const Order = require("../models/order");
+const { User, Product, Cart, Order } = require("../models");
 const ApiError = require("../utils/ApiError");
 
 const updateUser = async (req, res) => {
@@ -136,8 +133,6 @@ const orders = async (req, res) => {
   let userOrders = await Order.find({ user: user._id })
     .populate("products.product")
     .exec();
-
-  console.log(userOrders);
 
   res.json(userOrders);
 };

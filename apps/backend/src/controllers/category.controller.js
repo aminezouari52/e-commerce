@@ -1,7 +1,5 @@
-const Category = require("../models/category");
-const Sub = require("../models/sub");
+const { Category, Sub, Product } = require("../models");
 const slugify = require("slugify");
-const Product = require("../models/product");
 
 const create = async (req, res) => {
   req.body.slug = slugify(req.body.name);

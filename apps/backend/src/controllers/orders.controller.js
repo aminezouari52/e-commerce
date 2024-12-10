@@ -1,6 +1,4 @@
-const Product = require("../models/product");
-const User = require("../models/user");
-const Order = require("../models/order");
+const { Product, User, Order } = require("../models");
 
 const uniqueRef = require("../utils/uniqueRef");
 const isValidObjectId = require("../validation/is-valid-object");

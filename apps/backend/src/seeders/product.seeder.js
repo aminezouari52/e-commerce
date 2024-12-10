@@ -3,8 +3,7 @@ const { faker } = require("@faker-js/faker");
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const Product = require("../models/product");
-const Category = require("../models/category");
+const { Product, Category } = require("../models");
 const slugify = require("slugify");
 require("dotenv").config();
 

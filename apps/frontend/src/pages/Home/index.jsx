@@ -10,6 +10,8 @@ import CategoryList from "@/components/CategoryList";
 // STYLE
 import { Box } from "@chakra-ui/react";
 import { useRef } from "react";
+import Header from "@/components/nav/Header";
+import Footer from "@/components/nav/Footer";
 
 const Home = () => {
   const statsRef = useRef(null);
@@ -22,65 +24,69 @@ const Home = () => {
   const progress = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
 
   return (
-    <Box overflowX="hidden">
-      <Hero />
-      <motion.div
-        style={{
-          scale: progress,
-          opacity: progress,
-        }}
-        ref={statsRef}
+    <>
+      <Header />
+      <Box overflowX="hidden">
+        <Hero />
+        <motion.div
+          style={{
+            scale: progress,
+            opacity: progress,
+          }}
+          ref={statsRef}
 
-        /* initial={{ opacity: 0, x: -400 }}
+          /* initial={{ opacity: 0, x: -400 }}
          transition={{ duration: 0.8 }}
          whileInView={{
            opacity: 1,
            x: 0,
          }} */
-      >
-        <Statistics />
-      </motion.div>
+        >
+          <Statistics />
+        </motion.div>
 
-      {/* <Jumbotron
+        {/* <Jumbotron
         text={["New Arrivals", "Best Sellers", "Categories", "Sub Categories"]}
       /> */}
 
-      <motion.div
-        initial={{ opacity: 0, x: 400 }}
-        transition={{ duration: 0.8 }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
-        }}
-      >
-        <CheckoutGuide />
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 400 }}
+          transition={{ duration: 0.8 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+        >
+          <CheckoutGuide />
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, x: -400 }}
-        transition={{ duration: 0.8 }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
-        }}
-      >
-        <BestSellers />
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, x: 400 }}
-        transition={{ duration: 0.8 }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
-        }}
-      >
-        <NewArrivals />
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: -400 }}
+          transition={{ duration: 0.8 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+        >
+          <BestSellers />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 400 }}
+          transition={{ duration: 0.8 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+        >
+          <NewArrivals />
+        </motion.div>
 
-      <CategoryList />
+        <CategoryList />
 
-      {/* <SubList /> */}
-    </Box>
+        {/* <SubList /> */}
+      </Box>
+      <Footer />
+    </>
   );
 };
 

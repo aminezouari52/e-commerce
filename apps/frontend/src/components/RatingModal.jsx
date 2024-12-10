@@ -31,7 +31,7 @@ const RatingModal = ({ children }) => {
   const onOpenHandler = () => {
     return user && user.token
       ? onOpen()
-      : navigate(`/login`, { state: { from: `/product/${slug}` } });
+      : navigate(`/auth/login`, { state: { from: `/product/${slug}` } });
   };
 
   const okHandler = () => {

@@ -1,6 +1,6 @@
 // REACT
 import { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
 // REDUX
@@ -14,17 +14,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 // FUNCTIONS
 import { createOrUpdateUser } from "../../functions/auth";
 
+// COMPONENTS
+import { NavLink } from "react-router-dom";
+import Logo from "@/components/Logo";
+
 // STYLE
-import {
-  Flex,
-  Card,
-  CardBody,
-  Input,
-  Button,
-  Heading,
-  Text,
-  Link,
-} from "@chakra-ui/react";
+import { Flex, Input, Button, Heading, Text, Link } from "@chakra-ui/react";
 
 const Register = () => {
   let dispatch = useDispatch();
@@ -100,72 +95,76 @@ const Register = () => {
 
   return (
     <Flex
-      justifyContent="center"
+      as="form"
+      w="325px"
+      direction="column"
       alignItems="center"
-      h="calc(100vh - 40px)"
-      mx={4}
+      justifyContent="center"
+      gap={8}
+      onSubmit={handleSubmit}
     >
-      <Flex direction="column" alignItems="center">
-        <Card>
-          <CardBody>
-            <Flex direction="column" alignItems="center" px={8}>
-              <Heading
-                mb={6}
-                color="primary.500"
-                size={{ sm: "sm", md: "md", lg: "lg" }}
-              >
-                Create an Account
-              </Heading>
-              <Flex as="form" direction="column" onSubmit={handleSubmit}>
-                <Flex direction="column" alignItems="end" mb={2}>
-                  <Input
-                    focusBorderColor="primary.500"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="email"
-                    autoFocus
-                    size={{ sm: "sm", md: "md" }}
-                    mt={2}
-                  />
+      <Flex cursor="pointer" onClick={() => navigate("/")}>
+        <Logo w="280px" />
+      </Flex>
+      <Flex
+        gap="6px"
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Heading size="lg">Join Us Now!</Heading>
+        <Text color="darkgray">Welcome! Please create your account</Text>
+      </Flex>
 
-                  <Input
-                    focusBorderColor="primary.500"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    my={2}
-                    size={{ sm: "sm", md: "md" }}
-                  />
-                </Flex>
+      <Flex w="100%" direction="column" gap={2}>
+        <Input
+          focusBorderColor="primary.500"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="email"
+          autoFocus
+          size="md"
+          mt={2}
+        />
 
-                <Button
-                  type="submit"
-                  colorScheme="primary"
-                  size={{ sm: "xs", md: "sm", lg: "md" }}
-                  my={2}
-                >
-                  Register
-                </Button>
-                <Flex my={2}>
-                  <Text color="gray" mr={1}>
-                    Already have an account?
-                  </Text>
-                  <Link
-                    as={NavLink}
-                    to="/login"
-                    color="primary.500"
-                    fontWeight="semibold"
-                    _hover={{ textDecoration: "underline" }}
-                  >
-                    Login
-                  </Link>
-                </Flex>
-              </Flex>
-            </Flex>
-          </CardBody>
-        </Card>
+        <Input
+          focusBorderColor="primary.500"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="your password"
+          size="md"
+        />
+
+        <Button
+          type="submit"
+          w="100%"
+          isDisabled={!email || password.length < 6}
+          // isLoading={loading}
+          colorScheme="primary"
+          size="sm"
+          _hover={{
+            opacity: email && password.length >= 6 && "0.8",
+          }}
+        >
+          Register
+        </Button>
+      </Flex>
+
+      <Flex fontSize="sm">
+        <Text color="gray" mr={1}>
+          Already have an account?
+        </Text>
+        <Link
+          as={NavLink}
+          to="/auth/login"
+          color="primary.500"
+          fontWeight="semibold"
+          _hover={{ textDecoration: "underline" }}
+        >
+          Login
+        </Link>
       </Flex>
     </Flex>
   );

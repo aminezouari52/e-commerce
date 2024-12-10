@@ -11,7 +11,7 @@ import { Flex, Box, Heading, Text, Input, IconButton } from "@chakra-ui/react";
 // ASSETS
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
-const Header = () => {
+const Footer = () => {
   const [categories, setCategories] = useState([]);
   // const [subs, setSubs] = useState([]);
   const loadCategories = async () => {
@@ -119,9 +119,9 @@ const Header = () => {
           Copyright 2023 © NBZDEV. All rights reserved.
         </Text>
         <Flex gap="10px">
-          <IconButton size="md" colorScheme="facebook" icon={<FaFacebook />} />
+          <IconButton size="md" colorScheme="blue" icon={<FaFacebook />} />
           <IconButton size="md" colorScheme="pink" icon={<FaInstagram />} />
-          <IconButton size="md" colorScheme="twitter" icon={<FaTwitter />} />
+          <IconButton size="md" colorScheme="teal" icon={<FaTwitter />} />
           <IconButton size="md" colorScheme="red" icon={<FaYoutube />} />
         </Flex>
       </Flex>
@@ -129,4 +129,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Footer;

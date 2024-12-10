@@ -14,18 +14,10 @@ import { setLoggedInUser } from "../../reducers/userReducer";
 
 // COMPONENTS
 import { NavLink } from "react-router-dom";
+import Logo from "@/components/Logo";
 
 // STYLE
-import {
-  Card,
-  CardBody,
-  Flex,
-  Heading,
-  Input,
-  Button,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Heading, Input, Button, Link, Text } from "@chakra-ui/react";
 
 // ICONS
 import { AiOutlineMail } from "react-icons/ai";
@@ -43,6 +35,7 @@ const Login = () => {
 
   // REDIRECT USER
   const loggedInUser = useSelector((state) => state.userReducer.loggedInUser);
+
   useEffect(() => {
     const intended = location.state;
     if (intended) {
@@ -142,94 +135,99 @@ const Login = () => {
 
   return (
     <Flex
-      justifyContent="center"
+      as="form"
+      w="325px"
+      direction="column"
       alignItems="center"
-      h="calc(100vh - 40px)"
-      mx={4}
+      justifyContent="center"
+      gap={12}
+      onSubmit={handleSubmit}
     >
-      <Flex direction="column" alignItems="center">
-        <Card>
-          <CardBody>
-            <Flex direction="column" alignItems="center" px={8}>
-              <Heading
-                mb={6}
-                color="primary.500"
-                size={{ sm: "sm", md: "md", lg: "lg" }}
-              >
-                Login Account
-              </Heading>
-              <Flex as="form" direction="column" onSubmit={handleSubmit}>
-                <Flex direction="column" alignItems="end" mb={2}>
-                  <Input
-                    focusBorderColor="primary.500"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email"
-                    autoFocus
-                    size={{ sm: "sm", md: "md" }}
-                    mt={2}
-                  />
+      <Flex cursor="pointer" onClick={() => navigate("/")}>
+        <Logo w="280px" />
+      </Flex>
+      <Flex
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        gap={2}
+      >
+        <Heading size="lg" textAlign="center">
+          Welcome Back!
+        </Heading>
+        <Text color="darkgray" textAlign="center">
+          Login to access the platform
+        </Text>
+      </Flex>
 
-                  <Input
-                    focusBorderColor="primary.500"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Your password"
-                    my={2}
-                    size={{ sm: "sm", md: "md" }}
-                  />
-                  <Link
-                    as={NavLink}
-                    to="/forgot-password" // Replace with your actual forgot password route
-                    color="primary.500"
-                    _hover={{ textDecoration: "underline" }}
-                    fontSize="sm"
-                    my={2}
-                  >
-                    Forgot password?
-                  </Link>
-                </Flex>
-                <Button
-                  type="submit"
-                  leftIcon={<AiOutlineMail />}
-                  isDisabled={!email || password.length < 6}
-                  isLoading={loading}
-                  colorScheme="primary"
-                  my={2}
-                  size={{ sm: "xs", md: "sm", lg: "md" }}
-                >
-                  Login with Email/Password
-                </Button>
-                <Button
-                  onClick={googleLogin}
-                  leftIcon={<FcGoogle />}
-                  colorScheme="gray"
-                  size={{ sm: "xs", md: "sm", lg: "md" }}
-                  my={2}
-                >
-                  Login with Google
-                </Button>
+      <Flex w="100%" direction="column" alignItems="end" gap={2}>
+        <Input
+          focusBorderColor="primary.500"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your email"
+          autoFocus
+          size="md"
+          mt={2}
+        />
 
-                <Flex my={2} fontSize={{ sm: "sm", md: "md", lg: "lg" }}>
-                  <Text color="gray" mr={1}>
-                    Dont have an account?
-                  </Text>
-                  <Link
-                    as={NavLink}
-                    to="/register"
-                    color="primary.500"
-                    fontWeight="semibold"
-                    _hover={{ textDecoration: "underline" }}
-                  >
-                    Register
-                  </Link>
-                </Flex>
-              </Flex>
-            </Flex>
-          </CardBody>
-        </Card>
+        <Input
+          focusBorderColor="primary.500"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Your password"
+          size="md"
+        />
+        <Link
+          as={NavLink}
+          to="/auth/forgot-password" // Replace with your actual forgot password route
+          color="primary.500"
+          _hover={{ textDecoration: "underline" }}
+          fontSize="sm"
+        >
+          Forgot password?
+        </Link>
+        <Button
+          type="submit"
+          leftIcon={<AiOutlineMail />}
+          isDisabled={!email || password.length < 6}
+          isLoading={loading}
+          colorScheme="primary"
+          my={2}
+          w="100%"
+          size="sm"
+          _hover={{
+            opacity: email && password.length >= 6 && 0.8,
+          }}
+        >
+          Login with Email/Password
+        </Button>
+        <Button
+          colorScheme="gray"
+          size="sm"
+          w="100%"
+          leftIcon={<FcGoogle />}
+          onClick={googleLogin}
+        >
+          Login with Google
+        </Button>
+      </Flex>
+
+      <Flex fontSize="sm" w="100%" justifyContent="center">
+        <Text color="gray" mr={1}>
+          Don't have an account?
+        </Text>
+        <Link
+          as={NavLink}
+          to="/auth/register"
+          color="primary.500"
+          fontWeight="semibold"
+          _hover={{ textDecoration: "underline" }}
+        >
+          Register
+        </Link>
       </Flex>
     </Flex>
   );

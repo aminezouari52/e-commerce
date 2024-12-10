@@ -37,7 +37,7 @@ const HeaderMenu = () => {
     try {
       await signOut(auth);
       dispatch(logout(null));
-      navigate("/login");
+      navigate("/auth/login");
     } catch (err) {
       toast({
         title: "Logout failed!",

@@ -14,10 +14,8 @@ import { getLocalStorage } from "./utils";
 
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/nav/Header";
-import Footer from "./components/nav/Footer";
-import AdminRoute from "./components/routes/AdminRoute";
-import UserRoute from "./components/routes/UserRoute";
+import { AuthLayout, UserLayout, AdminLayout } from "@/components/layout";
+
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -81,7 +79,7 @@ const App = () => {
   //         duration: 3000,
   //         isClosable: true,
   //       });
-  //       navigate("/login");
+  //       navigate("/auth/login");
   //     }
   //   });
   // }, []);
@@ -93,23 +91,26 @@ const App = () => {
 
   return (
     <>
-      <Header />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/shop" element={<Shop />} />
         <Route exact path="/checkout" element={<Checkout />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="account" element={<UserAccount />} />
-        <Route path="/user/*" element={<UserRoute />}>
+
+        <Route path="/auth/*" element={<AuthLayout />}>
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Route>
+
+        <Route path="/user/*" element={<UserLayout />}>
           <Route path="account" element={<UserAccount />} />
           <Route path="orders" element={<Orders />} />
           <Route path="history" element={<History />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="password" element={<Password />} />
         </Route>
-        <Route path="/admin/*" element={<AdminRoute />}>
+        <Route path="/admin/*" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="category" element={<CategoryCreate />} />
           <Route path="category/create" element={<CreateCategory />} />
@@ -125,10 +126,7 @@ const App = () => {
         <Route exact path="/category/:slug" element={<CategoryHome />} />
         <Route exact path="/sub/:slug" element={<SubHome />} />
         <Route path="*" element={<NotFound />} />
-
-        <Route path="/admin/*" element={<NotFound />} />
       </Routes>
-      <Footer />
     </>
   );
 };

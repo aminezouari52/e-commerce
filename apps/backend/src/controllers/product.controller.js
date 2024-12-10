@@ -1,5 +1,4 @@
-const Product = require("../models/product");
-const User = require("../models/user");
+const { Product, User } = require("../models");
 const slugify = require("slugify");
 
 const create = async (req, res) => {

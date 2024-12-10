@@ -15,7 +15,7 @@ import CartDrawer from "./CartDrawer";
 import { Box, Flex, Text, Image, IconButton, Badge } from "@chakra-ui/react";
 
 // ASSETS
-import logo from "../../images/image.png";
+import logo from "@/images/logo.png";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import CategoriesMenu from "./CategoriesMenu";
 import { IoCartOutline } from "react-icons/io5";
@@ -138,10 +138,10 @@ const Header = () => {
             <HeaderMenu />
           ) : (
             <>
-              <HeaderButton pathname="/register" text="Register">
+              <HeaderButton pathname="/auth/register" text="Register">
                 <Text fontSize={{ sm: "sm", lg: "md" }}>Register</Text>
               </HeaderButton>
-              <HeaderButton pathname="/login" text="Login">
+              <HeaderButton pathname="/auth/login" text="Login">
                 <Text fontSize={{ sm: "sm", lg: "md" }}>Login</Text>
               </HeaderButton>
             </>

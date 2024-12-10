@@ -16,16 +16,18 @@ import { ViewIcon } from "@chakra-ui/icons";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+
   const user = useSelector((state) => state.userReducer.loggedInUser);
+
   useEffect(() => {
+    const getData = () => {
+      getUserOrders(user.token).then((res) => {
+        setOrders(res.data);
+      });
+    };
+
     getData();
-  }, []);
-  function getData() {
-    getUserOrders(user.token).then((res) => {
-      console.log(res.data);
-      setOrders(res.data);
-    });
-  }
+  }, [user]);
 
   const getBadgeColor = (status) => {
     if (status === "pending") return "orange";

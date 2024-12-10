@@ -1,5 +1,5 @@
 // const validateAddressInput = require("../validation/validateAddress");
-const Address = require("../models/address");
+const { Address } = require("../models");
 
 const createAddress = async (req, res) => {
   const address = await Address.create(req.body);
