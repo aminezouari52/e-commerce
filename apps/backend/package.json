@@ -10,8 +10,8 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
-    "seed:product": "node seeders/product.seeder.js",
-    "seed:category": "node seeders/category.seeder.js",
+    "seed:product": "node src/seeders/product.seeder.js",
+    "seed:category": "node src/seeders/category.seeder.js",
     "lint": "eslint src/**/*.js -f pretty --color"
   },
   "keywords": [

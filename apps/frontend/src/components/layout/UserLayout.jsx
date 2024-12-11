@@ -1,29 +1,54 @@
-// REACT
-import { Outlet } from "react-router-dom";
-
-// REDUX
+// HOOKS
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// FIREBASE
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
 
 // COMPONENTS
-import LoadingToRedirect from "./LoadingToRedirect";
+import { Outlet } from "react-router-dom";
 import SideBar from "../nav/SideBar";
+import Header from "@/components/nav/header";
+import Spinner from "@/components/Spinner";
+
+// STYLE
 import { Flex, Box } from "@chakra-ui/react";
 
 export const UserLayout = () => {
   const user = useSelector((state) => state.userReducer.loggedInUser);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
-  return user && user.token ? (
-    <Flex h="calc(100vh - 40px)">
-      <Box w="200px" display={{ sm: "none", md: "block" }}>
-        <SideBar />
-      </Box>
-      <Box w="100%" overflowX="hidden" bg="#e9ecef">
-        <Box px={5} h="100%">
-          <Outlet />
-        </Box>
-      </Box>
-    </Flex>
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) navigate("/auth/login");
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (user && user?.role !== "user") {
+      navigate("/auth/login");
+    }
+  }, [user]);
+
+  return isLoading ? (
+    <Spinner />
   ) : (
-    <LoadingToRedirect />
+    <Box h="calc(100vh - 40px)">
+      <Header />
+      <Flex>
+        <Box w="200px" display={{ sm: "none", md: "block" }}>
+          <SideBar />
+        </Box>
+        <Box w="100%" overflowX="hidden" bg="#e9ecef">
+          <Box px={5} h="100%">
+            <Outlet />
+          </Box>
+        </Box>
+      </Flex>
+    </Box>
   );
 };

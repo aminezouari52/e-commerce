@@ -31,10 +31,13 @@ const Wishlist = () => {
     loadWishlist();
   }, []);
 
-  const loadWishlist = () =>
-    getWishlist(user.token).then((res) => {
-      setWishlist(res.data.wishlist);
-    });
+  const loadWishlist = () => {
+    if (user) {
+      return getWishlist(user.token).then((res) => {
+        setWishlist(res.data.wishlist);
+      });
+    }
+  };
 
   const handleRemove = (productId) =>
     removeWishlist(productId, user.token).then(() => {

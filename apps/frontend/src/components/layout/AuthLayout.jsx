@@ -71,11 +71,11 @@ export const AuthLayout = () => {
             <Box>
               <Flex gap={1}>
                 <Text fontWeight="bold">user: </Text>
-                <Text>--</Text>
+                <Text>user@gmail.com</Text>
               </Flex>
               <Flex gap={1}>
                 <Text fontWeight="bold">admin: </Text>
-                <Text>--</Text>
+                <Text>admin@gmail.com</Text>
               </Flex>
             </Box>
           </PopoverBody>

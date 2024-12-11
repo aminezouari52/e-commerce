@@ -1,5 +1,6 @@
 // HOOKS
 import { useTheme } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 // STYLE
 import { Heading, Flex, Box, Text, Button } from "@chakra-ui/react";
@@ -10,6 +11,7 @@ import HeroVid from "@/images/hero-vid.mp4";
 
 const Hero = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const videoStyle = {
     width: "100%",
@@ -82,6 +84,7 @@ const Hero = () => {
                 background: "white",
                 color: "primary.500",
               }}
+              onClick={() => navigate("/shop")}
             >
               Shop now
             </Button>

@@ -1,46 +1,54 @@
 // HOOKS
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-// FUNCTIONS
-import { currentAdmin } from "../../functions/auth";
+// FIREBASE
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
 
 // COMPONENTS
-import LoadingToRedirect from "./LoadingToRedirect";
-import SideBar from "../nav/SideBar";
 import { Outlet } from "react-router-dom";
+import SideBar from "../nav/SideBar";
+import Header from "@/components/nav/header";
+import Spinner from "@/components/Spinner";
 
 // STYLE
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 
 export const AdminLayout = () => {
   const user = useSelector((state) => state.userReducer.loggedInUser);
-  const [ok, setOk] = useState(false);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (user && user.token) {
-      currentAdmin(user.token)
-        .then(() => {
-          setOk(true);
-        })
-        .catch(() => {
-          setOk(false);
-        });
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) navigate("/auth/login");
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (user && user?.role !== "admin") {
+      navigate("/auth/login");
     }
   }, [user]);
 
-  return ok ? (
-    <Flex h="calc(100vh - 40px)">
-      <Box w="200px" display={{ sm: "none", md: "block" }}>
-        <SideBar />
-      </Box>
-      <Box w="100%" overflowX="hidden" bg="#e9ecef">
-        <Box px={5} h="100%">
-          <Outlet />
-        </Box>
-      </Box>
-    </Flex>
+  return isLoading ? (
+    <Spinner />
   ) : (
-    <LoadingToRedirect />
+    <Box h="calc(100vh - 40px)">
+      <Header />
+      <Flex>
+        <Box w="200px" display={{ sm: "none", md: "block" }}>
+          <SideBar />
+        </Box>
+        <Box w="100%" overflowX="hidden" bg="#e9ecef">
+          <Box px={5} h="100%">
+            <Outlet />
+          </Box>
+        </Box>
+      </Flex>
+    </Box>
   );
 };

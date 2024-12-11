@@ -5,7 +5,8 @@ const express = require("express");
 const app = express();
 const { Category } = require("../models");
 const slugify = require("slugify");
-require("dotenv").config();
+const config = require("../config/config");
+const logger = require("../config/logger");
 
 const documentNumbers = 4;
 
@@ -20,39 +21,38 @@ async function seedCategoryCollection() {
   let server;
 
   try {
-    mongoose
-      .connect(process.env.MONGODB_URL, {
-        useNewUrlParser: true,
-      })
-      .then(() => {
-        server = app.listen(process.env.PORT, async () => {
-          await Category.collection.drop();
+    mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
+      logger.info("Connected to MongoDB");
+      server = app.listen(config.port, async () => {
+        logger.info(`Listening to port ${config.port}`);
 
-          let categories = [];
+        await Category.collection.drop();
 
-          for (let i = 0; i < documentNumbers; i++) {
-            const name = faker.commerce.productAdjective();
+        let categories = [];
 
-            let newCategory = {
-              name,
-              slug: String(slugify(name)).toLocaleLowerCase(),
-              image: images[i],
-              categoryType: "parent",
-              status: "yes",
-              parent: null,
-            };
+        for (let i = 0; i < documentNumbers; i++) {
+          const name = faker.commerce.productAdjective();
 
-            categories.push(newCategory);
-          }
+          let newCategory = {
+            name,
+            slug: String(slugify(name)).toLocaleLowerCase(),
+            image: images[i],
+            categoryType: "parent",
+            status: "yes",
+            parent: null,
+          };
 
-          await Category.collection.insertMany(categories);
+          categories.push(newCategory);
+        }
 
-          console.log("Category model seeded! :)");
+        await Category.collection.insertMany(categories);
 
-          server.close();
-          process.exit();
-        });
+        logger.info("Category model seeded! :)");
+
+        server.close();
+        process.exit();
       });
+    });
   } catch (err) {
     console.log(err.stack);
   }

@@ -9,13 +9,12 @@ import { onAuthStateChanged } from "firebase/auth";
 // FUNCTIONS
 import { setLoggedInUser } from "./reducers/userReducer";
 import { setCart } from "./reducers/cartReducer";
-import { currentUser } from "./functions/auth";
+import { getCurrentUser } from "./functions/auth";
 import { getLocalStorage } from "./utils";
 
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthLayout, UserLayout, AdminLayout } from "@/components/layout";
-
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -41,50 +40,44 @@ import UserAccount from "./pages/user/userAccount";
 import Orders from "./pages/user/Orders";
 import CreateCategory from "./pages/admin/category/CreateCategory";
 
+// const demoAccounts = ["", ""];
+
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const idTokenResult = await user.getIdTokenResult();
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      if (authUser) {
+        await authUser.reload();
+
+        const idTokenResult = await authUser.getIdTokenResult();
         try {
-          const res = await currentUser(idTokenResult.token);
+          const response = await getCurrentUser(idTokenResult.token);
+          if (!response.data) {
+            throw new Error("User not found or token expired");
+          }
+
+          const storedUser = getLocalStorage("user") || response.data;
+
+          // if (
+          //   !demoAccounts.includes(storedUser.email) &&
+          //   !authUser.emailVerified
+          // ) {
+          //   throw new Error("Email not verified. Please verify your email.");
+          // }
+
           dispatch(
-            setLoggedInUser({
-              name: res.data.name,
-              email: res.data.email,
-              token: idTokenResult.token,
-              role: res.data.role,
-              _id: res.data._id,
-            }),
+            setLoggedInUser({ ...storedUser, token: idTokenResult.token }),
           );
-        } catch (err) {
-          console.log(err);
+        } catch (error) {
+          console.log(error);
         }
       }
     });
-    // cleanup
+
     return () => unsubscribe();
   }, [dispatch]);
 
-  // // TODO: make sure this works
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, async (user) => {
-  //     if (!user) {
-  //       toast({
-  //         title: "Session expired.",
-  //         status: "warning",
-  //         colorScheme: "red",
-  //         duration: 3000,
-  //         isClosable: true,
-  //       });
-  //       navigate("/auth/login");
-  //     }
-  //   });
-  // }, []);
-
-  // update cart store
   useEffect(() => {
     dispatch(setCart(getLocalStorage("cart") || []));
   }, []);
@@ -109,6 +102,7 @@ const App = () => {
           <Route path="history" element={<History />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="password" element={<Password />} />
+          <Route path="*" element={<Navigate to="/user/history" />} />
         </Route>
         <Route path="/admin/*" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
