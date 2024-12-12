@@ -4,7 +4,6 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "prepare": "husky && husky install",
     "lint": "run-s --print-label \"lint:*\"",
     "lint:format": "prettier --color --write '**/*.{js,jsx}'",
     "lint:backend": "pnpm -F=backend lint",
