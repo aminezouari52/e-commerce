@@ -13,18 +13,18 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from "@chakra-ui/react";
-import laptop from "../../../images/laptop.jpg";
+import laptop from "@/assets/laptop.jpg";
 import { useNavigate } from "react-router-dom";
 
 // REDUX
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { getProductsByCount, removeProduct } from "../../../functions/product";
+import { getProductsByCount, removeProduct } from "@/functions/product";
 
 // STYLE
 import { Flex, Box, Heading, Center, Spinner, Text } from "@chakra-ui/react";
-import DataTableDisplay from "../../../components/dataDisplay/DataTable";
+import DataTableDisplay from "@/components/dataDisplay/DataTable";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const AllProducts = () => {

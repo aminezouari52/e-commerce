@@ -15,9 +15,9 @@ import {
   StepSeparator,
   useSteps,
 } from "@chakra-ui/react";
-import ShopImg from "@/images/shop.svg";
-import VerifyImg from "@/images/verify.svg";
-import PayImg from "@/images/pay.svg";
+import ShopImg from "@/assets/shop.svg";
+import VerifyImg from "@/assets/verify.svg";
+import PayImg from "@/assets/pay.svg";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 

@@ -2,7 +2,6 @@
 import { Heading, Flex, Box, Text, Button, Icon } from "@chakra-ui/react";
 
 // ASSETS
-import VideoSrc from "@/images/video.mp4";
 import { FaTruck, FaShieldAlt } from "react-icons/fa";
 import { MdDiscount } from "react-icons/md";
 import { RxArrowTopRight } from "react-icons/rx";
@@ -147,7 +146,10 @@ const Statistics = () => {
       >
         <Box>
           <video loop muted autoPlay={true} style={{ height: "73vh" }}>
-            <source src={VideoSrc} type="video/mp4" />
+            <source
+              src="https://res.cloudinary.com/dfzx2pdi3/video/upload/v1734267693/video_vwtlvr.mp4"
+              type="video/mp4"
+            />
           </video>
         </Box>
       </Flex>

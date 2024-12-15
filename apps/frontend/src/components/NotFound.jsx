@@ -1,5 +1,5 @@
 import { Flex, Box, Image, Heading } from "@chakra-ui/react";
-import NotFoundImg from "../images/not-found.svg";
+import NotFoundImg from "@/assets/not-found.svg";
 
 const NotFound = () => {
   return (

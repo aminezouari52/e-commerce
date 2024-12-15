@@ -39,8 +39,6 @@ app.use(formData.parse(options));
 app.use(cors());
 app.options("*", cors());
 
-app.set("trust proxy", true);
-
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 if (config.env !== "production") {

@@ -20,7 +20,7 @@ import {
 import { motion } from "framer-motion";
 
 // ASSETS
-import laptop from "@/images/laptop.jpg";
+import laptop from "@/assets/laptop.jpg";
 import { IoCart } from "react-icons/io5";
 
 const ProductCard = ({ product }) => {

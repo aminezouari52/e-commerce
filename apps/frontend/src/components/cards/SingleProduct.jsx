@@ -30,7 +30,7 @@ import {
 } from "@chakra-ui/react";
 
 // ASSETS
-import noImg from "../../images/no-image-available.jpg";
+import noImg from "@/assets/no-image-available.jpg";
 import { AiOutlineHeart } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 

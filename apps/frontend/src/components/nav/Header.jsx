@@ -15,7 +15,7 @@ import CartDrawer from "./CartDrawer";
 import { Box, Flex, Text, Image, IconButton, Badge } from "@chakra-ui/react";
 
 // ASSETS
-import logo from "@/images/logo.png";
+import logo from "@/assets/logo.png";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import CategoriesMenu from "./CategoriesMenu";
 import { IoCartOutline } from "react-icons/io5";

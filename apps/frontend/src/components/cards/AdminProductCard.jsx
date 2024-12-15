@@ -21,7 +21,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from "@chakra-ui/react";
-import laptop from "../../images/laptop.jpg";
+import laptop from "@/assets/laptop.jpg";
 
 // ASSETS
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";

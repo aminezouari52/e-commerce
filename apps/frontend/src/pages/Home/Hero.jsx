@@ -7,7 +7,6 @@ import { Heading, Flex, Box, Text, Button } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 // ASSETS
-import HeroVid from "@/images/hero-vid.mp4";
 
 const Hero = () => {
   const theme = useTheme();
@@ -29,7 +28,10 @@ const Hero = () => {
         }}
       >
         <video loop muted autoPlay={true} style={videoStyle}>
-          <source src={HeroVid} type="video/mp4" />
+          <source
+            src="https://res.cloudinary.com/dfzx2pdi3/video/upload/v1734267152/6199032-uhd_2732_1440_25fps_yfxdef.mp4"
+            type="video/mp4"
+          />
         </video>
       </Box>
       <Flex

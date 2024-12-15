@@ -9,9 +9,9 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
-import laptop from "../../images/laptop.jpg";
+import laptop from "@/assets/laptop.jpg";
 import { useDispatch } from "react-redux";
-import { setCart } from "../../reducers/cartReducer";
+import { setCart } from "@/reducers/cartReducer";
 import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai";
 
 const ProductCardInCheckout = ({ p }) => {
