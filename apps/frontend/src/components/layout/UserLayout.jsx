@@ -9,7 +9,7 @@ import { auth } from "@/firebase";
 
 // COMPONENTS
 import { Outlet } from "react-router-dom";
-import SideBar from "../nav/SideBar";
+import SideBar from "@/components/nav/SideBar";
 import Header from "@/components/nav/Header";
 import Spinner from "@/components/Spinner";
 

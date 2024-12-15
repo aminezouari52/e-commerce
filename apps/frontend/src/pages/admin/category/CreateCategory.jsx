@@ -5,18 +5,20 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { createCategory } from "../../../functions/category";
+import { createCategory } from "@/functions/category";
 
 // STYLE
 import { Box, Heading, Card, CardBody } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import CategoryForm from "../../../components/forms/CategoryForm";
+import CategoryForm from "@/components/forms/CategoryForm";
 import { Button, Flex, useToast } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+
 const initialState = {
   name: "",
   images: [],
 };
+
 function CreateCategory() {
   const navigate = useNavigate();
   const toast = useToast();
