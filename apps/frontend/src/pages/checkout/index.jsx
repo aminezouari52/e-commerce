@@ -37,8 +37,8 @@ import { FaTruck } from "react-icons/fa";
 import { IoStorefrontSharp } from "react-icons/io5";
 import PlaceOrderModal from "./PlaceOrderModal";
 import { schema } from "./schema";
-import Header from "../../components/nav/Header";
-import Footer from "../../components/nav/Footer";
+import Header from "@/components/nav/Header";
+import Footer from "@/components/nav/Footer";
 
 const shippingTypeOptions = [
   { value: "ship", title: "Ship", icon: FaTruck },
