@@ -95,7 +95,6 @@ const App = () => {
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
-
         <Route path="/user/*" element={<UserLayout />}>
           <Route path="account" element={<UserAccount />} />
           <Route path="orders" element={<Orders />} />
