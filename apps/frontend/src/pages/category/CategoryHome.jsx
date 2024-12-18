@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getCategory } from "../../functions/category";
-import ProductCard from "../../components/cards/ProductCard";
+import { getCategory } from "@/functions/category";
+import ProductCard from "@/components/cards/ProductCard";
 import { useParams } from "react-router-dom";
 import { Center, Spinner, Heading, Box, Flex } from "@chakra-ui/react";
 

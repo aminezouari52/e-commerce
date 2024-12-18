@@ -2,7 +2,7 @@ import { Flex, Button, FormLabel, Input, Select } from "@chakra-ui/react";
 import FileUpload from "./FileUpload";
 import { useEffect, useState } from "react";
 
-import { getParentCategories } from "../../functions/category";
+import { getParentCategories } from "@/functions/category";
 
 const CategoryForm = ({
   setValues,

@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 
 // FUNCTIONS
-import { getCategories } from "../../functions/category";
-// import { getSubs } from "../../functions/sub";
+import { getCategories } from "@/functions/category";
+// import { getSubs } from "@/functions/sub";
 
 // STYLE
 import { Flex, Box, Heading, Text, Input, IconButton } from "@chakra-ui/react";

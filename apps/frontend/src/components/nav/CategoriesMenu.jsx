@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 // FUNCTIONS
-import { getCategories } from "../../functions/category";
+import { getCategories } from "@/functions/category";
 
 // STYLE
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";

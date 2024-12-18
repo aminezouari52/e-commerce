@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 // FUNCTIONS
-import { getCategories, getCategorySubs } from "../../../functions/category";
-import { getProduct, updateProduct } from "../../../functions/product";
+import { getCategories, getCategorySubs } from "@/functions/category";
+import { getProduct, updateProduct } from "@/functions/product";
 
 // COMPONENTS
-import FileUpload from "../../../components/forms/FileUpload";
-import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
+import FileUpload from "@/components/forms/FileUpload";
+import ProductUpdateForm from "@/components/forms/ProductUpdateForm";
 
 // STYLE
 import { Box, Heading, Card, CardBody } from "@chakra-ui/react";

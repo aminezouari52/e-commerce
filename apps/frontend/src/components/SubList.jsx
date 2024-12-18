@@ -3,7 +3,7 @@
 // import { useNavigate } from "react-router-dom";
 
 // // FUNCTIONS
-// import { getSubs } from "../functions/sub";
+// import { getSubs } from "@/functions/sub";
 
 // COMPONENTS
 import { Gallery } from "react-grid-gallery";

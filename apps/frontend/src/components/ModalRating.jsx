@@ -1,13 +1,10 @@
-// REACT
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
-
-// STYLE
+import StarRating from "react-star-ratings";
 import {
   Button,
-  Icon,
   AlertDialog,
   AlertDialogOverlay,
   AlertDialogContent,
@@ -16,11 +13,12 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useToast,
+  Flex,
+  Text,
+  Tooltip,
 } from "@chakra-ui/react";
 
-// ASSETS
-import { AiOutlineStar } from "react-icons/ai";
-const RatingModal = ({ children }) => {
+const ModalRating = ({ product, children }) => {
   const navigate = useNavigate();
   const cancelRef = useRef();
   const { slug } = useParams();
@@ -39,23 +37,52 @@ const RatingModal = ({ children }) => {
     toast({
       title: "Thanks for your review. It will apper soon",
       status: "success",
-      colorScheme: "red",
+      colorScheme: "green",
       duration: 3000,
       isClosable: true,
     });
   };
 
+  let result = 0;
+  if (product && product.ratings && product.ratings.length !== 0) {
+    let ratingsArray = product && product.ratings;
+    let total = [];
+    let length = ratingsArray.length;
+    ratingsArray.map((r) => total.push(r.star));
+    let totalReduced = total.reduce((p, n) => p + n, 0);
+    let highest = length * 5;
+    result = (totalReduced * 5) / highest;
+  }
+
   return (
     <>
-      <Button
-        variant="ghost"
-        colorScheme="red"
-        leftIcon={<Icon as={AiOutlineStar} />}
-        onClick={onOpenHandler}
-        w="100%"
+      <Tooltip
+        label={user ? "Leave rating" : "Login to leave rating"}
+        placement="top"
+        hasArrow
       >
-        {user ? "Leave rating" : "Login to leave rating"}
-      </Button>
+        <Flex
+          cursor="pointer"
+          gap={1}
+          justifyContent="center"
+          alignItems="center"
+          onClick={onOpenHandler}
+          _hover={{
+            opacity: 0.8,
+          }}
+        >
+          <StarRating
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="red"
+            rating={result}
+            editing={false}
+          />
+          <Text>
+            ({product?.ratings?.length > 0 ? product?.ratings?.length : 0})
+          </Text>
+        </Flex>
+      </Tooltip>
 
       <AlertDialog
         motionPreset="slideInBottom"
@@ -71,8 +98,15 @@ const RatingModal = ({ children }) => {
           <AlertDialogCloseButton />
           <AlertDialogBody>{children}</AlertDialogBody>
           <AlertDialogFooter>
-            <Button colorScheme="primary" ml={3} onClick={okHandler}>
-              Ok
+            <Button
+              colorScheme="primary"
+              ml={3}
+              onClick={okHandler}
+              _hover={{
+                opacity: 0.8,
+              }}
+            >
+              Done
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -81,4 +115,4 @@ const RatingModal = ({ children }) => {
   );
 };
 
-export default RatingModal;
+export default ModalRating;

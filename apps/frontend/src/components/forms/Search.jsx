@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // FUNCTIONS
-import { setSearchText } from "../../reducers/searchReducer";
+import { setSearchText } from "@/reducers/searchReducer";
 
 // STYLE
 import { Flex, Input, IconButton } from "@chakra-ui/react";

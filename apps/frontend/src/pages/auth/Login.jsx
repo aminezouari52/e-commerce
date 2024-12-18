@@ -1,5 +1,5 @@
 // FIREBASE
-import { auth, googleAuthProvider } from "../../firebase";
+import { auth, googleAuthProvider } from "@/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 // HOOKS
@@ -9,8 +9,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // FUNCTIONS
-import { createOrUpdateUser } from "../../functions/auth";
-import { setLoggedInUser } from "../../reducers/userReducer";
+import { createOrUpdateUser } from "@/functions/auth";
+import { setLoggedInUser } from "@/reducers/userReducer";
 
 // COMPONENTS
 import { NavLink } from "react-router-dom";

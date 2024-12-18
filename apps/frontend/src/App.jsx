@@ -88,6 +88,9 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/shop" element={<Shop />} />
         <Route exact path="/checkout" element={<Checkout />} />
+        <Route exact path="/product/:slug" element={<Product />} />
+        <Route exact path="/category/:slug" element={<CategoryHome />} />
+        <Route exact path="/sub/:slug" element={<SubHome />} />
 
         <Route path="/auth/*" element={<AuthLayout />}>
           <Route path="register" element={<Register />} />
@@ -116,9 +119,7 @@ const App = () => {
           <Route path="products/:slug" element={<ProductUpdate />} />
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
         </Route>
-        <Route exact path="/product/:slug" element={<Product />} />
-        <Route exact path="/category/:slug" element={<CategoryHome />} />
-        <Route exact path="/sub/:slug" element={<SubHome />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

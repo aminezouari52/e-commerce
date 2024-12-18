@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // FUNCTIONS
-import { addProduct } from "../../reducers/cartReducer";
-import { showAverage } from "../../functions/rating";
+import { addProduct } from "@/reducers/cartReducer";
+import ShowRating from "@/components/ShowRating";
 import _ from "lodash";
 
 // STYLE
@@ -77,13 +77,13 @@ const ProductCard = ({ product }) => {
           w="100%"
           zIndex="0"
         >
-          {product && product.ratings && product.ratings.length > 0 ? (
-            showAverage(product)
-          ) : (
-            <Text textAlign="center" fontWeight="bold">
-              No rating yet
-            </Text>
-          )}
+          {/* {product && product?.ratings && product?.ratings?.length > 0 ? ( */}
+          <ShowRating product={product} />
+          {/* ) : ( */}
+          {/* <Text textAlign="center" fontWeight="bold"> */}
+          {/* No rating yet */}
+          {/* </Text> */}
+          {/* )} */}
         </Flex>
       </Flex>
 

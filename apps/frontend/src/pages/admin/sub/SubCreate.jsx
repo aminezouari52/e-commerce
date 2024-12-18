@@ -6,12 +6,12 @@ import { useToast, useDisclosure } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { getCategories } from "../../../functions/category";
-import { getSubs, createSub, removeSub } from "../../../functions/sub";
+import { getCategories } from "@/functions/category";
+import { getSubs, createSub, removeSub } from "@/functions/sub";
 
 // COMPONENTS
-import CategoryForm from "../../../components/forms/CategoryForm";
-import LocalSearch from "../../../components/forms/LocalSearch";
+import CategoryForm from "@/components/forms/CategoryForm";
+import LocalSearch from "@/components/forms/LocalSearch";
 
 // STYLE
 import {

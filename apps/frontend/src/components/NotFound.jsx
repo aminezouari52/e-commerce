@@ -1,21 +1,29 @@
-import { Flex, Box, Image, Heading } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { Flex, Image, Heading, Button } from "@chakra-ui/react";
 import NotFoundImg from "@/assets/not-found.svg";
 
 const NotFound = () => {
+  const navigate = useNavigate();
   return (
     <Flex
+      bg="#fff"
+      h="100vh"
       direction="column"
       alignItems="center"
       justifyContent="center"
-      bg="#fff"
-      h="calc(100vh - 40px)"
+      gap={10}
     >
-      <Box m={4}>
-        <Image boxSize="400px" src={NotFoundImg} alt="Dan Abramov" />
-      </Box>
-      <Heading size={{ sm: "sm", md: "md", lg: "lg" }} textAlign="center" m={2}>
-        Sorry! The page you are looking for is not found.
+      <Image boxSize="400px" src={NotFoundImg} alt="Dan Abramov" />
+      <Heading size="md" textAlign="center">
+        Sorry! The page you are looking for could not be found.
       </Heading>
+      <Button
+        colorScheme="deepRed"
+        variant="link"
+        onClick={() => navigate("/")}
+      >
+        Return to the home page
+      </Button>
     </Flex>
   );
 };

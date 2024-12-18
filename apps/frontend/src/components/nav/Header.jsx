@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 
 // COMPONENTS
-import Search from "../forms/Search";
+import Search from "@/components/forms/Search";
 import HeaderButton from "./HeaderButton";
 import HeaderDrawer from "./HeaderDrawer";
 import HeaderMenu from "./HeaderMenu";

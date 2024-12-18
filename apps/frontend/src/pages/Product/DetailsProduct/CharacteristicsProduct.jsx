@@ -3,17 +3,10 @@ import { Flex, Text, Stack, HStack, Button } from "@chakra-ui/react";
 
 const ProductListItems = ({ product }) => {
   const navigate = useNavigate();
-  const { price, category, subs, shipping, color, brand, quantity, sold } =
-    product;
+  const { category, subs, shipping, color, brand, quantity, sold } = product;
 
   return (
-    <Stack w="100%" spacing={4} p={4}>
-      <Flex justifyContent="space-between">
-        <Text fontWeight="medium" color="gray">
-          Price
-        </Text>
-        <Text fontWeight="medium">$ {price}</Text>
-      </Flex>
+    <Stack w="100%" spacing={4}>
       <Flex justifyContent="space-between">
         <Text fontWeight="medium" color="gray">
           Category
@@ -76,6 +69,7 @@ const ProductListItems = ({ product }) => {
         </Text>
         <Text fontWeight="medium">{quantity}</Text>
       </Flex>
+
       <Flex justifyContent="space-between">
         <Text fontWeight="medium" color="gray">
           Sold

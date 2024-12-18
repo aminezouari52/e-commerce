@@ -5,14 +5,14 @@ import { useToast } from "@chakra-ui/react";
 
 // REDUX
 import { useDispatch } from "react-redux";
-import { setLoggedInUser } from "../../reducers/userReducer";
+import { setLoggedInUser } from "@/reducers/userReducer";
 
 // FIREBASE
-import { auth } from "../../firebase";
+import { auth } from "@/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 // FUNCTIONS
-import { createOrUpdateUser } from "../../functions/auth";
+import { createOrUpdateUser } from "@/functions/auth";
 
 // COMPONENTS
 import { NavLink } from "react-router-dom";

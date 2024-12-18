@@ -6,12 +6,12 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { getCategory, updateCategory } from "../../../functions/category";
+import { getCategory, updateCategory } from "@/functions/category";
 
 // STYLE
 import { Box, Heading, Card, CardBody } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
-import CategoryForm from "../../../components/forms/CategoryForm";
+import CategoryForm from "@/components/forms/CategoryForm";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const CategoryUpdate = () => {

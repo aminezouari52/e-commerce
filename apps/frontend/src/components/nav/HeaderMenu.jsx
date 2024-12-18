@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { IconButton, useToast } from "@chakra-ui/react";
 
 // FIREBASE
-import { auth } from "../../firebase";
+import { auth } from "@/firebase";
 import { signOut } from "firebase/auth";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../reducers/userReducer";
+import { logout } from "@/reducers/userReducer";
 
 // STYLE
 import {

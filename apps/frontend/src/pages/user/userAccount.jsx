@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import DataTableDisplay from "../../components/dataDisplay/DataTable";
+import DataTableDisplay from "@/components/dataDisplay/DataTable";
 import { useSelector } from "react-redux";
 import { Card, CardBody, CardHeader, Heading } from "@chakra-ui/react";
-import { getUserOrders } from "../../functions/user";
+import { getUserOrders } from "@/functions/user";
 
 function UserAccount() {
   const [orders, setOrders] = useState([]);

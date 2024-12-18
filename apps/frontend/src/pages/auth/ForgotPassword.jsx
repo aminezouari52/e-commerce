@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 
 // FIREBASE
-import { auth } from "../../firebase";
+import { auth } from "@/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 // REDUX

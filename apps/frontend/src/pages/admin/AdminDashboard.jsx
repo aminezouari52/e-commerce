@@ -1,8 +1,8 @@
 import { Box, Heading, useToast, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { getOrders, changeStatus } from "../../functions/admin";
+import { getOrders, changeStatus } from "@/functions/admin";
 import { useSelector } from "react-redux";
-import Orders from "../../components/Orders";
+import Orders from "@/components/Orders";
 
 const AdminDashboard = () => {
   const toast = useToast();

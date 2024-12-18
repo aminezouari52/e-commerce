@@ -7,11 +7,11 @@ import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { getCategories } from "../../../functions/category";
-import { updateSub, getSub } from "../../../functions/sub";
+import { getCategories } from "@/functions/category";
+import { updateSub, getSub } from "@/functions/sub";
 
 // COMPONENTS
-import CategoryForm from "../../../components/forms/CategoryForm";
+import CategoryForm from "@/components/forms/CategoryForm";
 
 // STYLE
 import {

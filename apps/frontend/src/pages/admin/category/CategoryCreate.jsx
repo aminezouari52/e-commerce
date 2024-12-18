@@ -6,10 +6,10 @@ import { useToast, useDisclosure } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { getCategories, removeCategory } from "../../../functions/category";
+import { getCategories, removeCategory } from "@/functions/category";
 
 // COMPONENTS
-import LocalSearch from "../../../components/forms/LocalSearch";
+import LocalSearch from "@/components/forms/LocalSearch";
 
 // STYLE
 import {

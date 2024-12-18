@@ -4,13 +4,13 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { createProduct } from "../../../functions/product";
-import { getCategories, getCategorySubs } from "../../../functions/category";
+import { createProduct } from "@/functions/product";
+import { getCategories, getCategorySubs } from "@/functions/category";
 
 // STYLE
 import { Box, Heading, Card, CardBody } from "@chakra-ui/react";
-import ProductCreateForm from "../../../components/forms/ProductCreateForm";
-import FileUpload from "../../../components/forms/FileUpload";
+import ProductCreateForm from "@/components/forms/ProductCreateForm";
+import FileUpload from "@/components/forms/FileUpload";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 

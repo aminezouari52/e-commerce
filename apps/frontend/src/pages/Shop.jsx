@@ -3,12 +3,9 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
-import { getCategories } from "../functions/category";
-import { getSubs } from "../functions/sub";
-import {
-  getProductsByCount,
-  fetchProductsByFilter,
-} from "../functions/product";
+import { getCategories } from "@/functions/category";
+import { getSubs } from "@/functions/sub";
+import { getProductsByCount, fetchProductsByFilter } from "@/functions/product";
 
 // COMPONENTS
 import ProductCard from "@/components/cards/ProductCard";
@@ -26,8 +23,9 @@ import {
   Spinner,
   SimpleGrid,
 } from "@chakra-ui/react";
+
 const Shop = () => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [price, setPrice] = useState([0, 4999]);
   const [categories, setCategories] = useState([]);
@@ -39,11 +37,12 @@ const Shop = () => {
   const [shipping, setShipping] = useState("");
   const search = useSelector((state) => state.searchReducer.searchText);
   const { text } = search;
+
   const loadAllProducts = () => {
     getProductsByCount(12).then((p) => {
       setTimeout(() => {
         setProducts(p.data);
-        setLoading(false);
+        setIsLoading(false);
       }, 10);
     });
   };
@@ -53,13 +52,15 @@ const Shop = () => {
       setProducts(res.data);
     });
   };
+
   // 1. load products by default on page load
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     loadAllProducts();
     getCategories().then((res) => setCategories(res.data));
     getSubs().then((res) => setSubs(res.data));
   }, []);
+
   // 2. load products on user search input
   useEffect(() => {
     if (!text) {
@@ -71,6 +72,7 @@ const Shop = () => {
       return () => clearTimeout(delayed);
     }
   }, [text]);
+
   // 3. load products based on filters
   useEffect(() => {
     fetchProducts({
@@ -83,6 +85,13 @@ const Shop = () => {
       shipping,
     });
   }, [price, categoryIds, subIds, brands, colors, shipping, text]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
+
   // onChange handlers
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
@@ -93,6 +102,7 @@ const Shop = () => {
         : [...prevCategoryIds, categoryId],
     );
   };
+
   const handleSubChange = (e) => {
     const subId = e.target.value;
     setSubIds((prevSubIds) =>
@@ -102,6 +112,7 @@ const Shop = () => {
         : [...prevSubIds, subId],
     );
   };
+
   const handleBrandChange = (e) => {
     const brand = e.target.value;
     setBrands((prevBrands) =>
@@ -120,15 +131,18 @@ const Shop = () => {
         : [...prevColors, color],
     );
   };
+
   const handleSlider = (value) => {
     setPrice(value);
   };
+
   const handleShippingchange = (value) => {
     setShipping(value);
   };
+
   return (
     <>
-      {loading && (
+      {isLoading && (
         <Center
           position="fixed"
           top="0"

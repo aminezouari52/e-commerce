@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // FUNCTIONS
-import { getWishlist, removeWishlist } from "../../functions/user";
+import { getWishlist, removeWishlist } from "@/functions/user";
 
 // ICONS
 import { AiFillDelete } from "react-icons/ai";
