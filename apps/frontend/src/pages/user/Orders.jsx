@@ -73,6 +73,8 @@ const Orders = () => {
     </Tr>
   );
 
+  console.log(orders);
+
   return (
     <Box my={2}>
       <Heading size="lg" color="primary.500" my={5}>

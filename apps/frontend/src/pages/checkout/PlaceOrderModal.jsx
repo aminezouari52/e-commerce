@@ -33,9 +33,9 @@ const PlaceOrderModal = ({ isOpen, onClose, succeeded, total, placeOrder }) => {
               <Button
                 variant="link"
                 colorScheme="deepBlue"
-                onClick={() => navigate("/user/history")}
+                onClick={() => navigate("/user")}
               >
-                See it in your purchase history.
+                See it in your orders page.
               </Button>
             </>
           ) : (

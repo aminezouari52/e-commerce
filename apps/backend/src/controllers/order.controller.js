@@ -30,7 +30,7 @@ const createOrder = async (req, res) => {
   const bulkOption = products.map((product) => {
     return {
       updateOne: {
-        filter: { _id: product.product._id },
+        filter: { _id: product._id },
         update: { $inc: { quantity: -product.count, sold: product.count } },
       },
     };

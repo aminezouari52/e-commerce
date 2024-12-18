@@ -22,8 +22,6 @@ import {
 
 // ICONS
 import { FiLogOut } from "react-icons/fi";
-import { BsClockHistory } from "react-icons/bs";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { BsGear } from "react-icons/bs";
 
@@ -64,7 +62,7 @@ const HeaderMenu = () => {
       ></MenuButton>
       <MenuList>
         <MenuItem
-          onClick={() => navigate("/user/account/")}
+          onClick={() => navigate(user?.role === "admin" ? "/admin" : "/user")}
           variant="transparent"
           icon={<Icon h="15px" w="15px" as={BsGear} />}
           _hover={{
@@ -72,29 +70,6 @@ const HeaderMenu = () => {
           }}
         >
           {user.email && user.email.split("@")[0]}
-        </MenuItem>
-        <Divider />
-        <MenuItem
-          variant="transparent"
-          onClick={() =>
-            navigate(
-              user.role === "admin" ? "/admin/dashboard" : "/user/history",
-            )
-          }
-          icon={
-            <Icon
-              h="15px"
-              w="15px"
-              as={
-                user.role === "admin" ? MdOutlineSpaceDashboard : BsClockHistory
-              }
-            />
-          }
-          _hover={{
-            bg: "lightgray",
-          }}
-        >
-          {user.role === "admin" ? "Dashboard" : "History"}
         </MenuItem>
         <Divider />
 

@@ -7,8 +7,7 @@ import { Box, Button, Icon, Stack } from "@chakra-ui/react";
 
 // ICONS
 import { AiFillLock, AiOutlineHeart } from "react-icons/ai";
-import { BsClockHistory } from "react-icons/bs";
-import { FaCubes } from "react-icons/fa";
+import { FaCubes, FaRegUser } from "react-icons/fa";
 import { BiCube } from "react-icons/bi";
 import { BsMouse2 } from "react-icons/bs";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
@@ -22,9 +21,9 @@ const SideBar = () => {
 
   const userSideBar = [
     {
-      title: "History",
-      icon: <Icon as={BsClockHistory} mr={2} />,
-      link: "/user/history",
+      title: "Account",
+      icon: <Icon as={FaRegUser} mr={2} />,
+      link: "/user/account",
     },
     {
       title: "Wishlist",

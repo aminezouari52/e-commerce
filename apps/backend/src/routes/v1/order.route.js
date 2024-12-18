@@ -4,7 +4,7 @@ const router = express.Router();
 
 // const { authCheck, adminCheck } = require("../../middlewares/auth");
 
-const orderController = require("../../controllers/orders.controller");
+const orderController = require("../../controllers/order.controller");
 
 // router.get(
 //   "/orders/AllOrdersAdmin",

@@ -15,17 +15,19 @@ import { getLocalStorage } from "./utils";
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthLayout, UserLayout, AdminLayout } from "@/components/layout";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import Checkout from "./pages/Checkout";
+import Product from "./pages/Product";
+import CategoryHome from "./pages/CategoryHome";
+import SubHome from "./pages/SubHome";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-import Home from "./pages/Home";
-import Shop from "./pages/Shop";
-import Checkout from "./pages/checkout";
-import Product from "./pages/Product";
-import SubHome from "./pages/sub/SubHome";
-import CategoryHome from "./pages/category/CategoryHome";
-import History from "./pages/user/History";
+import Account from "./pages/user/Account";
 import Password from "./pages/user/Password";
+import Wishlist from "./pages/user/Wishlist";
+import Orders from "./pages/user/Orders";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
@@ -34,11 +36,8 @@ import SubUpdate from "./pages/admin/sub/SubUpdate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductUpdate from "./pages/admin/product/ProductUpdate";
-import Wishlist from "./pages/user/Wishlist";
-import NotFound from "./components/NotFound";
-import UserAccount from "./pages/user/userAccount";
-import Orders from "./pages/user/Orders";
 import CreateCategory from "./pages/admin/category/CreateCategory";
+import NotFound from "./components/NotFound";
 
 // const demoAccounts = ["", ""];
 
@@ -100,12 +99,11 @@ const App = () => {
         </Route>
 
         <Route path="/user/*" element={<UserLayout />}>
-          <Route path="account" element={<UserAccount />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="history" element={<History />} />
+          <Route path="account" element={<Account />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="password" element={<Password />} />
-          <Route path="*" element={<Navigate to="/user/history" />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="*" element={<Navigate to="/user/account" />} />
         </Route>
         <Route path="/admin/*" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
