@@ -17,7 +17,7 @@ import { ImPriceTags } from "react-icons/im";
 const SideBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   const userSideBar = [
     {

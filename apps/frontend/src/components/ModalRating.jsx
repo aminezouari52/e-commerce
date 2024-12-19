@@ -23,7 +23,7 @@ const ModalRating = ({ product, children }) => {
   const cancelRef = useRef();
   const { slug } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const toast = useToast();
 
   const onOpenHandler = () => {

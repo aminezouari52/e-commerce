@@ -17,16 +17,18 @@ import { ViewIcon } from "@chakra-ui/icons";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
+
+  const loadOrders = () => {
+    getUserOrders(user.token).then((res) => {
+      setOrders(res.data);
+    });
+  };
 
   useEffect(() => {
-    const getData = () => {
-      getUserOrders(user.token).then((res) => {
-        setOrders(res.data);
-      });
-    };
-
-    getData();
+    if (user && user?.token) {
+      loadOrders();
+    }
   }, [user]);
 
   const getBadgeColor = (status) => {
@@ -73,10 +75,8 @@ const Orders = () => {
     </Tr>
   );
 
-  console.log(orders);
-
   return (
-    <Box my={2}>
+    <Box>
       <Heading size="lg" color="primary.500" my={5}>
         My orders
       </Heading>

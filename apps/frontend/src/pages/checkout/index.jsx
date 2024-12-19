@@ -50,7 +50,7 @@ const shippingTypeOptions = [
 ];
 
 const Checkout = () => {
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const cart = useSelector((state) => state.cartReducer.cart);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();

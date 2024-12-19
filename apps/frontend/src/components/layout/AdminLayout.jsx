@@ -17,7 +17,7 @@ import Spinner from "@/components/Spinner";
 import { Flex, Box } from "@chakra-ui/react";
 
 export const AdminLayout = () => {
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 

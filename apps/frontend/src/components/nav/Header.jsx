@@ -25,7 +25,7 @@ const Header = () => {
   const navigate = useNavigate();
   const cartButtonRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const cart = useSelector((state) => state.cartReducer.cart);
 
   return (

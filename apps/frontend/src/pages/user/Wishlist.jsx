@@ -23,7 +23,7 @@ import {
 
 const Wishlist = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   const [wishlist, setWishlist] = useState([]);
 

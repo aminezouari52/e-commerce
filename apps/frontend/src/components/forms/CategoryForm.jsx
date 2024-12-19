@@ -17,9 +17,11 @@ const CategoryForm = ({
   const loadCategories = () => {
     getParentCategories().then((c) => setCategories(c.data?.data));
   };
+
   useEffect(() => {
     loadCategories();
   }, []);
+
   function handleParentCategory(event) {
     setValues({ ...values, parent: event?.target?.value });
   }

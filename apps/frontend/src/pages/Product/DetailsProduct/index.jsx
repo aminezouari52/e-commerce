@@ -37,7 +37,7 @@ import { FiTruck } from "react-icons/fi";
 
 const SingleProduct = ({ product, star, onStarClick }) => {
   const { title, images, _id } = product;
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   const toast = useToast();
 

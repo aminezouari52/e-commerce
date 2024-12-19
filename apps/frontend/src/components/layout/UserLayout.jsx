@@ -17,7 +17,7 @@ import Spinner from "@/components/Spinner";
 import { Flex, Box } from "@chakra-ui/react";
 
 export const UserLayout = () => {
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,16 +37,14 @@ export const UserLayout = () => {
   return isLoading ? (
     <Spinner />
   ) : (
-    <Box h="calc(100vh - 40px)">
+    <Box h="100vh">
       <Header />
-      <Flex>
-        <Box w="200px" display={{ sm: "none", md: "block" }}>
+      <Flex h="calc(100% - 79px)">
+        <Box w="200px" display={{ sm: "none", md: "block" }} bg="#fff">
           <SideBar />
         </Box>
-        <Box w="100%" overflowX="hidden" bg="#e9ecef">
-          <Box px={5} h="100%">
-            <Outlet />
-          </Box>
+        <Box w="100%" overflowX="hidden" bg="#e9ecef" px={6}>
+          <Outlet />
         </Box>
       </Flex>
     </Box>

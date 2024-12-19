@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   const toast = useToast();
 
   const [orders, setOrders] = useState([]);
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
     loadOrders();

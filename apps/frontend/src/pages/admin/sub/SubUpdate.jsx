@@ -30,7 +30,7 @@ const SubUpdate = () => {
   const toast = useToast();
 
   // LOGGED IN USER
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   // STATE
   const [name, setName] = useState("");

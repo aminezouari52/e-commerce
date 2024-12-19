@@ -34,7 +34,7 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [related, setRelated] = useState([]);
   const [star, setStar] = useState();
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const { slug } = params;
 
   useEffect(() => {

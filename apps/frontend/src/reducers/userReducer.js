@@ -2,24 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 import { removeLocalStorage, setLocalStorage } from "@/utils";
 
 const initialState = {
-  loggedInUser: null,
+  user: null,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setLoggedInUser: (state, action) => {
-      state.loggedInUser = action.payload;
+    setUser: (state, action) => {
+      state.user = action.payload;
       setLocalStorage("user", action.payload);
     },
     logout: (state) => {
-      state.loggedInUser = null;
+      state.user = null;
       removeLocalStorage("user");
     },
   },
 });
 
-export const { setLoggedInUser, logout } = userSlice.actions;
+export const { setUser, logout } = userSlice.actions;
 
 export default userSlice.reducer;

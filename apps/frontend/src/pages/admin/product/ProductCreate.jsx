@@ -37,7 +37,7 @@ const ProductCreate = () => {
   const [loading, setLoading] = useState(false);
 
   // LOGGED IN USER
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

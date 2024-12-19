@@ -38,7 +38,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const SubCreate = () => {
   // LOGGED IN USER
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   // STATES
   const [name, setName] = useState("");

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // FUNCTIONS
 import { createOrUpdateUser } from "@/functions/auth";
-import { setLoggedInUser } from "@/reducers/userReducer";
+import { setUser } from "@/reducers/userReducer";
 
 // COMPONENTS
 import { NavLink } from "react-router-dom";
@@ -34,22 +34,22 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   // REDIRECT USER
-  const loggedInUser = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
     const intended = location.state;
     if (intended) {
       return;
     } else {
-      if (loggedInUser && loggedInUser.token) {
-        if (loggedInUser.role === "admin") {
+      if (user && user.token) {
+        if (user.role === "admin") {
           navigate("/admin/dashboard");
         } else {
           navigate("/user");
         }
       }
     }
-  }, [loggedInUser, navigate, location]);
+  }, [user, navigate, location]);
 
   // REDIRECT FUNCTION
   const roleBasedRedirect = (res) => {
@@ -77,7 +77,7 @@ const Login = () => {
       try {
         const res = await createOrUpdateUser(idTokenResult.token);
         dispatch(
-          setLoggedInUser({
+          setUser({
             name: res.data.name,
             email: res.data.email,
             token: idTokenResult.token,
@@ -114,7 +114,7 @@ const Login = () => {
       // create user in database
       const res = await createOrUpdateUser(idTokenResult.token);
       dispatch(
-        setLoggedInUser({
+        setUser({
           name: res.data.name,
           email: res.data.email,
           token: idTokenResult.token,

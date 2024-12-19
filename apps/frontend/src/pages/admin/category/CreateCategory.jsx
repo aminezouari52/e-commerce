@@ -25,7 +25,7 @@ function CreateCategory() {
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState(initialState);
 
-  const user = useSelector((state) => state.user.loggedInUser);
+  const user = useSelector((state) => state.user.user);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

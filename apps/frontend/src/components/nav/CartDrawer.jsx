@@ -37,7 +37,7 @@ import {
 
 const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
   const cart = useSelector((state) => state.cartReducer.cart);
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();

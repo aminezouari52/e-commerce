@@ -34,7 +34,7 @@ import { useNavigate } from "react-router-dom";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const CategoryCreate = () => {
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   const [categories, setCategories] = useState([]);
   const [categorieSlug, setCategorySlug] = useState("");

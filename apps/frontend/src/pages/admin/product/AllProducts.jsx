@@ -112,7 +112,7 @@ const AllProducts = () => {
       },
     },
   ];
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   // DELETE DIALOG
   const { isOpen, onOpen, onClose } = useDisclosure();

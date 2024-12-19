@@ -7,7 +7,7 @@ import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 // FUNCTIONS
-import { setLoggedInUser } from "./reducers/userReducer";
+import { setUser } from "./reducers/userReducer";
 import { setCart } from "./reducers/cartReducer";
 import { getCurrentUser } from "./functions/auth";
 import { getLocalStorage } from "./utils";
@@ -65,9 +65,7 @@ const App = () => {
           //   throw new Error("Email not verified. Please verify your email.");
           // }
 
-          dispatch(
-            setLoggedInUser({ ...storedUser, token: idTokenResult.token }),
-          );
+          dispatch(setUser({ ...storedUser, token: idTokenResult.token }));
         } catch (error) {
           console.log(error);
         }

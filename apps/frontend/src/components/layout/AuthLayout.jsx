@@ -30,7 +30,7 @@ import { FaInfoCircle } from "react-icons/fa";
 export const AuthLayout = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
     if (user && user.token) {

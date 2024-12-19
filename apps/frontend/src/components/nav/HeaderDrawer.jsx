@@ -29,7 +29,7 @@ import { AiOutlineHome, AiOutlineShopping } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 
 const HeaderDrawer = () => {
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
   const cart = useSelector((state) => state.cartReducer.cart);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();

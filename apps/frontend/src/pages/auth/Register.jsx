@@ -5,7 +5,7 @@ import { useToast } from "@chakra-ui/react";
 
 // REDUX
 import { useDispatch } from "react-redux";
-import { setLoggedInUser } from "@/reducers/userReducer";
+import { setUser } from "@/reducers/userReducer";
 
 // FIREBASE
 import { auth } from "@/firebase";
@@ -66,7 +66,7 @@ const Register = () => {
       // redux store
       const res = await createOrUpdateUser(idTokenResult.token);
       dispatch(
-        setLoggedInUser({
+        setUser({
           name: res.data.name,
           email: res.data.email,
           token: idTokenResult.token,

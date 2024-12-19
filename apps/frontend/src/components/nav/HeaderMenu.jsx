@@ -29,7 +29,7 @@ const HeaderMenu = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer.loggedInUser);
+  const user = useSelector((state) => state.userReducer.user);
 
   const logoutHandler = async () => {
     try {
