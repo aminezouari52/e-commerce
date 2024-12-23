@@ -13,6 +13,6 @@ const orderController = require("../../controllers/order.controller");
 //   orderController.orders,
 // );
 
-router.post("/", orderController.createOrder);
+router.route("/").post(orderController.createOrder);
 
 module.exports = router;

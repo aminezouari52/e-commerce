@@ -7,12 +7,18 @@ const { authCheck, adminCheck } = require("../../middlewares/auth");
 const categoryController = require("../../controllers/category.controller");
 
 // routes
-router.post("/", authCheck, adminCheck, categoryController.create);
-router.get("/categories", categoryController.list);
-router.get("/parentcategories", categoryController.listParents);
-router.get("/:slug", categoryController.read);
-router.put("/:slug", authCheck, adminCheck, categoryController.update);
-router.delete("/:slug", authCheck, adminCheck, categoryController.remove);
-router.get("/subs/:_id", categoryController.getSubs);
+router.route("/").post(authCheck, adminCheck, categoryController.create);
+
+router.route("/categories").get(categoryController.list);
+
+router.route("/parentcategories").get(categoryController.listParents);
+
+router
+  .route("/:slug")
+  .get(categoryController.read)
+  .put(authCheck, adminCheck, categoryController.update)
+  .delete(authCheck, adminCheck, categoryController.remove);
+
+router.route("/subs/:_id").get(categoryController.getSubs);
 
 module.exports = router;

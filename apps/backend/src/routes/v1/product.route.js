@@ -19,25 +19,29 @@ const productController = require("../../controllers/product.controller");
 //     },
 //   ]),
 
-router.post(
-  "/",
-  authCheck,
-  adminCheck,
-  uploader.single("images"),
-  productController.create,
-);
-router.get("/products/:count", productController.listAll);
-router.delete("/:slug", authCheck, adminCheck, productController.remove);
-router.get("/:slug", productController.read);
-router.put("/:slug", authCheck, adminCheck, productController.update);
+router
+  .route("/")
+  .post(
+    authCheck,
+    adminCheck,
+    uploader.single("images"),
+    productController.create,
+  );
 
-router.post("/products", productController.list);
+router.route("/products/:count").get(productController.listAll);
 
-// rating
-router.put("/star/:productId", authCheck, productController.productStar);
-// related
-router.get("/related/:productId", productController.listRelated);
-// search
-router.post("/search/filters", productController.searchFilters);
+router
+  .route("/:slug")
+  .get(productController.read)
+  .put(authCheck, adminCheck, productController.update)
+  .delete(authCheck, adminCheck, productController.remove);
+
+router.route("/products").post(productController.list);
+
+router.route("/star/:productId").put(authCheck, productController.productStar);
+
+router.route("/related/:productId").get(productController.listRelated);
+
+router.route("/search/filters").post(productController.searchFilters);
 
 module.exports = router;

@@ -30,14 +30,11 @@ const initialState = {
   brand: "",
 };
 const ProductCreate = () => {
+  const user = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const toast = useToast();
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // LOGGED IN USER
-  const user = useSelector((state) => state.userReducer.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,12 +114,7 @@ const ProductCreate = () => {
 
       <Card my={2}>
         <CardBody>
-          <FileUpload
-            values={values}
-            setValues={setValues}
-            setLoading={setLoading}
-            loading={loading}
-          />
+          <FileUpload values={values} setValues={setValues} />
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}

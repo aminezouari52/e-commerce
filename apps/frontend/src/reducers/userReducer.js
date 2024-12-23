@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { removeLocalStorage, setLocalStorage } from "@/utils";
+import { removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
 
 const initialState = {
   user: null,

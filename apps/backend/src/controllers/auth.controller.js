@@ -1,6 +1,8 @@
 const { User } = require("../models");
+const catchAsync = require("../utils/catchAsync");
+const httpStatus = require("http-status");
 
-const createOrUpdateUser = async (req, res) => {
+const createOrUpdateUser = catchAsync(async (req, res) => {
   const { picture, email } = req.user;
 
   const user = await User.findOneAndUpdate(
@@ -9,25 +11,21 @@ const createOrUpdateUser = async (req, res) => {
     { new: true },
   );
   if (user) {
-    res.json(user);
+    res.status(httpStatus.OK).send(user);
   } else {
     const newUser = await new User({
       email,
       name: email.split("@")[0],
       picture,
     }).save();
-    res.json(newUser);
+    res.status(httpStatus.OK).send(newUser);
   }
-};
+});
 
-const currentUser = async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.user.email }).exec();
-    res.json(user);
-  } catch (err) {
-    throw new Error(err);
-  }
-};
+const currentUser = catchAsync(async (req, res) => {
+  const user = await User.findOne({ email: req.user.email }).exec();
+  res.status(httpStatus.OK).send(user);
+});
 
 module.exports = {
   createOrUpdateUser,

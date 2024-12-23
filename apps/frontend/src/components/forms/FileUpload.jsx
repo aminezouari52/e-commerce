@@ -1,72 +1,91 @@
-// STYLE
-import { Flex, FormControl, FormLabel, Input, Spinner } from "@chakra-ui/react";
+import { useState } from "react";
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Spinner,
+  Box,
+  Avatar,
+} from "@chakra-ui/react";
+import { SmallCloseIcon } from "@chakra-ui/icons";
+import Resizer from "react-image-file-resizer";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-const FileUpload = ({ values, setValues, loading }) => {
+const FileUpload = ({ values, setValues }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useSelector((state) => state.userReducer.user);
+
   const fileUploadAndResize = (e) => {
-    let files = e.target.files[0]; // 3
-    // let allUploadedFiles = values.images;
+    let files = e.target.files; // 3
+    console.log(files);
+    let allUploadedFiles = values.images;
     setValues({ ...values, images: files });
     // resize
-    // if (files) {
-    //   setLoading(true);
-    //   for (let i = 0; i < files.length; i++) {
-    //     Resizer.imageFileResizer(
-    //       files[i],
-    //       720,
-    //       720,
-    //       "JPEG",
-    //       100,
-    //       0,
-    //       async (uri) => {
-    //         try {
-    //           const res = await axios.post(
-    //             `${import.meta.env.VITE_API_V1_URL}/cloudinary/uploadimages`,
-    //             { image: uri },
-    //             { headers: { authtoken: user ? user.token : "" } }
-    //           );
-    //           setLoading(false);
-    //           allUploadedFiles.push(res.data);
-    //           setValues({ ...values, images: allUploadedFiles });
-    //         } catch (err) {
-    //           console.log(err);
+    if (files) {
+      setIsLoading(true);
+      for (let i = 0; i < files.length; i++) {
+        Resizer.imageFileResizer(
+          files[i],
+          720,
+          720,
+          "JPEG",
+          100,
+          0,
+          async (uri) => {
+            try {
+              const res = await axios.post(
+                `${import.meta.env.VITE_API_V1_URL}/cloudinary/uploadimages`,
+                { image: uri },
+                { headers: { authtoken: user ? user.token : "" } },
+              );
+              setIsLoading(false);
+              allUploadedFiles.push(res.data);
+              console.log(allUploadedFiles);
 
-    //           setLoading(false);
-    //         }
-    //       },
-    //       "base64"
-    //     );
-    //   }
-    // }
+              setValues({ ...values, images: allUploadedFiles });
+            } catch (err) {
+              console.log(err);
+
+              setIsLoading(false);
+            }
+          },
+          "base64",
+        );
+      }
+    }
   };
 
-  // const handleImageRemove = async (public_id) => {
-  //   setLoading(true);
-  //   try {
-  //     await axios.post(
-  //       `${import.meta.env.VITE_API_V1_URL}/cloudinary/removeimage`,
-  //       { public_id },
-  //       {
-  //         headers: {
-  //           authtoken: user ? user.token : "",
-  //         },
-  //       },
-  //     );
+  const handleImageRemove = async (public_id) => {
+    setIsLoading(true);
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_V1_URL}/cloudinary/removeimage`,
+        { public_id },
+        {
+          headers: {
+            authtoken: user ? user.token : "",
+          },
+        },
+      );
 
-  //     setLoading(false);
-  //     const { images } = values;
-  //     let filteredImages = images.filter((item) => {
-  //       return item.public_id !== public_id;
-  //     });
-  //     setValues({ ...values, images: filteredImages });
-  //   } catch (err) {
-  //     setLoading(false);
-  //   }
-  // };
+      setIsLoading(false);
+      const { images } = values;
+      let filteredImages = images.filter((item) => {
+        return item.public_id !== public_id;
+      });
+      setValues({ ...values, images: filteredImages });
+    } catch (err) {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
       <Flex my={2}>
-        {/* {values.images &&
+        {values &&
+          Array.isArray(values?.images) &&
           values?.images?.map((image) => (
             <Box key={image.public_id} position="relative" mr={2}>
               <Avatar src={image.url} borderRadius="0px" size="xl" />
@@ -82,11 +101,11 @@ const FileUpload = ({ values, setValues, loading }) => {
                 onClick={() => handleImageRemove(image.public_id)}
               />
             </Box>
-          ))} */}
+          ))}
       </Flex>
 
       <FormControl>
-        {loading ? (
+        {isLoading ? (
           <Spinner color="primary.500" />
         ) : (
           <FormLabel

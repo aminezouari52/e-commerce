@@ -1,21 +1,18 @@
+const httpStatus = require("http-status");
 const { User } = require("../models");
+const catchAsync = require("../utils/catchAsync");
 
-const getRecommendations = async (req, res) => {
-  try {
-    // Retrieve user information from request
-    await User.findOne({ email: "ahmedmohsen@gmail.com" }).exec();
+const getRecommendations = catchAsync(async (req, res) => {
+  // Retrieve user information from request
+  await User.findOne({ email: "ahmedmohsen@gmail.com" }).exec();
 
-    // Pass user data to your recommendation model
-    // // const recommendations = recommendationModel(userData);
+  // Pass user data to your recommendation model
+  // // const recommendations = recommendationModel(userData);
 
-    res.json({
-      // recommendations
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(400).send("Failed to get recommendations");
-  }
-};
+  res.status(httpStatus.OK).send({
+    // recommendations
+  });
+});
 
 module.exports = {
   getRecommendations,

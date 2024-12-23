@@ -1,5 +1,8 @@
 const { Order } = require("../models");
 let errorMessage = "An error has accured";
+const catchAsync = require("../utils/catchAsync");
+const httpStatus = require("http-status");
+
 //orders, orderStatus
 
 // const orders = async (req, res) => {
@@ -43,17 +46,16 @@ const orders = async (req, res) => {
     });
   }
 };
-const orderStatus = async (req, res) => {
-  const { orderId, orderStatus } = req.body;
 
-  let updated = await Order.findByIdAndUpdate(
+const orderStatus = catchAsync(async (req, res) => {
+  const { orderId, orderStatus } = req.body;
+  const order = await Order.findByIdAndUpdate(
     orderId,
     { orderStatus },
     { new: true },
   ).exec();
-
-  res.json(updated);
-};
+  res.status(httpStatus.OK).send(order);
+});
 
 module.exports = {
   orders,

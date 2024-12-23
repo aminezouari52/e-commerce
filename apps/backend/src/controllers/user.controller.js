@@ -1,7 +1,20 @@
 const { User, Product, Cart, Order } = require("../models");
 const ApiError = require("../utils/ApiError");
+const httpStatus = require("http-status");
+const catchAsync = require("../utils/catchAsync");
 
-const updateUser = async (req, res) => {
+const getUser = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id).exec();
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  res.status(httpStatus.OK).send(user);
+});
+
+const updateUser = catchAsync(async (req, res) => {
   const id = req.params.id;
   const body = req.body;
   const user = await User.findByIdAndUpdate(id, body, {
@@ -12,10 +25,10 @@ const updateUser = async (req, res) => {
     throw new ApiError(404, "User not found");
   }
 
-  res.status(200).send(user);
-};
+  res.status(httpStatus.OK).send(user);
+});
 
-const setUserCart = async (req, res) => {
+const setUserCart = catchAsync(async (req, res) => {
   const { cart } = req.body;
   let products = [];
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -48,10 +61,10 @@ const setUserCart = async (req, res) => {
     user: user._id,
   }).save();
 
-  res.json({ ok: true });
-};
+  res.status(httpStatus.OK).send({ ok: true });
+});
 
-const getUserCart = async (req, res) => {
+const getUserCart = catchAsync(async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
 
   let cart = await Cart.findOne({ user: user._id })
@@ -63,12 +76,12 @@ const getUserCart = async (req, res) => {
     })
     .exec();
 
-  res.json({
+  res.status(httpStatus.OK).send({
     products: cart?.products || [],
     cartTotal: cart?.cartTotal || 0,
     totalAfterDiscount: cart?.totalAfterDiscount || 0,
   });
-};
+});
 
 const emptyCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -81,24 +94,24 @@ const emptyCart = async (req, res) => {
   res.json(cart);
 };
 
-const saveAddress = async (req, res) => {
+const saveAddress = catchAsync(async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
     { address: req.body.address },
   ).exec();
 
-  res.json({ ok: true });
-};
+  res.status(httpStatus.OK).send({ ok: true });
+});
 
-const savePhone = async (req, res) => {
+const savePhone = catchAsync(async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
     { phone: req.body.phone },
   ).exec();
-  res.json({ ok: true });
-};
+  res.status(httpStatus.OK).send({ ok: true });
+});
 
-const createOrder = async (req, res) => {
+const createOrder = catchAsync(async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
   const { amount } = req.body;
 
@@ -124,20 +137,20 @@ const createOrder = async (req, res) => {
   await Product.bulkWrite(bulkOption, {});
 
   console.log("NEW ORDER SAVED", newOrder);
-  res.json({ ok: true });
-};
+  res.status(httpStatus.OK).send({ ok: true });
+});
 
-const orders = async (req, res) => {
+const orders = catchAsync(async (req, res) => {
   let user = await User.findOne({ email: req.user.email }).exec();
 
   let userOrders = await Order.find({ user: user._id })
     .populate("products.product")
     .exec();
 
-  res.json(userOrders);
-};
+  res.status(httpStatus).send(userOrders);
+});
 
-const addToWishlist = async (req, res) => {
+const addToWishlist = catchAsync(async (req, res) => {
   const { productId } = req.body;
 
   await User.findOneAndUpdate(
@@ -145,29 +158,30 @@ const addToWishlist = async (req, res) => {
     { $addToSet: { wishlist: productId } },
   ).exec();
 
-  res.json({ ok: true });
-};
+  res.status(httpStatus).send({ ok: true });
+});
 
-const wishlist = async (req, res) => {
+const wishlist = catchAsync(async (req, res) => {
   const list = await User.findOne({ email: req.user.email })
     .select("wishlist")
     .populate("wishlist")
     .exec();
 
-  res.json(list);
-};
+  res.status(httpStatus.OK).send(list);
+});
 
-const removeFromWishlist = async (req, res) => {
+const removeFromWishlist = catchAsync(async (req, res) => {
   const { productId } = req.params;
   await User.findOneAndUpdate(
     { email: req.user.email },
     { $pull: { wishlist: productId } },
   ).exec();
 
-  res.json({ ok: true });
-};
+  res.status(httpStatus.OK).send({ ok: true });
+});
 
 module.exports = {
+  getUser,
   updateUser,
   setUserCart,
   getUserCart,

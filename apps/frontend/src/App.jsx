@@ -10,7 +10,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { setUser } from "./reducers/userReducer";
 import { setCart } from "./reducers/cartReducer";
 import { getCurrentUser } from "./functions/auth";
-import { getLocalStorage } from "./utils";
+import { getLocalStorage } from "./utils/localStorage";
 
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";

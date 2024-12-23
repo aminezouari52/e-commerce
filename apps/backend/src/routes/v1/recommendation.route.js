@@ -3,6 +3,8 @@ const router = express.Router();
 
 const recommendationController = require("../../controllers/recommendation.controller");
 
-router.get("/recommendations", recommendationController.getRecommendations);
+router
+  .route("/recommendations")
+  .get(recommendationController.getRecommendations);
 
 module.exports = router;

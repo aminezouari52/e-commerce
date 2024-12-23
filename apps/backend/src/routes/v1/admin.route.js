@@ -6,7 +6,10 @@ const { authCheck, adminCheck } = require("../../middlewares/auth");
 
 const adminController = require("../../controllers/admin.controller");
 
-router.get("/orders", authCheck, adminCheck, adminController.orders);
-router.put("/order-status", authCheck, adminCheck, adminController.orderStatus);
+router.route("/orders").get(authCheck, adminCheck, adminController.orders);
+
+router
+  .route("/order-status")
+  .put(authCheck, adminCheck, adminController.orderStatus);
 
 module.exports = router;

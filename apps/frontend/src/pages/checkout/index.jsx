@@ -2,16 +2,20 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 // FUNCTIONS
 import { getUserCart, emptyUserCart, updateUser } from "@/functions/user";
 import { createOrder } from "@/functions/order";
 import { createAddress } from "@/functions/address";
 import { emptyCart } from "@/reducers/cartReducer";
+import { schema } from "./schema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // COMPONENTS
 import OrderSummary from "./OrderSummary";
+import Header from "@/components/nav/Header";
+import Footer from "@/components/nav/Footer";
+import PlaceOrderModal from "./PlaceOrderModal";
 
 // STYLE
 import {
@@ -35,10 +39,6 @@ import {
 import RadioCard from "@/components/RadioCard";
 import { FaTruck } from "react-icons/fa";
 import { IoStorefrontSharp } from "react-icons/io5";
-import PlaceOrderModal from "./PlaceOrderModal";
-import { schema } from "./schema";
-import Header from "@/components/nav/Header";
-import Footer from "@/components/nav/Footer";
 
 const shippingTypeOptions = [
   { value: "ship", title: "Ship", icon: FaTruck },

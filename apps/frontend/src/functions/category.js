@@ -2,10 +2,12 @@ import axios from "axios";
 
 export const getCategories = async () =>
   await axios.get(`${import.meta.env.VITE_API_V1_URL}/category/categories`);
+
 export const getParentCategories = async () =>
   await axios.get(
     `${import.meta.env.VITE_API_V1_URL}/category/Parentcategories`,
   );
+
 export const getCategory = async (slug) =>
   await axios.get(`${import.meta.env.VITE_API_V1_URL}/category/${slug}`);
 

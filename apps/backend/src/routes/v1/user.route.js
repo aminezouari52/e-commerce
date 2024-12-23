@@ -6,20 +6,30 @@ const { authCheck } = require("../../middlewares/auth");
 
 const userController = require("../../controllers/user.controller");
 
-router.patch("/:id", authCheck, userController.updateUser);
-router.post("/cart", authCheck, userController.setUserCart);
-router.get("/cart", authCheck, userController.getUserCart);
-router.delete("/cart", authCheck, userController.emptyCart);
-router.post("/address", authCheck, userController.saveAddress);
-router.post("/phone", authCheck, userController.savePhone);
-router.post("/order", authCheck, userController.createOrder);
-router.get("/orders", authCheck, userController.orders);
-router.post("/wishlist", authCheck, userController.addToWishlist);
-router.get("/wishlist", authCheck, userController.wishlist);
-router.put(
-  "/wishlist/:productId",
-  authCheck,
-  userController.removeFromWishlist,
-);
+router
+  .route("/:id")
+  .get(userController.getUser)
+  .patch(authCheck, userController.updateUser);
+
+router
+  .route("/cart")
+  .get(authCheck, userController.getUserCart)
+  .post(authCheck, userController.setUserCart)
+  .delete(authCheck, userController.emptyCart);
+
+router.route("/address").post(authCheck, userController.saveAddress);
+
+router.route("/phone").post(authCheck, userController.savePhone);
+router.route("/order").post(authCheck, userController.createOrder);
+router.route("/orders").get(authCheck, userController.orders);
+
+router
+  .route("/wishlist")
+  .post(authCheck, userController.addToWishlist)
+  .get(authCheck, userController.wishlist);
+
+router
+  .route("/wishlist/:productId")
+  .put(authCheck, userController.removeFromWishlist);
 
 module.exports = router;

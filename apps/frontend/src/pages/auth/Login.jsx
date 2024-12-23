@@ -75,17 +75,14 @@ const Login = () => {
       const idTokenResult = await user.getIdTokenResult();
       // create user in database
       try {
-        const res = await createOrUpdateUser(idTokenResult.token);
+        const response = await createOrUpdateUser(idTokenResult.token);
         dispatch(
           setUser({
-            name: res.data.name,
-            email: res.data.email,
+            ...response.data,
             token: idTokenResult.token,
-            role: res.data.role,
-            _id: res.data._id,
           }),
         );
-        roleBasedRedirect(res);
+        roleBasedRedirect(response);
       } catch (err) {
         toast({
           title: "Failed to create or update user",
@@ -111,18 +108,16 @@ const Login = () => {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-      // create user in database
-      const res = await createOrUpdateUser(idTokenResult.token);
+      const response = await createOrUpdateUser(idTokenResult.token);
+
       dispatch(
         setUser({
-          name: res.data.name,
-          email: res.data.email,
+          ...response.data,
           token: idTokenResult.token,
-          role: res.data.role,
-          _id: res.data._id,
         }),
       );
-      roleBasedRedirect(res);
+
+      roleBasedRedirect(response);
     } catch (err) {
       toast({
         title: "Failed to create or update user",

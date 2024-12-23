@@ -1,33 +1,31 @@
 const { Product, User } = require("../models");
 const slugify = require("slugify");
+const catchAsync = require("../utils/catchAsync");
+const httpStatus = require("http-status");
 
-const create = async (req, res) => {
-  try {
-    const data = req.body;
-    data.subs = [];
+const create = catchAsync(async (req, res) => {
+  const data = req.body;
+  data.subs = [];
 
-    if (req?.body?.subs?.length !== 0) {
-      data.subs = req?.body?.subs;
-    }
-
-    data.slug = slugify(data.title);
-    const file = req?.file;
-    let path = `${file?.destination}/${file?.filename}`.slice(1);
-    let images = [];
-    images?.push(path);
-    if (data?.images?.length > 0) {
-      images.splice(1, 0, ...data.images);
-    } else {
-      data.images = images;
-    }
-    const newProduct = await new Product(data).save();
-    res.json(newProduct);
-  } catch (err) {
-    res.status(400).json({
-      err: err.message,
-    });
+  if (req?.body?.subs?.length !== 0) {
+    data.subs = req?.body?.subs;
   }
-};
+
+  data.slug = slugify(data.title);
+  const file = req?.file;
+  let path = `${file?.destination}/${file?.filename}`.slice(1);
+  let images = [];
+  images?.push(path);
+  if (data?.images?.length > 0) {
+    images.splice(1, 0, ...data.images);
+  } else {
+    data.images = images;
+  }
+  const newProduct = await new Product(data).save();
+
+  res.satus(httpStatus.OK).send(newProduct);
+});
+
 const listAll = async (req, res) => {
   let products = await Product.find({})
     .limit(parseInt(req.params.count))
@@ -38,64 +36,47 @@ const listAll = async (req, res) => {
   res.json(products);
 };
 
-const remove = async (req, res) => {
-  try {
-    const deleted = await Product.findOneAndRemove({
-      slug: req.params.slug,
-    }).exec();
-    res.json(deleted);
-  } catch (error) {
-    console.log(error);
-    return res.staus(400).send("Product delete failed");
-  }
-};
+const remove = catchAsync(async (req, res) => {
+  const deleted = await Product.findOneAndRemove({
+    slug: req.params.slug,
+  }).exec();
+  res.status(httpStatus.OK).send(deleted);
+});
 
-const read = async (req, res) => {
+const read = catchAsync(async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug })
     .populate("category")
     .populate("subs")
     .exec();
-  res.json(product);
-};
+  res.status(httpStatus.OK).send(product);
+});
 
-const update = async (req, res) => {
-  try {
-    if (req.body.title) {
-      req.body.slug = slugify(req.body.title);
-    }
-    const updated = await Product.findOneAndUpdate(
-      { slug: req.params.slug },
-      req.body,
-      { new: true },
-    ).exec();
-    res.json(updated);
-  } catch (err) {
-    console.log("PRODUCT UPDATE ERROR ----> ", err);
-    // return res.status(400).send("Product update failed");
-    res.status(400).json({
-      err: err.message,
-    });
+const update = catchAsync(async (req, res) => {
+  if (req.body.title) {
+    req.body.slug = slugify(req.body.title);
   }
-};
+  const updated = await Product.findOneAndUpdate(
+    { slug: req.params.slug },
+    req.body,
+    { new: true },
+  ).exec();
+  res.status(httpStatus.OK).json(updated);
+});
 
-const list = async (req, res) => {
-  try {
-    // createdAt/updatedAt, desc/asc, 3
-    const { sort, order, limit } = req.body;
-    const products = await Product.find({})
-      .populate("category")
-      .populate("subs")
-      .sort([[sort, order]])
-      .limit(limit)
-      .exec();
+const list = catchAsync(async (req, res) => {
+  // createdAt/updatedAt, desc/asc, 3
+  const { sort, order, limit } = req.body;
+  const products = await Product.find({})
+    .populate("category")
+    .populate("subs")
+    .sort([[sort, order]])
+    .limit(limit)
+    .exec();
 
-    res.json(products);
-  } catch (err) {
-    console.log(err);
-  }
-};
+  res.status(httpStatus.OK).send(products);
+});
 
-const productStar = async (req, res) => {
+const productStar = catchAsync(async (req, res) => {
   const product = await Product.findOne({ _id: req.params.productId });
   const user = await User.findOne({ email: req.user.email }).exec();
 
@@ -121,10 +102,12 @@ const productStar = async (req, res) => {
     await product.save();
   }
 
-  res.json({ messageCode: "PRR01", message: "Product Rating Updated" });
-};
+  res
+    .status(httpStatus.OK)
+    .send({ messageCode: "PRR01", message: "Product Rating Updated" });
+});
 
-const listRelated = async (req, res) => {
+const listRelated = catchAsync(async (req, res) => {
   const product = await Product.findById(req.params.productId).exec();
 
   const related = await Product.find({
@@ -136,10 +119,10 @@ const listRelated = async (req, res) => {
     .populate("subs")
     .exec();
 
-  res.json(related);
-};
+  res.status(httpStatus.OK).send(related);
+});
 
-const searchFilters = async (req, res) => {
+const searchFilters = catchAsync(async (req, res) => {
   const { query, price, category, sub, shipping, color, brand } = req.body;
 
   const filterOptions = {};
@@ -163,8 +146,8 @@ const searchFilters = async (req, res) => {
     // .populate("postedBy", "_id name")
     .exec();
 
-  res.json(products);
-};
+  res.status(httpStatus.OK).send(products);
+});
 
 module.exports = {
   create,
