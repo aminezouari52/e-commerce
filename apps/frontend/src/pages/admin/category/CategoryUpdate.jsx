@@ -1,17 +1,16 @@
-// REACT
+// HOOKS
 import { useState, useEffect } from "react";
-import { Button, Flex, useToast } from "@chakra-ui/react";
-
-// REDUX
+import useToast from "@/utils/toast";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import CategoryForm from "@/components/forms/CategoryForm";
 
 // FUNCTIONS
 import { getCategory, updateCategory } from "@/functions/category";
 
 // STYLE
-import { Box, Heading, Card, CardBody } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
-import CategoryForm from "@/components/forms/CategoryForm";
+import { Box, Button, Flex, Heading, Card, CardBody } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const CategoryUpdate = () => {
@@ -36,22 +35,11 @@ const CategoryUpdate = () => {
       const res = await updateCategory(params.slug, values, user.token);
       setLoading(false);
       setValues();
-
-      toast({
-        title: `"${res.data?.data?.name}" is updated`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`${res.data?.data?.name} is updated`, "success");
       navigate("/admin/category");
     } catch (err) {
       setLoading(false);
-      toast({
-        title: "Failed to update category",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to update category", "error");
     }
   };
 

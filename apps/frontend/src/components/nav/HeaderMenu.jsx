@@ -1,6 +1,7 @@
 // HOOKS
 import { useNavigate } from "react-router-dom";
-import { IconButton, useToast } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 
 // FIREBASE
 import { auth } from "@/firebase";
@@ -37,12 +38,7 @@ const HeaderMenu = () => {
       dispatch(logout(null));
       navigate("/auth/login");
     } catch (err) {
-      toast({
-        title: "Logout failed!",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Logout failed!", "error");
     }
   };
 

@@ -1,17 +1,15 @@
-import {
-  Tr,
-  Td,
-  Image,
-  useToast,
-  Input,
-  Button,
-  Icon,
-  Flex,
-} from "@chakra-ui/react";
+// HOOKS
+import { useDispatch } from "react-redux";
+import useToast from "@/utils/toast";
+
+import { setCart } from "@/reducers/cartReducer";
+
+// STYLE1
+import { Tr, Td, Image, Input, Button, Icon, Flex } from "@chakra-ui/react";
+
+// ASSETS
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import laptop from "@/assets/laptop.jpg";
-import { useDispatch } from "react-redux";
-import { setCart } from "@/reducers/cartReducer";
 import { AiFillCloseCircle, AiFillDelete } from "react-icons/ai";
 
 const ProductCardInCheckout = ({ p }) => {
@@ -22,12 +20,7 @@ const ProductCardInCheckout = ({ p }) => {
     let count = e.target.value < 1 ? 1 : e.target.value;
 
     if (count > p.quantity) {
-      toast({
-        title: `Max available quantity: ${p.quantity}`,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`Max available quantity: ${p.quantity}`, "error");
       return;
     }
 

@@ -1,6 +1,7 @@
 // REACT
 import { useState, useEffect, useRef } from "react";
-import { useToast, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 
 // REDUX
 import { useSelector } from "react-redux";
@@ -61,20 +62,10 @@ const CategoryCreate = () => {
   const handleRemove = async () => {
     try {
       const res = await removeCategory(categorieSlug, user.token);
-      toast({
-        title: `"${res.data.name}" deleted`,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`${res.data.name} deleted`, "error");
       loadCategories();
     } catch (err) {
-      toast({
-        title: "Failed to remove category",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to remove category", "error");
     }
     onClose();
   };

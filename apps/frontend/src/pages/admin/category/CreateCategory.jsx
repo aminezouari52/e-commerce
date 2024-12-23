@@ -1,8 +1,7 @@
-// REACT
+// HOOKS
 import { useState } from "react";
-
-// REDUX
 import { useSelector } from "react-redux";
+import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { createCategory } from "@/functions/category";
@@ -11,7 +10,7 @@ import { createCategory } from "@/functions/category";
 import { Box, Heading, Card, CardBody } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import CategoryForm from "@/components/forms/CategoryForm";
-import { Button, Flex, useToast } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const initialState = {
@@ -35,21 +34,14 @@ function CreateCategory() {
       const res = await createCategory(values, user.token);
       setLoading(false);
       setValues(initialState);
-      toast({
-        title: `"${res?.data?.resp?.name}" is created!`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`${res?.data?.resp?.name} is created!`, "success");
       navigate("/admin/category");
     } catch (err) {
       setLoading(false);
-      toast({
-        title: err?.response.data?.message ?? "Failed to create category",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(
+        err?.response.data?.message ?? "Failed to create category",
+        "error",
+      );
     }
   };
   return (

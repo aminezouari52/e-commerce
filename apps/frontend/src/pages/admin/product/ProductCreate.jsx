@@ -1,18 +1,22 @@
-// REACT
+// HOOKS
 import { useState, useEffect } from "react";
-import { Button, Flex, useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // FUNCTIONS
 import { createProduct } from "@/functions/product";
 import { getCategories, getCategorySubs } from "@/functions/category";
 
-// STYLE
-import { Box, Heading, Card, CardBody } from "@chakra-ui/react";
+// COMPONENTS
 import ProductCreateForm from "@/components/forms/ProductCreateForm";
 import FileUpload from "@/components/forms/FileUpload";
+
+// STYLE
+import { Button, Flex, Box, Heading, Card, CardBody } from "@chakra-ui/react";
+
+// ASSETS
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
   title: "",
@@ -40,19 +44,9 @@ const ProductCreate = () => {
     e.preventDefault();
     try {
       await createProduct(values, user.token);
-      toast({
-        title: "Product created!",
-        status: "success",
-        duration: 1000,
-        isClosable: true,
-      });
+      toast("Product created!", "success");
     } catch (err) {
-      toast({
-        title: "Failed to create product",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to create product", "error");
     }
   };
 

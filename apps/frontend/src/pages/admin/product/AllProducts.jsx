@@ -1,8 +1,24 @@
-// REACT
+// HOOKS
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useToast from "@/utils/toast";
+import { useDisclosure } from "@chakra-ui/react";
+
+// COMPONENTS
+import DataTableDisplay from "@/components/dataDisplay/DataTable";
+
+// FUNCTIONS
+import { getProductsByCount, removeProduct } from "@/functions/product";
+
+// STYLE
 import {
-  useToast,
-  useDisclosure,
+  Flex,
+  Box,
+  Heading,
+  Center,
+  Spinner,
+  Text,
   Image,
   Button,
   Icon,
@@ -13,18 +29,9 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from "@chakra-ui/react";
+
+// ASSETS
 import laptop from "@/assets/laptop.jpg";
-import { useNavigate } from "react-router-dom";
-
-// REDUX
-import { useSelector } from "react-redux";
-
-// FUNCTIONS
-import { getProductsByCount, removeProduct } from "@/functions/product";
-
-// STYLE
-import { Flex, Box, Heading, Center, Spinner, Text } from "@chakra-ui/react";
-import DataTableDisplay from "@/components/dataDisplay/DataTable";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const AllProducts = () => {
@@ -140,23 +147,13 @@ const AllProducts = () => {
       try {
         await removeProduct(selectedId, user.token);
         setLoading(false);
-        toast({
-          title: "Product deleted",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast("Product deleted", "error");
         loadAllProducts();
         setSelectedId();
       } catch (err) {
         setLoading(false);
         setSelectedId();
-        toast({
-          title: "Failed to delete product",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast("Failed to delete product", "error");
       }
       onClose();
     }

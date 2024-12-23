@@ -1,6 +1,6 @@
-// REACT
+// HOOKS
 import { useState, useEffect, useCallback } from "react";
-import { useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -54,24 +54,13 @@ const ProductUpdate = () => {
     try {
       const res = await updateProduct(slug, values, user.token);
       setLoading(false);
-
-      toast({
-        title: `"${res.data.title}" is updated`,
-        status: "success",
-        duration: 1000,
-        isClosable: true,
-      });
+      toast(`${res.data.title} is updated`, "success");
       setTimeout(() => {
         navigate("/admin/products");
       }, 1000);
     } catch (err) {
       setLoading(false);
-      toast({
-        title: "Failed to update product",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to update product", "error");
     }
   };
 

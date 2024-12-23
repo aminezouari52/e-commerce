@@ -1,6 +1,6 @@
 // REACT
 import { useState } from "react";
-import { useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 
 // FIREBASE
 import { auth } from "@/firebase";
@@ -25,21 +25,11 @@ const ForgotPassword = () => {
       await sendPasswordResetEmail(auth, email);
       setEmail("");
       setLoading(false);
-      toast({
-        title: "Check your email for password reset link",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Check your email for password reset link", "success");
       navigate("/");
     } catch (err) {
       setLoading(false);
-      toast({
-        title: "Failed to send password reset email",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to send password reset email", "error");
     }
   };
 

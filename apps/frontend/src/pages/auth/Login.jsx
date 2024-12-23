@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 // HOOKS
 import { useState, useEffect } from "react";
-import { useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -84,20 +84,10 @@ const Login = () => {
         );
         roleBasedRedirect(response);
       } catch (err) {
-        toast({
-          title: "Failed to create or update user",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        toast("Failed to create or update user", "error");
       }
     } catch (err) {
-      toast({
-        title: "Failed to login user",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to login user", "error");
       setLoading(false);
     }
   };
@@ -119,12 +109,7 @@ const Login = () => {
 
       roleBasedRedirect(response);
     } catch (err) {
-      toast({
-        title: "Failed to create or update user",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to create or update user", "error");
     }
   };
 

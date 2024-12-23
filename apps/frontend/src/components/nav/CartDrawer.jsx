@@ -1,7 +1,7 @@
 // HOOKS
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import {
@@ -68,12 +68,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
     if (/\D/.test(`${count}`)) return;
 
     if (count > product?.quantity) {
-      toast({
-        title: `Max available quantity: ${product?.quantity}`,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`Max available quantity: ${product?.quantity}`, "error");
       return;
     }
 
@@ -82,12 +77,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
 
   const incrementProductCountHandler = (product) => {
     if (product?.count + 1 > product?.quantity) {
-      toast({
-        title: `Max available quantity: ${product.quantity}`,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`Max available quantity: ${product.quantity}`, "error");
       return;
     }
     dispatch(
@@ -99,12 +89,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
 
   const decrementProductCountHandler = (product) => {
     if (product?.count - 1 < 1) {
-      toast({
-        title: `Min available quantity: 0`,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Min available quantity: 0", "error");
       return;
     }
     dispatch(

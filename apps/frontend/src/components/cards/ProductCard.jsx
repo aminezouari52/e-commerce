@@ -1,6 +1,7 @@
 // HOOKS
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { addProduct } from "@/reducers/cartReducer";
@@ -8,15 +9,7 @@ import ShowRating from "@/components/ShowRating";
 import _ from "lodash";
 
 // STYLE
-import {
-  Flex,
-  Image,
-  Heading,
-  Text,
-  Button,
-  useToast,
-  Icon,
-} from "@chakra-ui/react";
+import { Flex, Image, Heading, Text, Button, Icon } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 // ASSETS
@@ -31,12 +24,7 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = () => {
     dispatch(addProduct(product));
-    toast({
-      title: "Product added.",
-      status: "info",
-      duration: 2000,
-      isClosable: true,
-    });
+    toast("Product added.", "info");
   };
 
   return (

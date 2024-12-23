@@ -1,9 +1,7 @@
-// REACT
+// HOOKS
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
-
-// REDUX
+import useToast from "@/utils/toast";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
@@ -45,26 +43,15 @@ const SubUpdate = () => {
       const res = await updateSub(params.slug, { name, parent }, user.token);
       setLoading(false);
       setName("");
-      toast({
-        title: `"${res.data.name}" is updated`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`${res.data.name} is updated`, "success");
       navigate("/admin/sub");
     } catch (err) {
       setLoading(false);
-      toast({
-        title: "Failed to update sub category",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to update sub category", "error");
     }
   };
 
   useEffect(() => {
-    // LOAD STATES
     const loadCategories = () => {
       getCategories().then((c) => setCategories(c.data));
     };

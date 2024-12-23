@@ -5,6 +5,7 @@ import StarRating from "react-star-ratings";
 
 // HOOKS
 import { useDispatch, useSelector } from "react-redux";
+import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { addToWishlist } from "@/functions/user";
@@ -24,7 +25,6 @@ import {
   ButtonGroup,
   Button,
   Icon,
-  useToast,
   Text,
   IconButton,
 } from "@chakra-ui/react";
@@ -43,38 +43,19 @@ const SingleProduct = ({ product, star, onStarClick }) => {
 
   const handleAddToCart = () => {
     dispatch(addProduct(product));
-    toast({
-      title: "Product added to cart.",
-      status: "info",
-      duration: 2000,
-      isClosable: true,
-    });
+    toast("Product added to cart.", "info");
   };
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     if (!user?.token) {
-      toast({
-        title: "login to proceed",
-        description:
-          "You need to login in order to add the product to wishlist",
-        status: "info",
-        colorScheme: "blue",
-        duration: 2000,
-        isClosable: true,
-      });
+      toast("login to proceed", "info");
       return;
     }
     console.log("hi");
 
     addToWishlist(product?._id, user.token).then(() => {
-      toast({
-        title: "Product added to wishlist.",
-        status: "info",
-        colorScheme: "green",
-        duration: 2000,
-        isClosable: true,
-      });
+      toast("Product added to wishlist.", "success");
     });
   };
 

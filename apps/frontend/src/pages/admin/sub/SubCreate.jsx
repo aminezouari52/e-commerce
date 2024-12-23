@@ -1,9 +1,9 @@
-// REACT
+// HOOKS
 import { useState, useEffect, useRef } from "react";
-import { useToast, useDisclosure } from "@chakra-ui/react";
-
-// REDUX
+import useToast from "@/utils/toast";
+import { useDisclosure } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // FUNCTIONS
 import { getCategories } from "@/functions/category";
@@ -31,16 +31,12 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
-// ICONS
+// ASSETS
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const SubCreate = () => {
-  // LOGGED IN USER
   const user = useSelector((state) => state.userReducer.user);
-
-  // STATES
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
@@ -72,21 +68,11 @@ const SubCreate = () => {
       const res = await createSub({ name, parent: category }, user.token);
       setLoading(false);
       setName("");
-      toast({
-        title: `"${res.data.name}" is created!`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(`${res.data.name} is created!`, "success");
       loadSubs();
     } catch (err) {
       setLoading(false);
-      toast({
-        title: "Failed to create sub category",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to create sub category", "error");
     }
   };
   const handleRemove = async () => {

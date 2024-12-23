@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
+import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { getUserCart, emptyUserCart, updateUser } from "@/functions/user";
@@ -32,7 +33,6 @@ import {
   FormLabel,
   InputLeftAddon,
   FormHelperText,
-  useToast,
 } from "@chakra-ui/react";
 
 // ASSETS
@@ -94,13 +94,7 @@ const Checkout = () => {
     const { name, phone, email, shippingType, paymentType, address } =
       orderData;
     if (!products.length) {
-      toast({
-        title: "No products",
-        status: "warning",
-        colorScheme: "red",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("No products", "warning");
       return;
     }
 

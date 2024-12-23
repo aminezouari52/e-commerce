@@ -1,8 +1,8 @@
-// REACT
+// HOOKS
 import { useState } from "react";
-import { useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 
-// FIREBASE
+// FUNCTIONS
 import { auth } from "@/firebase";
 import { updatePassword } from "firebase/auth";
 
@@ -31,20 +31,10 @@ const Password = () => {
       await updatePassword(auth.currentUser, password);
       setLoading(false);
       setPassword("");
-      toast({
-        title: "Password updated!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Password updated!", "success");
     } catch (err) {
       setLoading(false);
-      toast({
-        title: "Failed to update password",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to update password", "error");
     }
   };
 

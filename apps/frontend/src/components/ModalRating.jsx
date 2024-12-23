@@ -1,7 +1,11 @@
+// HOOKS
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
+import useToast from "@/utils/toast";
+
+// STYLE
 import StarRating from "react-star-ratings";
 import {
   Button,
@@ -12,7 +16,6 @@ import {
   AlertDialogCloseButton,
   AlertDialogBody,
   AlertDialogFooter,
-  useToast,
   Flex,
   Text,
   Tooltip,
@@ -34,13 +37,7 @@ const ModalRating = ({ product, children }) => {
 
   const okHandler = () => {
     onClose();
-    toast({
-      title: "Thanks for your review. It will apper soon",
-      status: "success",
-      colorScheme: "green",
-      duration: 3000,
-      isClosable: true,
-    });
+    toast("Thanks for your review. It will apper soon", "success");
   };
 
   let result = 0;

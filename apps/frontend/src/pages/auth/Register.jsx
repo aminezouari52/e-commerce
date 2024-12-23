@@ -1,7 +1,7 @@
 // REACT
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+import useToast from "@/utils/toast";
 
 // REDUX
 import { useDispatch } from "react-redux";
@@ -33,21 +33,11 @@ const Register = () => {
 
     // validation
     if (!email || !password) {
-      toast({
-        title: "Email and password is required",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Email and password is required", "error");
       return;
     }
     if (password.length < 6) {
-      toast({
-        title: "Password must be at least 6 characters long",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Password must be at least 6 characters long", "error");
       return;
     }
 
@@ -77,19 +67,9 @@ const Register = () => {
 
       // redirect
       navigate("/");
-      toast({
-        title: "Account created successfully!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Account created successfully!", "success");
     } catch (err) {
-      toast({
-        title: "Failed to create or update user",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Failed to create or update user", "error");
     }
   };
 

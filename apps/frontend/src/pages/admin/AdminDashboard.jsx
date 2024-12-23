@@ -1,8 +1,9 @@
-import { Box, Heading, useToast, Text } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { getOrders, changeStatus } from "@/functions/admin";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import useToast from "@/utils/toast";
+import { getOrders, changeStatus } from "@/functions/admin";
 import Orders from "@/components/Orders";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 const AdminDashboard = () => {
   const toast = useToast();
@@ -21,12 +22,7 @@ const AdminDashboard = () => {
 
   const handleStatusChange = (orderId, orderStatus) => {
     changeStatus(orderId, orderStatus, user.token).then(() => {
-      toast({
-        title: "Status updated.",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
+      toast("Status updated", "success");
       loadOrders();
     });
   };
