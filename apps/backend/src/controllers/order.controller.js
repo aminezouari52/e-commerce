@@ -1,6 +1,8 @@
 const { Product, User, Order } = require("../models");
 const uniqueRef = require("../utils/uniqueRef");
 const isValidObjectId = require("../validation/is-valid-object");
+const ApiError = require("../utils/ApiError");
+const httpStatus = require("http-status");
 
 const createOrder = async (req, res) => {
   const { amount, userId, products, email, name, phone } = req.body;
@@ -16,7 +18,7 @@ const createOrder = async (req, res) => {
   if (userId && isValidObjectId(userId)) {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     }
     newOrder["user"] = userId;
   }

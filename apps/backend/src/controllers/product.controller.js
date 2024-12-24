@@ -2,6 +2,7 @@ const { Product, User } = require("../models");
 const slugify = require("slugify");
 const catchAsync = require("../utils/catchAsync");
 const httpStatus = require("http-status");
+const ApiError = require("../utils/ApiError");
 
 const create = catchAsync(async (req, res) => {
   const data = req.body;
@@ -83,8 +84,9 @@ const productStar = catchAsync(async (req, res) => {
   const { star } = req.body;
 
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
+
   if (!product) {
     return res.status(404).json({ error: "Product not found" });
   }

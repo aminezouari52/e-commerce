@@ -133,7 +133,7 @@ const Account = () => {
         w="50%"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <FormControl isRequired display="flex" gap={4}>
+        <FormControl display="flex" gap={4}>
           <FormLabel w="80px" color="gray.600" fontWeight="semibold" m={0}>
             Name
           </FormLabel>
@@ -164,7 +164,7 @@ const Account = () => {
             </FormHelperText>
           </Box>
         </FormControl>
-        <FormControl isRequired display="flex" gap={4}>
+        <FormControl display="flex" gap={4}>
           <FormLabel
             w="80px"
             color="gray.600"
@@ -202,7 +202,7 @@ const Account = () => {
             </FormHelperText>
           </Box>
         </FormControl>
-        <FormControl isRequired display="flex" gap={4}>
+        <FormControl display="flex" gap={4}>
           <FormLabel w="80px" color="gray.600" fontWeight="semibold" m={0}>
             Phone
           </FormLabel>

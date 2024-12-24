@@ -8,7 +8,7 @@ const getUser = catchAsync(async (req, res) => {
   const user = await User.findById(id).exec();
 
   if (!user) {
-    throw new ApiError(404, "User not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
 
   res.status(httpStatus.OK).send(user);
@@ -22,7 +22,7 @@ const updateUser = catchAsync(async (req, res) => {
   }).exec();
 
   if (!user) {
-    throw new ApiError(404, "User not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
 
   res.status(httpStatus.OK).send(user);
@@ -87,7 +87,7 @@ const emptyCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
 
   if (!user) {
-    throw new Error("User not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
 
   const cart = await Cart.findOneAndRemove({ user: user._id }).exec();
@@ -161,13 +161,17 @@ const addToWishlist = catchAsync(async (req, res) => {
   res.status(httpStatus).send({ ok: true });
 });
 
-const wishlist = catchAsync(async (req, res) => {
-  const list = await User.findOne({ email: req.user.email })
+const getUserWishlist = catchAsync(async (req, res) => {
+  const user = await User.findOne({ email: req.user.email })
     .select("wishlist")
     .populate("wishlist")
     .exec();
 
-  res.status(httpStatus.OK).send(list);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  res.status(httpStatus.OK).send(user);
 });
 
 const removeFromWishlist = catchAsync(async (req, res) => {
@@ -191,6 +195,6 @@ module.exports = {
   createOrder,
   orders,
   addToWishlist,
-  wishlist,
+  getUserWishlist,
   removeFromWishlist,
 };

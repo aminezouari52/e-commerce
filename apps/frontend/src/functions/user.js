@@ -68,7 +68,7 @@ export const getUserOrders = async (authtoken) =>
     },
   });
 
-export const getWishlist = async (authtoken) =>
+export const getUserWishlist = async (authtoken) =>
   await axios.get(`${import.meta.env.VITE_API_V1_URL}/user/wishlist`, {
     headers: {
       authtoken,

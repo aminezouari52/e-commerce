@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // FUNCTIONS
-import { getWishlist, removeWishlist } from "@/functions/user";
+import { getUserWishlist, removeWishlist } from "@/functions/user";
 
 // ICONS
 import { AiFillDelete } from "react-icons/ai";
@@ -24,33 +24,34 @@ import {
 const Wishlist = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.userReducer.user);
-
   const [wishlist, setWishlist] = useState([]);
 
-  useEffect(() => {
-    loadWishlist();
-  }, []);
+  const loadWishlist = async () => {
+    const response = await getUserWishlist(user?.token);
+    setWishlist(response.data.wishlist);
+  };
 
-  const loadWishlist = () => {
+  const handleRemove = async (productId) => {
     if (user) {
-      return getWishlist(user.token).then((res) => {
-        setWishlist(res.data.wishlist);
-      });
+      await removeWishlist(productId, user.token);
+      loadWishlist();
     }
   };
 
-  const handleRemove = (productId) =>
-    removeWishlist(productId, user.token).then(() => {
+  useEffect(() => {
+    if (user) {
       loadWishlist();
-    });
+    }
+  }, [user]);
+
   return (
     <Box overflowY="hidden">
       <Heading size="lg" color="primary.500" my={5}>
         Wishlist
       </Heading>
-      {wishlist?.length ? (
+      {wishlist?.length > 0 ? (
         <>
-          {wishlist.map((p, i) => (
+          {wishlist?.map((p, i) => (
             <Card mb={2} key={i}>
               <CardBody>
                 <Flex justifyContent="space-between">
