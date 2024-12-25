@@ -25,7 +25,6 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Account from "./pages/user/Account";
-import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
 import Orders from "./pages/user/Orders";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -99,7 +98,6 @@ const App = () => {
         <Route path="/user/*" element={<UserLayout />}>
           <Route path="account" element={<Account />} />
           <Route path="wishlist" element={<Wishlist />} />
-          <Route path="password" element={<Password />} />
           <Route path="orders" element={<Orders />} />
           <Route path="*" element={<Navigate to="/user/account" />} />
         </Route>

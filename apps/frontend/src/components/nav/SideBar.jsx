@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Box, Button, Icon, Stack } from "@chakra-ui/react";
 
 // ICONS
-import { AiFillLock, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
 import { FaCubes, FaRegUser } from "react-icons/fa";
 import { BiCube } from "react-icons/bi";
 import { BsMouse2 } from "react-icons/bs";
@@ -29,11 +29,6 @@ const SideBar = () => {
       title: "Wishlist",
       icon: <Icon as={AiOutlineHeart} mr={2} />,
       link: "/user/wishlist",
-    },
-    {
-      title: "Password",
-      icon: <Icon as={AiFillLock} mr={2} />,
-      link: "/user/password",
     },
     {
       title: "orders",

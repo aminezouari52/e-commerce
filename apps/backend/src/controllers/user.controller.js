@@ -147,7 +147,7 @@ const orders = catchAsync(async (req, res) => {
     .populate("products.product")
     .exec();
 
-  res.status(httpStatus).send(userOrders);
+  res.status(httpStatus.OK).send(userOrders);
 });
 
 const addToWishlist = catchAsync(async (req, res) => {
@@ -158,7 +158,7 @@ const addToWishlist = catchAsync(async (req, res) => {
     { $addToSet: { wishlist: productId } },
   ).exec();
 
-  res.status(httpStatus).send({ ok: true });
+  res.status(httpStatus.OK).send({ ok: true });
 });
 
 const getUserWishlist = catchAsync(async (req, res) => {

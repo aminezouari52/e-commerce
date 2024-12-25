@@ -9,14 +9,23 @@ import ShowRating from "@/components/ShowRating";
 import _ from "lodash";
 
 // STYLE
-import { Flex, Image, Heading, Text, Button, Icon } from "@chakra-ui/react";
+import {
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Button,
+  Icon,
+  CloseButton,
+  Tooltip,
+} from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 // ASSETS
 import laptop from "@/assets/laptop.jpg";
 import { IoCart } from "react-icons/io5";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onCloseHandler }) => {
   const navigate = useNavigate();
   const { images, title, slug, price } = product;
   const dispatch = useDispatch();
@@ -29,6 +38,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Flex
+      position="relative"
       bg="white"
       w={{ sm: "cardWidth.sm", md: "cardWidth.md", lg: "cardWidth.lg" }}
       minWidth={{ sm: "cardWidth.sm", md: "cardWidth.md", lg: "cardWidth.lg" }}
@@ -65,16 +75,9 @@ const ProductCard = ({ product }) => {
           w="100%"
           zIndex="0"
         >
-          {/* {product && product?.ratings && product?.ratings?.length > 0 ? ( */}
           <ShowRating product={product} />
-          {/* ) : ( */}
-          {/* <Text textAlign="center" fontWeight="bold"> */}
-          {/* No rating yet */}
-          {/* </Text> */}
-          {/* )} */}
         </Flex>
       </Flex>
-
       <Flex
         flexDirection="column"
         justifyContent="center"
@@ -99,6 +102,25 @@ const ProductCard = ({ product }) => {
       >
         {product?.quantity < 1 ? "Out of stock" : "Add to cart"}
       </Button>
+      {onCloseHandler && (
+        <Tooltip label={"remove from wishlist"} placement="top" hasArrow>
+          <CloseButton
+            size="sm"
+            zIndex="4"
+            position="absolute"
+            top="-12px"
+            right="-12px"
+            color="red"
+            variant="solid"
+            bg="#fff"
+            borderRadius="50%"
+            _hover={{
+              opacity: 0.8,
+            }}
+            onClick={onCloseHandler}
+          />
+        </Tooltip>
+      )}
     </Flex>
   );
 };

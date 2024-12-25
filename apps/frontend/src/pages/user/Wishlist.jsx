@@ -1,28 +1,17 @@
 // HOOKS
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
+// COMPONENTS
+import ProductCard from "@/components/cards/ProductCard";
 
 // FUNCTIONS
 import { getUserWishlist, removeWishlist } from "@/functions/user";
 
-// ICONS
-import { AiFillDelete } from "react-icons/ai";
-
 // STYLE
-import {
-  Text,
-  Box,
-  Heading,
-  Flex,
-  Button,
-  Card,
-  CardBody,
-  Icon,
-} from "@chakra-ui/react";
+import { Text, Box, Heading, SimpleGrid } from "@chakra-ui/react";
 
 const Wishlist = () => {
-  const navigate = useNavigate();
   const user = useSelector((state) => state.userReducer.user);
   const [wishlist, setWishlist] = useState([]);
 
@@ -51,29 +40,22 @@ const Wishlist = () => {
       </Heading>
       {wishlist?.length > 0 ? (
         <>
-          {wishlist?.map((p, i) => (
-            <Card mb={2} key={i}>
-              <CardBody>
-                <Flex justifyContent="space-between">
-                  <Button
-                    variant="link"
-                    colorScheme="teal"
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                  >
-                    {p.title}
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="solid"
-                    colorScheme="red"
-                    onClick={() => handleRemove(p._id)}
-                  >
-                    <Icon as={AiFillDelete} h="15px" w="15px" />
-                  </Button>
-                </Flex>
-              </CardBody>
-            </Card>
-          ))}
+          <SimpleGrid
+            minChildWidth={{
+              sm: "cardWidth.sm",
+              md: "cardWidth.md",
+              lg: "cardWidth.lg",
+            }}
+            spacing={10}
+          >
+            {wishlist?.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                onCloseHandler={() => handleRemove(product._id)}
+              />
+            ))}
+          </SimpleGrid>
         </>
       ) : (
         <Text>Wish list is empty.</Text>
