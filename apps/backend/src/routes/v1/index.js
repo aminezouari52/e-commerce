@@ -9,6 +9,7 @@ const productRoute = require("./product.route");
 const recommendationRoute = require("./recommendation.route");
 const subRoute = require("./sub.route");
 const userRoute = require("./user.route");
+const cartRoute = require("./cart.route");
 
 const router = express.Router();
 
@@ -48,6 +49,10 @@ const defaultRoutes = [
   {
     path: "/sub",
     route: subRoute,
+  },
+  {
+    path: "/cart",
+    route: cartRoute,
   },
   {
     path: "/user",

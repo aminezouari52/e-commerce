@@ -19,39 +19,25 @@ const cartSlice = createSlice({
     },
 
     addProduct: (state, action) => {
-      const { _id } = action.payload;
-      const product = state.cart.find((c) => c._id === _id);
-      if (product) product.count += 1;
-      else state.cart.push({ ...action.payload, count: 1 });
+      const { product, count } = action.payload;
+      const cartProduct = state.cart.find((p) => p._id === product._id);
+      if (cartProduct) cartProduct.count += count;
+      else state.cart.push({ ...product, count: 1 });
       setLocalStorage("cart", state.cart);
     },
 
-    removeProduct: (state, action) => {
-      const { _id } = action.payload;
-      const newCart = state.cart.filter((cart) => cart._id !== _id);
-      state.cart = newCart;
-      setLocalStorage("cart", newCart);
-    },
-
     updateProductCount: (state, action) => {
-      const { _id, count } = action.payload;
-      const product = state.cart.find((c) => c._id === _id);
+      const { productId, count } = action.payload;
+      const product = state.cart.find((c) => c._id === productId);
       if (product) product.count = count;
       setLocalStorage("cart", state.cart);
     },
 
-    incrementProductCount: (state, action) => {
-      const { _id } = action.payload;
-      const product = state.cart.find((c) => c._id === _id);
-      if (product) product.count++;
-      setLocalStorage("cart", state.cart);
-    },
-
-    decrementProductCount: (state, action) => {
-      const { _id } = action.payload;
-      const product = state.cart.find((c) => c._id === _id);
-      if (product) product.count--;
-      setLocalStorage("cart", state.cart);
+    deleteProduct: (state, action) => {
+      const { productId } = action.payload;
+      const newCart = state.cart.filter((product) => product._id !== productId);
+      state.cart = newCart;
+      setLocalStorage("cart", newCart);
     },
 
     emptyCart: (state) => {
@@ -68,6 +54,6 @@ export const {
   updateProductCount,
   incrementProductCount,
   decrementProductCount,
-  removeProduct,
+  deleteProduct,
 } = cartSlice.actions;
 export default cartSlice.reducer;

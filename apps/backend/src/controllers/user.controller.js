@@ -36,28 +36,17 @@ const setUserCart = catchAsync(async (req, res) => {
   // Check if a cart with the logged-in user ID already exists and remove it if found
   await Cart.findOneAndDelete({ user: user._id }).exec();
 
-  for (let i = 0; i < cart.length; i++) {
+  for (let i = 0; i < cart.products.length; i++) {
     let object = {};
 
-    object.product = cart[i]._id;
-    object.count = cart[i].count;
-    object.color = cart[i].color;
+    object.product = cart.products[i].product._id;
+    object.count = cart.products[i].count;
 
-    let { price } = await Product.findById(cart[i]._id).select("price").exec();
-
-    object.price = price;
     products.push(object);
-  }
-
-  let cartTotal = 0;
-
-  for (let i = 0; i < products.length; i++) {
-    cartTotal = cartTotal + products[i].price * products[i].count;
   }
 
   await new Cart({
     products,
-    cartTotal,
     user: user._id,
   }).save();
 
@@ -76,11 +65,7 @@ const getUserCart = catchAsync(async (req, res) => {
     })
     .exec();
 
-  res.status(httpStatus.OK).send({
-    products: cart?.products || [],
-    cartTotal: cart?.cartTotal || 0,
-    totalAfterDiscount: cart?.totalAfterDiscount || 0,
-  });
+  res.status(httpStatus.OK).send(cart);
 });
 
 const emptyCart = async (req, res) => {

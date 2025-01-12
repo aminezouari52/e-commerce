@@ -6,12 +6,6 @@ const { authCheck } = require("../../middlewares/auth");
 
 const userController = require("../../controllers/user.controller");
 
-router
-  .route("/cart")
-  .get(authCheck, userController.getUserCart)
-  .post(authCheck, userController.setUserCart)
-  .delete(authCheck, userController.emptyCart);
-
 router.route("/address").post(authCheck, userController.saveAddress);
 
 router.route("/phone").post(authCheck, userController.savePhone);

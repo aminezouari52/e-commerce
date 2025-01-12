@@ -7,15 +7,16 @@ const cartSchema = new mongoose.Schema(
       {
         product: {
           type: ObjectId,
+          required: true,
           ref: "Product",
         },
-        count: Number,
-        color: String,
-        price: Number,
+        count: {
+          type: Number,
+          required: true,
+          default: 1,
+        },
       },
     ],
-    cartTotal: Number,
-    totalAfterDiscount: Number,
     user: { type: ObjectId, ref: "User" },
   },
   { timestamps: true },

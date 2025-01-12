@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const updateUser = async (user, body) => {
-  return await axios.patch(
+export const updateUser = async (user, body) =>
+  await axios.patch(
     `${import.meta.env.VITE_API_V1_URL}/user/${user.id}`,
     body,
     {
@@ -10,34 +10,6 @@ export const updateUser = async (user, body) => {
       },
     },
   );
-};
-
-export const setUserCart = async (cart, authtoken) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_API_V1_URL}/user/cart`,
-    { cart },
-    {
-      headers: {
-        authtoken,
-      },
-    },
-  );
-  return res;
-};
-
-export const getUserCart = async (authtoken) =>
-  await axios.get(`${import.meta.env.VITE_API_V1_URL}/user/cart`, {
-    headers: {
-      authtoken,
-    },
-  });
-
-export const emptyUserCart = async (authtoken) =>
-  await axios.delete(`${import.meta.env.VITE_API_V1_URL}/user/cart`, {
-    headers: {
-      authtoken,
-    },
-  });
 
 export const saveUserAddress = async (authtoken, address) =>
   await axios.post(
@@ -86,8 +58,8 @@ export const removeWishlist = async (productId, authtoken) =>
     },
   );
 
-export const addToWishlist = async (productId, authtoken) => {
-  return await axios.post(
+export const addToWishlist = async (productId, authtoken) =>
+  await axios.post(
     `${import.meta.env.VITE_API_V1_URL}/user/wishlist`,
     { productId },
     {
@@ -96,4 +68,3 @@ export const addToWishlist = async (productId, authtoken) => {
       },
     },
   );
-};

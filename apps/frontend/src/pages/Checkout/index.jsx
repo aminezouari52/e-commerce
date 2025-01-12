@@ -5,12 +5,14 @@ import { useForm, FormProvider } from "react-hook-form";
 import useToast from "@/utils/toast";
 
 // FUNCTIONS
-import { getUserCart, emptyUserCart, updateUser } from "@/functions/user";
+import { updateUser } from "@/functions/user";
+import { emptyUserCart, getUserCart } from "@/functions/cart";
+
 import { createOrder } from "@/functions/order";
 import { createAddress } from "@/functions/address";
 import { emptyCart } from "@/reducers/cartReducer";
-import { schema } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 // COMPONENTS
 import OrderSummary from "./OrderSummary";
@@ -49,6 +51,16 @@ const shippingTypeOptions = [
   },
 ];
 
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    address: yup.string().required(),
+    email: yup.string().required(),
+    phone: yup.string().required(),
+    paymentType: yup.string().required(),
+  })
+  .required();
+
 const Checkout = () => {
   const user = useSelector((state) => state.userReducer.user);
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -56,39 +68,16 @@ const Checkout = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
-  const [total, setTotal] = useState(0);
   const [succeeded, setSucceeded] = useState(false);
   const [orderData, setOrderData] = useState();
 
   const methods = useForm({ resolver: yupResolver(schema) });
 
   const getTotal = () => {
-    return cart.reduce((currentValue, nextValue) => {
+    return products?.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
     }, 0);
   };
-
-  const loadProducts = async () => {
-    if (user && user?.token) {
-      const cartData = (await getUserCart(user?.token)).data;
-      setProducts(
-        cartData.products.map((product) => {
-          return {
-            count: product.count,
-            ...product.product,
-          };
-        }),
-      );
-      setTotal(cartData.cartTotal);
-    } else {
-      setTotal(getTotal());
-      setProducts(cart);
-    }
-  };
-
-  useEffect(() => {
-    loadProducts();
-  }, [user]);
 
   const placeOrder = async () => {
     const { name, phone, email, shippingType, paymentType, address } =
@@ -109,7 +98,7 @@ const Checkout = () => {
       name,
       shippingType,
       paymentType,
-      amount: total,
+      amount: getTotal(),
       userId: user ? user?._id : null,
       products,
     };
@@ -130,17 +119,45 @@ const Checkout = () => {
       console.log(error);
     }
 
-    dispatch(emptyCart());
-    if (user && user?.token) await emptyUserCart(user.token);
+    if (user && user?.token) {
+      try {
+        await emptyUserCart(user.token);
+      } catch (error) {
+        console.log(error);
+      }
+    } else dispatch(emptyCart());
     setSucceeded(true);
     setProducts([]);
-    setTotal(0);
   };
 
   function onSubmit(values) {
     onOpen();
     setOrderData({ ...values, products });
   }
+
+  const loadUserCart = async () => {
+    try {
+      const response = await getUserCart(user.token);
+      const userCart = response.data;
+      const updatedProducts = userCart.products?.map((p) => {
+        return {
+          count: p.count,
+          ...p.product,
+        };
+      });
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.token) {
+      loadUserCart();
+    } else {
+      setProducts(cart);
+    }
+  }, [user, cart]);
 
   return (
     <>
@@ -357,7 +374,7 @@ const Checkout = () => {
 
           <OrderSummary
             products={products}
-            total={total}
+            total={getTotal()}
             onOpen={methods.handleSubmit(onSubmit)}
           />
         </Flex>
@@ -365,7 +382,7 @@ const Checkout = () => {
         <PlaceOrderModal
           isOpen={isOpen}
           onClose={onClose}
-          total={total}
+          total={getTotal()}
           succeeded={succeeded}
           placeOrder={placeOrder}
         />

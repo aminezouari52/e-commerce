@@ -1,16 +1,21 @@
 // HOOKS
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import {
+  getUserCart,
+  addUserProduct,
+  updateUserProductCount,
+  deleteUserProduct,
+} from "@/functions/cart";
+import {
   updateProductCount,
-  incrementProductCount,
-  decrementProductCount,
-  removeProduct,
+  deleteProduct,
+  addProduct,
 } from "@/reducers/cartReducer";
-import { setUserCart } from "@/functions/user";
 
 // STYLE
 import {
@@ -41,28 +46,22 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
+  const [products, setProducts] = useState([]);
 
   const getTotal = () => {
-    return cart.reduce((currentValue, nextValue) => {
-      return currentValue + nextValue.count * nextValue.price;
-    }, 0);
+    return products
+      .reduce((currentValue, nextValue) => {
+        return currentValue + nextValue.count * nextValue.price;
+      }, 0)
+      .toFixed(2);
   };
 
-  const saveOrderToDb = async () => {
+  const proceedToCheckoutHandler = async () => {
     onClose();
-    if (cart) {
-      try {
-        if (user && user?.token) {
-          await setUserCart(cart, user.token);
-        }
-        navigate("/checkout");
-      } catch (err) {
-        console.log("cart save err", err);
-      }
-    }
+    navigate("/checkout");
   };
 
-  const handleQuantityChange = (value, product) => {
+  const updateProductCountHandler = async (value, product) => {
     let count = +value;
 
     if (/\D/.test(`${count}`)) return;
@@ -72,36 +71,116 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
       return;
     }
 
-    dispatch(updateProductCount({ _id: product._id, count }));
+    if (user && user.token) {
+      try {
+        await updateUserProductCount(
+          { productId: product._id, count },
+          user.token,
+        );
+        window.dispatchEvent(new Event("cartUpdated"));
+      } catch (error) {
+        console.log(error);
+        toast("Failed to add product.", "error");
+      }
+    } else {
+      dispatch(
+        updateProductCount({
+          productId: product._id,
+          count,
+        }),
+      );
+    }
   };
 
-  const incrementProductCountHandler = (product) => {
+  const incrementProductCountHandler = async (product) => {
     if (product?.count + 1 > product?.quantity) {
       toast(`Max available quantity: ${product.quantity}`, "error");
       return;
     }
-    dispatch(
-      incrementProductCount({
-        _id: product?._id,
-      }),
-    );
+
+    if (user && user.token) {
+      try {
+        await addUserProduct({ productId: product._id, count: 1 }, user.token);
+        window.dispatchEvent(new Event("cartUpdated"));
+      } catch (error) {
+        console.log(error);
+        toast("Failed to add product.", "error");
+      }
+    } else {
+      dispatch(
+        addProduct({
+          product,
+          count: 1,
+        }),
+      );
+    }
   };
 
-  const decrementProductCountHandler = (product) => {
+  const decrementProductCountHandler = async (product) => {
     if (product?.count - 1 < 1) {
       toast("Min available quantity: 0", "error");
       return;
     }
-    dispatch(
-      decrementProductCount({
-        _id: product?._id,
-      }),
-    );
+
+    if (user && user.token) {
+      try {
+        await addUserProduct({ productId: product._id, count: -1 }, user.token);
+        window.dispatchEvent(new Event("cartUpdated"));
+      } catch (error) {
+        console.log(error);
+        toast("Failed to add product.", "error");
+      }
+    } else {
+      dispatch(
+        addProduct({
+          product,
+          count: -1,
+        }),
+      );
+    }
   };
 
-  const removeProductHandler = (product) => {
-    dispatch(removeProduct({ _id: product?._id }));
+  const deleteProductHandler = async (product) => {
+    if (user && user.token) {
+      try {
+        await deleteUserProduct(product._id, user.token);
+        window.dispatchEvent(new Event("cartUpdated"));
+      } catch (error) {
+        console.log(error);
+        toast("Failed to remove product.", "error");
+      }
+    } else {
+      dispatch(dispatch(deleteProduct({ productId: product?._id })));
+    }
   };
+
+  const loadUserCart = async () => {
+    try {
+      const response = await getUserCart(user.token);
+      const userCart = response.data;
+      const updatedProducts = userCart.products?.map((p) => {
+        return {
+          count: p.count,
+          ...p.product,
+        };
+      });
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.token) {
+      loadUserCart();
+    } else {
+      setProducts(cart);
+    }
+
+    window.addEventListener("cartUpdated", loadUserCart);
+
+    return () => window.removeEventListener("cartUpdated", loadUserCart);
+  }, [user, cart]);
 
   return (
     <Drawer
@@ -118,8 +197,9 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
 
         <DrawerBody as={Stack} bg="#fff" spacing={5}>
           <Divider size="lg" />
-          {!cart || (cart.length === 0 && <Text>Your cart is empty</Text>)}
-          {cart.map((product, i) => (
+          {!products ||
+            (products.length === 0 && <Text>Your cart is empty</Text>)}
+          {products?.map((product, i) => (
             <Flex key={i} alignItems="center" gap={4}>
               <Box>
                 <Image
@@ -171,9 +251,9 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
                         max={product?.quantity}
                         focusBorderColor="primary.500"
                         p={0}
-                        value={cart[i]?.count}
+                        value={products[i]?.count}
                         onChange={(event) => {
-                          handleQuantityChange(event, product);
+                          updateProductCountHandler(event, product);
                         }}
                       >
                         <NumberInputField p={1} type="tel" />
@@ -195,7 +275,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
                       variant="link"
                       colorScheme="red"
                       size="xs"
-                      onClick={() => removeProductHandler(product)}
+                      onClick={() => deleteProductHandler(product)}
                     >
                       remove
                     </Button>
@@ -206,7 +286,7 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
           ))}
           <Divider size="lg" />
           <Text>
-            Total: <b>${getTotal().toFixed(2)}</b>
+            Total: <b>${getTotal()}</b>
           </Text>
           <Divider size="lg" />
         </DrawerBody>
@@ -217,9 +297,9 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
             mt={2}
             variant="solid"
             colorScheme="primary"
-            isDisabled={!cart?.length}
-            onClick={saveOrderToDb}
-            _hover={{ opacity: !cart?.length ? 0.4 : 0.8 }}
+            isDisabled={!products?.length}
+            onClick={proceedToCheckoutHandler}
+            _hover={{ opacity: !products?.length ? 0.4 : 0.8 }}
           >
             Proceed to Checkout
           </Button>

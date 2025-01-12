@@ -9,6 +9,7 @@ import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { addToWishlist } from "@/functions/user";
+import { addUserProduct } from "@/functions/cart";
 import { addProduct } from "@/reducers/cartReducer";
 import _ from "lodash";
 
@@ -41,11 +42,20 @@ const SingleProduct = ({ product, star, onStarClick }) => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const handleAddToCart = () => {
-    dispatch(addProduct(product));
-    toast("Product added to cart.", "info");
+  const handleAddProduct = async () => {
+    if (user && user.token) {
+      try {
+        await addUserProduct({ productId: product._id, count: 1 }, user.token);
+        toast("Product added.", "success");
+      } catch (error) {
+        console.log(error);
+        toast("Failed to add product.", "error");
+      }
+    } else {
+      dispatch(addProduct({ product, count: 1 }));
+      toast("Product added.", "success");
+    }
   };
-
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     if (!user?.token) {
@@ -117,7 +127,7 @@ const SingleProduct = ({ product, star, onStarClick }) => {
               }}
               colorScheme="primary"
               leftIcon={<Icon as={AiOutlineShoppingCart} />}
-              onClick={handleAddToCart}
+              onClick={handleAddProduct}
               isDisabled={product?.quantity < 1}
               w="100%"
             >

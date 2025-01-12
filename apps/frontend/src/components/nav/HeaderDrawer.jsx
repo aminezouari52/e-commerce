@@ -1,9 +1,11 @@
 // HOOKS
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
-
-// REDUX
 import { useSelector } from "react-redux";
+
+// FUNCTIONS
+import { getUserCart } from "@/functions/cart";
 
 // COMPONENTS
 import SideBar from "./SideBar";
@@ -29,11 +31,36 @@ import { AiOutlineHome, AiOutlineShopping } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 
 const HeaderDrawer = () => {
-  const user = useSelector((state) => state.userReducer.user);
-  const cart = useSelector((state) => state.cartReducer.cart);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const location = useLocation();
+  const user = useSelector((state) => state.userReducer.user);
+  const cart = useSelector((state) => state.cartReducer.cart);
+  const [products, setProducts] = useState([]);
+
+  const loadUserCart = async () => {
+    try {
+      const response = await getUserCart(user.token);
+      const userCart = response.data;
+      const updatedProducts = userCart.products?.map((p) => {
+        return {
+          count: p.count,
+          ...p.product,
+        };
+      });
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.token) {
+      loadUserCart();
+    } else {
+      setProducts(cart);
+    }
+  }, [user, cart]);
 
   return (
     <Box display={{ sm: "block", md: "none", lg: "none" }}>
@@ -97,7 +124,7 @@ const HeaderDrawer = () => {
               <Flex alignItems="start">
                 <Text>Cart</Text>
                 <Badge borderRadius="50%" colorScheme="red" variant="solid">
-                  {cart?.length}
+                  {products?.length}
                 </Badge>
               </Flex>
             </Button>

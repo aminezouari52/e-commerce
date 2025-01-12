@@ -1,6 +1,6 @@
 // HOOKS
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // FIREBASE
 import { auth } from "./firebase";
@@ -8,9 +8,10 @@ import { onAuthStateChanged } from "firebase/auth";
 
 // FUNCTIONS
 import { setUser } from "./reducers/userReducer";
-import { setCart } from "./reducers/cartReducer";
+import { emptyCart, setCart } from "./reducers/cartReducer";
 import { getCurrentUser } from "./functions/auth";
-import { getLocalStorage } from "./utils/localStorage";
+
+import { getLocalStorage, removeLocalStorage } from "./utils/localStorage";
 
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -42,6 +43,7 @@ import NotFound from "./components/NotFound";
 
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
@@ -75,8 +77,18 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (user && user.token) {
+      // TODO: if
+      //  * user does not have a cart in database
+      //  * cartReducer is not empty
+      //  => merge the cartReducer in the user in database
+
+      dispatch(emptyCart());
+      removeLocalStorage("cart");
+      return;
+    }
     dispatch(setCart(getLocalStorage("cart") || []));
-  }, []);
+  }, [user]);
 
   return (
     <>

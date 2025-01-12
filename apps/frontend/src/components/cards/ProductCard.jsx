@@ -1,9 +1,10 @@
 // HOOKS
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useToast from "@/utils/toast";
 
 // FUNCTIONS
+import { addUserProduct } from "@/functions/cart";
 import { addProduct } from "@/reducers/cartReducer";
 import ShowRating from "@/components/ShowRating";
 import _ from "lodash";
@@ -27,13 +28,25 @@ import { IoCart } from "react-icons/io5";
 
 const ProductCard = ({ product, onCloseHandler }) => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.userReducer.user);
   const { images, title, slug, price } = product;
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const handleAddToCart = () => {
-    dispatch(addProduct(product));
-    toast("Product added.", "info");
+  const handleAddProduct = async () => {
+    if (user && user.token) {
+      try {
+        await addUserProduct({ productId: product._id, count: 1 }, user.token);
+        window.dispatchEvent(new Event("cartUpdated"));
+        toast("Product added.", "success");
+      } catch (error) {
+        console.log(error);
+        toast("Failed to add product.", "error");
+      }
+    } else {
+      dispatch(addProduct({ product, count: 1 }));
+      toast("Product added.", "success");
+    }
   };
 
   return (
@@ -95,7 +108,7 @@ const ProductCard = ({ product, onCloseHandler }) => {
         colorScheme="primary"
         isDisabled={product?.quantity < 1}
         leftIcon={<Icon as={IoCart} />}
-        onClick={handleAddToCart}
+        onClick={handleAddProduct}
         _hover={{
           opacity: !(product?.quantity < 1) && 0.8,
         }}

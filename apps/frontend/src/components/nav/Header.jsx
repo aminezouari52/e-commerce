@@ -1,8 +1,11 @@
 // HOOKS
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
+
+// FUNCTIONS
+import { getUserCart } from "@/functions/cart";
 
 // COMPONENTS
 import Search from "@/components/forms/Search";
@@ -27,6 +30,31 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.userReducer.user);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const [products, setProducts] = useState([]);
+
+  const loadUserCart = async () => {
+    try {
+      const response = await getUserCart(user.token);
+      const userCart = response.data;
+      const updatedProducts = userCart.products?.map((p) => {
+        return {
+          count: p.count,
+          ...p.product,
+        };
+      });
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.token) {
+      loadUserCart();
+    } else {
+      setProducts(cart);
+    }
+  }, [user, cart]);
 
   return (
     <Box position="sticky" top="0" zIndex="11">
@@ -111,13 +139,12 @@ const Header = () => {
                 )
               }
               onClick={() => onOpen()}
-              // onClick={() => navigate("/cart")}
               _hover={{
                 bg: "lightgray",
               }}
             />
             <Badge
-              display={cart.length === 0 ? "none" : "flex"}
+              display={products?.length === 0 ? "none" : "flex"}
               pos="absolute"
               top="0"
               right="0"
@@ -131,7 +158,7 @@ const Header = () => {
               variant="solid"
               p={0}
             >
-              {cart?.length}
+              {products?.length}
             </Badge>
           </Box>
           {user ? (
