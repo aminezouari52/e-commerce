@@ -6,11 +6,9 @@ import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { updateUser } from "@/functions/user";
-import { emptyUserCart, getUserCart } from "@/functions/cart";
-
 import { createOrder } from "@/functions/order";
 import { createAddress } from "@/functions/address";
-import { emptyCart } from "@/reducers/cartReducer";
+import { emptyGuestCart, emptyUserCart } from "@/reducers/cartReducer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -63,7 +61,8 @@ const schema = yup
 
 const Checkout = () => {
   const user = useSelector((state) => state.userReducer.user);
-  const cart = useSelector((state) => state.cartReducer.cart);
+  const guestCart = useSelector((state) => state.cartReducer.guestCart);
+  const userCart = useSelector((state) => state.cartReducer.userCart);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const dispatch = useDispatch();
@@ -119,13 +118,8 @@ const Checkout = () => {
       console.log(error);
     }
 
-    if (user && user?.token) {
-      try {
-        await emptyUserCart(user.token);
-      } catch (error) {
-        console.log(error);
-      }
-    } else dispatch(emptyCart());
+    if (user && user?.token) dispatch(emptyUserCart());
+    else dispatch(emptyGuestCart());
     setSucceeded(true);
     setProducts([]);
   };
@@ -135,29 +129,13 @@ const Checkout = () => {
     setOrderData({ ...values, products });
   }
 
-  const loadUserCart = async () => {
-    try {
-      const response = await getUserCart(user.token);
-      const userCart = response.data;
-      const updatedProducts = userCart.products?.map((p) => {
-        return {
-          count: p.count,
-          ...p.product,
-        };
-      });
-      setProducts(updatedProducts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     if (user && user.token) {
-      loadUserCart();
+      setProducts(userCart);
     } else {
-      setProducts(cart);
+      setProducts(guestCart);
     }
-  }, [user, cart]);
+  }, [user, guestCart, userCart]);
 
   return (
     <>

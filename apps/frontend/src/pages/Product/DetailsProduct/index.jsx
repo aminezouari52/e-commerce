@@ -9,8 +9,7 @@ import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import { addToWishlist } from "@/functions/user";
-import { addUserProduct } from "@/functions/cart";
-import { addProduct } from "@/reducers/cartReducer";
+import { addGuestProduct, addUserProduct } from "@/reducers/cartReducer";
 import _ from "lodash";
 
 // COMPONENTS
@@ -43,30 +42,20 @@ const SingleProduct = ({ product, star, onStarClick }) => {
   const toast = useToast();
 
   const handleAddProduct = async () => {
-    if (user && user.token) {
-      try {
-        await addUserProduct({ productId: product._id, count: 1 }, user.token);
-        toast("Product added.", "success");
-      } catch (error) {
-        console.log(error);
-        toast("Failed to add product.", "error");
-      }
-    } else {
-      dispatch(addProduct({ product, count: 1 }));
-      toast("Product added.", "success");
-    }
+    const payload = { product, count: 1 };
+    if (user && user.token) dispatch(addUserProduct(payload));
+    else dispatch(addGuestProduct(payload));
+    toast("Product added.", "success");
   };
-  const handleAddToWishlist = (e) => {
-    e.preventDefault();
-    if (!user?.token) {
+
+  const handleAddToWishlist = async (event) => {
+    event.preventDefault();
+    if (!user) {
       toast("login to proceed", "info");
       return;
     }
-    console.log("hi");
-
-    addToWishlist(product?._id, user.token).then(() => {
-      toast("Product added to wishlist.", "success");
-    });
+    await addToWishlist(product?._id, user.token);
+    toast("Product added to wishlist.", "success");
   };
 
   return (

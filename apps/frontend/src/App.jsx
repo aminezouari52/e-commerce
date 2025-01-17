@@ -8,10 +8,11 @@ import { onAuthStateChanged } from "firebase/auth";
 
 // FUNCTIONS
 import { setUser } from "./reducers/userReducer";
-import { emptyCart, setCart } from "./reducers/cartReducer";
+import { setGuestCart, setUserCart } from "./reducers/cartReducer";
 import { getCurrentUser } from "./functions/auth";
-
-import { getLocalStorage, removeLocalStorage } from "./utils/localStorage";
+import { getUserCart, syncUserCart } from "./functions/cart";
+import { getLocalStorage } from "./utils/localStorage";
+import { convertTocartReducer } from "./utils";
 
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -44,6 +45,7 @@ import NotFound from "./components/NotFound";
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
+  const userCart = useSelector((state) => state.cartReducer.userCart);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
@@ -76,19 +78,32 @@ const App = () => {
     return () => unsubscribe();
   }, [dispatch]);
 
-  useEffect(() => {
-    if (user && user.token) {
-      // TODO: if
-      //  * user does not have a cart in database
-      //  * cartReducer is not empty
-      //  => merge the cartReducer in the user in database
-
-      dispatch(emptyCart());
-      removeLocalStorage("cart");
-      return;
+  const loadUserCart = async () => {
+    try {
+      const response = await getUserCart(user.token);
+      const userCart = convertTocartReducer(response.data);
+      dispatch(setUserCart(userCart));
+    } catch (error) {
+      console.log(error);
     }
-    dispatch(setCart(getLocalStorage("cart") || []));
+  };
+
+  useEffect(() => {
+    if (user && user.token) loadUserCart();
+    else dispatch(setGuestCart(getLocalStorage("guestCart") || []));
   }, [user]);
+
+  // sync userCart with backend cart
+  const loadSyncUserCart = async () => {
+    await syncUserCart(userCart, user?.token);
+  };
+
+  useEffect(() => {
+    if (user && userCart) {
+      const timeoutId = setTimeout(() => loadSyncUserCart(), 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [userCart]);
 
   return (
     <>

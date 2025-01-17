@@ -1,7 +1,3 @@
-// FIREBASE
-import { auth, googleAuthProvider } from "@/firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-
 // HOOKS
 import { useState, useEffect } from "react";
 import useToast from "@/utils/toast";
@@ -9,8 +5,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // FUNCTIONS
+import { syncUserCart } from "@/functions/cart";
 import { createOrUpdateUser } from "@/functions/auth";
+import { getUserCart } from "@/functions/cart";
 import { setUser } from "@/reducers/userReducer";
+import { auth, googleAuthProvider } from "@/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 // COMPONENTS
 import { NavLink } from "react-router-dom";
@@ -19,12 +19,13 @@ import Logo from "@/components/Logo";
 // STYLE
 import { Flex, Heading, Input, Button, Link, Text } from "@chakra-ui/react";
 
-// ICONS
+// ASSETS
 import { AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  // HOOKS
+  const user = useSelector((state) => state.userReducer.user);
+  const guestCart = useSelector((state) => state.cartReducer.guestCart);
   const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,9 +33,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // REDIRECT USER
-  const user = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
     const intended = location.state;
@@ -51,7 +49,6 @@ const Login = () => {
     }
   }, [user, navigate, location]);
 
-  // REDIRECT FUNCTION
   const roleBasedRedirect = (res) => {
     const intended = location.state;
     if (intended) {
@@ -65,35 +62,36 @@ const Login = () => {
     }
   };
 
-  // SUBMIT FUNCTION
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setLoading(true);
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-      // create user in database
-      try {
-        const response = await createOrUpdateUser(idTokenResult.token);
-        dispatch(
-          setUser({
-            ...response.data,
-            token: idTokenResult.token,
-          }),
-        );
-        roleBasedRedirect(response);
-      } catch (err) {
-        toast("Failed to create or update user", "error");
+      const response = await createOrUpdateUser(idTokenResult.token);
+      dispatch(
+        setUser({
+          ...response.data,
+          token: idTokenResult.token,
+        }),
+      );
+
+      const cartResponse = await getUserCart(idTokenResult.token);
+      if (!cartResponse?.data?.products?.length && !!guestCart?.length > 0) {
+        await syncUserCart(guestCart, idTokenResult.token);
       }
+
+      roleBasedRedirect(response);
     } catch (err) {
       toast("Failed to login user", "error");
       setLoading(false);
     }
   };
 
-  // LOGIN WITH GOOGLE
-  const googleLogin = async () => {
+  const googleLogin = async (event) => {
+    event.preventDefault();
+    setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const { user } = result;
@@ -107,9 +105,15 @@ const Login = () => {
         }),
       );
 
+      const cartResponse = await getUserCart(idTokenResult.token);
+      if (!cartResponse?.data?.products?.length && !!guestCart?.length > 0) {
+        await syncUserCart(guestCart, idTokenResult.token);
+      }
+
       roleBasedRedirect(response);
     } catch (err) {
       toast("Failed to create or update user", "error");
+      setLoading(false);
     }
   };
 

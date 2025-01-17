@@ -28,57 +28,6 @@ const updateUser = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(user);
 });
 
-const setUserCart = catchAsync(async (req, res) => {
-  const { cart } = req.body;
-  let products = [];
-  const user = await User.findOne({ email: req.user.email }).exec();
-
-  // Check if a cart with the logged-in user ID already exists and remove it if found
-  await Cart.findOneAndDelete({ user: user._id }).exec();
-
-  for (let i = 0; i < cart.products.length; i++) {
-    let object = {};
-
-    object.product = cart.products[i].product._id;
-    object.count = cart.products[i].count;
-
-    products.push(object);
-  }
-
-  await new Cart({
-    products,
-    user: user._id,
-  }).save();
-
-  res.status(httpStatus.OK).send({ ok: true });
-});
-
-const getUserCart = catchAsync(async (req, res) => {
-  const user = await User.findOne({ email: req.user.email }).exec();
-
-  let cart = await Cart.findOne({ user: user._id })
-    .populate({
-      path: "products.product",
-      populate: {
-        path: "category",
-      },
-    })
-    .exec();
-
-  res.status(httpStatus.OK).send(cart);
-});
-
-const emptyCart = async (req, res) => {
-  const user = await User.findOne({ email: req.user.email }).exec();
-
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
-  }
-
-  const cart = await Cart.findOneAndRemove({ user: user._id }).exec();
-  res.json(cart);
-};
-
 const saveAddress = catchAsync(async (req, res) => {
   await User.findOneAndUpdate(
     { email: req.user.email },
@@ -172,9 +121,6 @@ const removeFromWishlist = catchAsync(async (req, res) => {
 module.exports = {
   getUser,
   updateUser,
-  setUserCart,
-  getUserCart,
-  emptyCart,
   saveAddress,
   savePhone,
   createOrder,

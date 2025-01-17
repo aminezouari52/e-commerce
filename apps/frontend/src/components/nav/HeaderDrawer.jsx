@@ -4,9 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-// FUNCTIONS
-import { getUserCart } from "@/functions/cart";
-
 // COMPONENTS
 import SideBar from "./SideBar";
 
@@ -35,32 +32,17 @@ const HeaderDrawer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector((state) => state.userReducer.user);
-  const cart = useSelector((state) => state.cartReducer.cart);
+  const guestCart = useSelector((state) => state.cartReducer.guestCart);
+  const userCart = useSelector((state) => state.cartReducer.userCart);
   const [products, setProducts] = useState([]);
-
-  const loadUserCart = async () => {
-    try {
-      const response = await getUserCart(user.token);
-      const userCart = response.data;
-      const updatedProducts = userCart.products?.map((p) => {
-        return {
-          count: p.count,
-          ...p.product,
-        };
-      });
-      setProducts(updatedProducts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     if (user && user.token) {
-      loadUserCart();
+      setProducts(userCart);
     } else {
-      setProducts(cart);
+      setProducts(guestCart);
     }
-  }, [user, cart]);
+  }, [user, guestCart, userCart]);
 
   return (
     <Box display={{ sm: "block", md: "none", lg: "none" }}>

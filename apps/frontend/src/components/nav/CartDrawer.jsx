@@ -6,15 +6,12 @@ import useToast from "@/utils/toast";
 
 // FUNCTIONS
 import {
-  getUserCart,
+  updateGuestProductCount,
+  deleteGuestProduct,
+  addGuestProduct,
   addUserProduct,
   updateUserProductCount,
   deleteUserProduct,
-} from "@/functions/cart";
-import {
-  updateProductCount,
-  deleteProduct,
-  addProduct,
 } from "@/reducers/cartReducer";
 
 // STYLE
@@ -41,7 +38,9 @@ import {
 } from "@chakra-ui/react";
 
 const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
-  const cart = useSelector((state) => state.cartReducer.cart);
+  const guestCart = useSelector((state) => state.cartReducer.guestCart);
+  const userCart = useSelector((state) => state.cartReducer.userCart);
+
   const user = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -72,19 +71,15 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
     }
 
     if (user && user.token) {
-      try {
-        await updateUserProductCount(
-          { productId: product._id, count },
-          user.token,
-        );
-        window.dispatchEvent(new Event("cartUpdated"));
-      } catch (error) {
-        console.log(error);
-        toast("Failed to add product.", "error");
-      }
+      dispatch(
+        updateUserProductCount({
+          productId: product._id,
+          count,
+        }),
+      );
     } else {
       dispatch(
-        updateProductCount({
+        updateGuestProductCount({
           productId: product._id,
           count,
         }),
@@ -99,16 +94,15 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
     }
 
     if (user && user.token) {
-      try {
-        await addUserProduct({ productId: product._id, count: 1 }, user.token);
-        window.dispatchEvent(new Event("cartUpdated"));
-      } catch (error) {
-        console.log(error);
-        toast("Failed to add product.", "error");
-      }
+      dispatch(
+        addUserProduct({
+          product,
+          count: 1,
+        }),
+      );
     } else {
       dispatch(
-        addProduct({
+        addGuestProduct({
           product,
           count: 1,
         }),
@@ -123,16 +117,15 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
     }
 
     if (user && user.token) {
-      try {
-        await addUserProduct({ productId: product._id, count: -1 }, user.token);
-        window.dispatchEvent(new Event("cartUpdated"));
-      } catch (error) {
-        console.log(error);
-        toast("Failed to add product.", "error");
-      }
+      dispatch(
+        addUserProduct({
+          product,
+          count: -1,
+        }),
+      );
     } else {
       dispatch(
-        addProduct({
+        addGuestProduct({
           product,
           count: -1,
         }),
@@ -142,45 +135,19 @@ const CartDrawer = ({ isOpen, onClose, cartButtonRef }) => {
 
   const deleteProductHandler = async (product) => {
     if (user && user.token) {
-      try {
-        await deleteUserProduct(product._id, user.token);
-        window.dispatchEvent(new Event("cartUpdated"));
-      } catch (error) {
-        console.log(error);
-        toast("Failed to remove product.", "error");
-      }
+      dispatch(dispatch(deleteUserProduct({ productId: product?._id })));
     } else {
-      dispatch(dispatch(deleteProduct({ productId: product?._id })));
-    }
-  };
-
-  const loadUserCart = async () => {
-    try {
-      const response = await getUserCart(user.token);
-      const userCart = response.data;
-      const updatedProducts = userCart.products?.map((p) => {
-        return {
-          count: p.count,
-          ...p.product,
-        };
-      });
-      setProducts(updatedProducts);
-    } catch (error) {
-      console.log(error);
+      dispatch(dispatch(deleteGuestProduct({ productId: product?._id })));
     }
   };
 
   useEffect(() => {
     if (user && user.token) {
-      loadUserCart();
+      setProducts(userCart);
     } else {
-      setProducts(cart);
+      setProducts(guestCart);
     }
-
-    window.addEventListener("cartUpdated", loadUserCart);
-
-    return () => window.removeEventListener("cartUpdated", loadUserCart);
-  }, [user, cart]);
+  }, [user, guestCart, userCart]);
 
   return (
     <Drawer

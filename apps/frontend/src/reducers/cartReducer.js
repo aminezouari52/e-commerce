@@ -6,54 +6,95 @@ import {
 } from "@/utils/localStorage";
 
 const initialState = {
-  cart: getLocalStorage("cart") || [],
+  guestCart: getLocalStorage("guestCart") || [],
+  userCart: getLocalStorage("userCart") || [],
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setCart: (state, action) => {
-      state.cart = action.payload;
-      setLocalStorage("cart", action.payload);
+    setUserCart: (state, action) => {
+      console.log(action.payload);
+      state.userCart = action.payload;
+      setLocalStorage("userCart", action.payload);
     },
 
-    addProduct: (state, action) => {
+    addUserProduct: (state, action) => {
       const { product, count } = action.payload;
-      const cartProduct = state.cart.find((p) => p._id === product._id);
+      const cartProduct = state.userCart.find((p) => p._id === product._id);
       if (cartProduct) cartProduct.count += count;
-      else state.cart.push({ ...product, count: 1 });
-      setLocalStorage("cart", state.cart);
+      else state.userCart.push({ ...product, count: 1 });
+      setLocalStorage("userCart", state.userCart);
     },
 
-    updateProductCount: (state, action) => {
+    updateUserProductCount: (state, action) => {
       const { productId, count } = action.payload;
-      const product = state.cart.find((c) => c._id === productId);
+      const product = state.userCart.find((c) => c._id === productId);
       if (product) product.count = count;
-      setLocalStorage("cart", state.cart);
+      setLocalStorage("userCart", state.userCart);
     },
 
-    deleteProduct: (state, action) => {
+    deleteUserProduct: (state, action) => {
       const { productId } = action.payload;
-      const newCart = state.cart.filter((product) => product._id !== productId);
-      state.cart = newCart;
-      setLocalStorage("cart", newCart);
+      const newCart = state.userCart.filter(
+        (product) => product._id !== productId,
+      );
+      state.userCart = newCart;
+      setLocalStorage("userCart", newCart);
     },
 
-    emptyCart: (state) => {
-      state.cart = [];
-      removeLocalStorage("cart");
+    emptyUserCart: (state) => {
+      state.userCart = [];
+      removeLocalStorage("userCart");
+    },
+
+    setGuestCart: (state, action) => {
+      state.userCart = action.payload;
+      setLocalStorage("guestCart", action.payload);
+    },
+
+    updateGuestProductCount: (state, action) => {
+      const { productId, count } = action.payload;
+      const product = state.guestCart.find((c) => c._id === productId);
+      if (product) product.count = count;
+      setLocalStorage("guestCart", state.guestCart);
+    },
+
+    addGuestProduct: (state, action) => {
+      const { product, count } = action.payload;
+      const cartProduct = state.guestCart.find((p) => p._id === product._id);
+      if (cartProduct) cartProduct.count += count;
+      else state.guestCart.push({ ...product, count: 1 });
+      setLocalStorage("guestCart", state.guestCart);
+    },
+
+    deleteGuestProduct: (state, action) => {
+      const { productId } = action.payload;
+      const newCart = state.guestCart.filter(
+        (product) => product._id !== productId,
+      );
+      state.guestCart = newCart;
+      setLocalStorage("guestCart", newCart);
+    },
+
+    emptyGuestCart: (state) => {
+      state.guestCart = [];
+      removeLocalStorage("guestCart");
     },
   },
 });
 
 export const {
-  setCart,
-  addProduct,
-  emptyCart,
-  updateProductCount,
-  incrementProductCount,
-  decrementProductCount,
-  deleteProduct,
+  setGuestCart,
+  addGuestProduct,
+  emptyGuestCart,
+  updateGuestProductCount,
+  deleteGuestProduct,
+  addUserProduct,
+  emptyUserCart,
+  updateUserProductCount,
+  deleteUserProduct,
+  setUserCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

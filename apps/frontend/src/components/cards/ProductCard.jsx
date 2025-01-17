@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useToast from "@/utils/toast";
 
 // FUNCTIONS
-import { addUserProduct } from "@/functions/cart";
-import { addProduct } from "@/reducers/cartReducer";
+import { addGuestProduct, addUserProduct } from "@/reducers/cartReducer";
 import ShowRating from "@/components/ShowRating";
 import _ from "lodash";
 
@@ -35,16 +34,10 @@ const ProductCard = ({ product, onCloseHandler }) => {
 
   const handleAddProduct = async () => {
     if (user && user.token) {
-      try {
-        await addUserProduct({ productId: product._id, count: 1 }, user.token);
-        window.dispatchEvent(new Event("cartUpdated"));
-        toast("Product added.", "success");
-      } catch (error) {
-        console.log(error);
-        toast("Failed to add product.", "error");
-      }
+      dispatch(addUserProduct({ product, count: 1 }));
+      toast("Product added.", "success");
     } else {
-      dispatch(addProduct({ product, count: 1 }));
+      dispatch(addGuestProduct({ product, count: 1 }));
       toast("Product added.", "success");
     }
   };

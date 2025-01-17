@@ -4,9 +4,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 
-// FUNCTIONS
-import { getUserCart } from "@/functions/cart";
-
 // COMPONENTS
 import Search from "@/components/forms/Search";
 import HeaderButton from "./HeaderButton";
@@ -29,32 +26,18 @@ const Header = () => {
   const cartButtonRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.userReducer.user);
-  const cart = useSelector((state) => state.cartReducer.cart);
+  const guestCart = useSelector((state) => state.cartReducer.guestCart);
+  const userCart = useSelector((state) => state.cartReducer.userCart);
+
   const [products, setProducts] = useState([]);
 
-  const loadUserCart = async () => {
-    try {
-      const response = await getUserCart(user.token);
-      const userCart = response.data;
-      const updatedProducts = userCart.products?.map((p) => {
-        return {
-          count: p.count,
-          ...p.product,
-        };
-      });
-      setProducts(updatedProducts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (user && user.token) {
-      loadUserCart();
+    if (user) {
+      setProducts(userCart);
     } else {
-      setProducts(cart);
+      setProducts(guestCart);
     }
-  }, [user, cart]);
+  }, [user, guestCart, userCart]);
 
   return (
     <Box position="sticky" top="0" zIndex="11">
