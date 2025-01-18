@@ -1,6 +1,6 @@
 // HOOKS
 import { useState, useEffect } from "react";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 

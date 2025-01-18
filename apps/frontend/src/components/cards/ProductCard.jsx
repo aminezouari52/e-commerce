@@ -1,7 +1,7 @@
 // HOOKS
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // FUNCTIONS
 import { addGuestProduct, addUserProduct } from "@/reducers/cartReducer";

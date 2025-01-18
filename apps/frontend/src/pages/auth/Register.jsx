@@ -1,7 +1,7 @@
 // REACT
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // REDUX
 import { useDispatch } from "react-redux";

@@ -1,7 +1,7 @@
 // HOOKS
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // FUNCTIONS
 import { createCategory } from "@/functions/category";

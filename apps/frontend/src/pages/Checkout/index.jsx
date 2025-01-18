@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // FUNCTIONS
 import { updateUser } from "@/functions/user";

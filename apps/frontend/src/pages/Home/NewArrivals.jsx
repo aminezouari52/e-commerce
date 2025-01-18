@@ -1,30 +1,37 @@
 // REACT
 import { useEffect, useState } from "react";
+import { useDisclosure } from "@chakra-ui/react";
 
 // FUNCTIONS
 import { getProducts } from "@/functions/product";
 
 // COMPONENTS
-import Carousel from "./Carousel";
+import Carousel from "@/components/Carousel";
+import ProductCard from "@/components/cards/ProductCard";
 
 // STYLE
-import { Heading, Flex, Box, Text } from "@chakra-ui/react";
+import { Heading, Box, Text, Container } from "@chakra-ui/react";
 
 const NewArrivals = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const loadAllProducts = () => {
-      setLoading(true);
-      getProducts("createdAt", "desc", products?.length).then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      });
-    };
+  const loadProducts = async () => {
+    setLoading(true);
+    try {
+      const response = await getProducts("createdAt", "desc", products?.length);
+      setProducts(response.data);
+    } catch (error) {
+      console.log(error);
+      toast("Failed to load products", "error");
+    }
+    setLoading(false);
+  };
 
-    loadAllProducts();
-  }, [products?.length]);
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   return (
     <Box>
@@ -44,9 +51,54 @@ const NewArrivals = () => {
         <Text color="deepRed.500"> New </Text>
         &nbsp; Arrivals
       </Heading>
-      <Flex bg="white" flexDirection="column" alignItems="center" gap="20px">
-        <Carousel products={products} loading={loading} />
-      </Flex>
+      <Container
+        py={8}
+        px={0}
+        maxW={{
+          base: "100%",
+          sm: "35rem",
+          md: "43.75rem",
+          lg: "57.5rem",
+          xl: "75rem",
+          xxl: "87.5rem",
+        }}
+      >
+        <Carousel gap={32}>
+          {products.map((product, index) => (
+            <>
+              {loading ? (
+                <Box
+                  padding="6"
+                  boxShadow="lg"
+                  bg="white"
+                  mb={2}
+                  w={{
+                    sm: "cardWidth.sm",
+                    md: "cardWidth.md",
+                    lg: "cardWidth.lg",
+                  }}
+                >
+                  <SkeletonCircle size="10" />
+                  <SkeletonText
+                    pt={4}
+                    noOfLines={3}
+                    spacing="4"
+                    skeletonHeight="2"
+                  />
+                </Box>
+              ) : (
+                <ProductCard
+                  key={index}
+                  product={product}
+                  isOpen={isOpen}
+                  onOpen={onOpen}
+                  onClose={onClose}
+                />
+              )}
+            </>
+          ))}
+        </Carousel>
+      </Container>
     </Box>
   );
 };

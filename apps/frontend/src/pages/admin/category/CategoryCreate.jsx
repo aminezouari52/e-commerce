@@ -1,7 +1,7 @@
 // REACT
 import { useState, useEffect, useRef } from "react";
 import { useDisclosure } from "@chakra-ui/react";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // REDUX
 import { useSelector } from "react-redux";

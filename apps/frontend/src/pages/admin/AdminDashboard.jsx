@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 import { getOrders, changeStatus } from "@/functions/admin";
 import Orders from "@/components/Orders";
 import { Box, Heading, Text } from "@chakra-ui/react";

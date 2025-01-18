@@ -1,7 +1,7 @@
 // HOOKS
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@chakra-ui/react";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // FIREBASE
 import { auth } from "@/firebase";

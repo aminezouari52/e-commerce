@@ -1,6 +1,6 @@
 // REACT
 import { useState } from "react";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // FIREBASE
 import { auth } from "@/firebase";

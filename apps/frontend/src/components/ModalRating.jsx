@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // STYLE
 import StarRating from "react-star-ratings";

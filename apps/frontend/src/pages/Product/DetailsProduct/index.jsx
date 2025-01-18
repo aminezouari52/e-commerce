@@ -5,7 +5,7 @@ import StarRating from "react-star-ratings";
 
 // HOOKS
 import { useDispatch, useSelector } from "react-redux";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 
 // FUNCTIONS
 import { addToWishlist } from "@/functions/user";

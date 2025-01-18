@@ -11,8 +11,7 @@ import { setUser } from "./reducers/userReducer";
 import { setGuestCart, setUserCart } from "./reducers/cartReducer";
 import { getCurrentUser } from "./functions/auth";
 import { getUserCart, syncUserCart } from "./functions/cart";
-import { getLocalStorage } from "./utils/localStorage";
-import { convertTocartReducer } from "./utils";
+import { getLocalStorage, normalizeCart } from "./utils";
 
 // COMPONENTS
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -81,7 +80,7 @@ const App = () => {
   const loadUserCart = async () => {
     try {
       const response = await getUserCart(user.token);
-      const userCart = convertTocartReducer(response.data);
+      const userCart = normalizeCart(response.data);
       dispatch(setUserCart(userCart));
     } catch (error) {
       console.log(error);

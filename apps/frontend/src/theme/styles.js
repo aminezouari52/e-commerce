@@ -22,10 +22,17 @@ export const globalStyles = {
     heading: "Nunito, Helvetica, sans-serif",
   },
   breakpoints: {
-    sm: "0px",
-    md: "960px",
-    lg: "1400px",
-    xl: "1920px",
-    "2xl": "2560px",
+    xs: "30em",
+    sm: "36em",
+    md: "46.25em",
+    lg: "62.5em",
+    xl: "78.125em",
+    xxl: "95em",
+
+    // sm: "0px",
+    // md: "960px",
+    // lg: "1400px",
+    // xl: "1920px",
+    // "2xl": "2560px",
   },
 };

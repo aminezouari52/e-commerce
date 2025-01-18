@@ -1,10 +1,4 @@
-export const convertTocartReducer = (cart) => {
-  return (
-    cart?.products?.map((p) => {
-      return {
-        count: p.count,
-        ...p.product,
-      };
-    }) || []
-  );
-};
+export { percentage } from "./percentage";
+export { normalizeCart } from "./normalizeCart";
+export { useToast } from "./toast";
+export * from "./localStorage";

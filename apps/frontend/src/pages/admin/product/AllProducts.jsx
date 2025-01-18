@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useToast from "@/utils/toast";
+import { useToast } from "@/utils/toast";
 import { useDisclosure } from "@chakra-ui/react";
 
 // COMPONENTS
