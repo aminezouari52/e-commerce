@@ -12,11 +12,11 @@ const Hero = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  // const videoStyle = {
-  //   width: "100%",
-  //   height: "100%",
-  //   objectFit: "cover",
-  // };
+  const videoStyle = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  };
 
   return (
     <Box flexDirection="column" justifyContent="center" position="relative">
@@ -27,12 +27,12 @@ const Hero = () => {
           lg: `calc(100vh - ${theme.sizes.header.lg})`,
         }}
       >
-        {/* <video loop muted autoPlay={true} style={videoStyle}>
+        <video loop muted autoPlay={true} style={videoStyle}>
           <source
             src="https://res.cloudinary.com/dfzx2pdi3/video/upload/v1734267152/6199032-uhd_2732_1440_25fps_yfxdef.mp4"
             type="video/mp4"
           />
-        </video> */}
+        </video>
       </Box>
       <Flex
         position="absolute"
