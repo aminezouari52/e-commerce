@@ -125,7 +125,8 @@ const listRelated = catchAsync(async (req, res) => {
 });
 
 const searchFilters = catchAsync(async (req, res) => {
-  const { query, price, category, sub, shipping, color, brand } = req.body;
+  const { query, price, category, sub, shipping, color, brand, sortBy } =
+    req.body;
 
   const filterOptions = {};
 
@@ -142,10 +143,19 @@ const searchFilters = catchAsync(async (req, res) => {
   if (color && color.length) filterOptions.color = { $in: color };
   if (shipping) filterOptions.shipping = shipping;
 
+  const sortOptions = {};
+  if (sortBy) {
+    const [field, order] = sortBy.split(":");
+    sortOptions[field] = order === "desc" ? -1 : 1;
+  } else {
+    sortOptions.createdAt = -1;
+  }
+
   const products = await Product.find(filterOptions)
     .populate("category", "_id name")
     .populate("subs", "_id name")
     // .populate("postedBy", "_id name")
+    .sort(sortOptions)
     .exec();
 
   res.status(httpStatus.OK).send(products);

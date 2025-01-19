@@ -1,6 +1,7 @@
 // REACT
 import { useEffect, useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
+import { useToast } from "@/utils";
 
 // FUNCTIONS
 import { getProducts } from "@/functions/product";
@@ -10,9 +11,18 @@ import Carousel from "@/components/Carousel";
 import ProductCard from "@/components/cards/ProductCard";
 
 // STYLE
-import { Heading, Box, Text, Container } from "@chakra-ui/react";
+import {
+  Heading,
+  Box,
+  Text,
+  Container,
+  SkeletonCircle,
+  SkeletonText,
+} from "@chakra-ui/react";
+import { Fragment } from "react";
 
 const NewArrivals = () => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -64,8 +74,8 @@ const NewArrivals = () => {
         }}
       >
         <Carousel gap={32}>
-          {products.map((product, index) => (
-            <>
+          {products.map((product) => (
+            <Fragment key={product._id}>
               {loading ? (
                 <Box
                   padding="6"
@@ -88,14 +98,13 @@ const NewArrivals = () => {
                 </Box>
               ) : (
                 <ProductCard
-                  key={index}
                   product={product}
                   isOpen={isOpen}
                   onOpen={onOpen}
                   onClose={onClose}
                 />
               )}
-            </>
+            </Fragment>
           ))}
         </Carousel>
       </Container>

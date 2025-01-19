@@ -19,6 +19,7 @@ import {
   SkeletonCircle,
   SkeletonText,
 } from "@chakra-ui/react";
+import { Fragment } from "react";
 
 const BestSellers = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -72,8 +73,8 @@ const BestSellers = () => {
         }}
       >
         <Carousel gap={32}>
-          {products.map((product, index) => (
-            <>
+          {products.map((product) => (
+            <Fragment key={product._id}>
               {loading ? (
                 <Box
                   padding="6"
@@ -96,14 +97,13 @@ const BestSellers = () => {
                 </Box>
               ) : (
                 <ProductCard
-                  key={index}
                   product={product}
                   isOpen={isOpen}
                   onOpen={onOpen}
                   onClose={onClose}
                 />
               )}
-            </>
+            </Fragment>
           ))}
         </Carousel>
       </Container>

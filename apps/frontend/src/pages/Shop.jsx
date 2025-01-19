@@ -1,11 +1,11 @@
 // HOOKS
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // FUNCTIONS
 import { getCategories } from "@/functions/category";
 import { getSubs } from "@/functions/sub";
-import { getProductsByCount, fetchProductsByFilter } from "@/functions/product";
+import { fetchProductsByFilter, getProductsByCount } from "@/functions/product";
 
 // COMPONENTS
 import ProductCard from "@/components/cards/ProductCard";
@@ -22,7 +22,9 @@ import {
   Center,
   Spinner,
   SimpleGrid,
+  Select,
 } from "@chakra-ui/react";
+import { ArrowUpDownIcon } from "@chakra-ui/icons";
 
 const Shop = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,39 +37,58 @@ const Shop = () => {
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
   const [shipping, setShipping] = useState("");
-  const search = useSelector((state) => state.searchReducer.searchText);
-  const { text } = search;
+  const [sortBy, setSortBy] = useState("");
+  const { text } = useSelector((state) => state.searchReducer.searchText);
 
-  const loadAllProducts = () => {
-    getProductsByCount(12).then((p) => {
-      setTimeout(() => {
-        setProducts(p.data);
-        setIsLoading(false);
-      }, 10);
-    });
+  const loadProducts = async () => {
+    const response = await getProductsByCount();
+    setTimeout(() => {
+      setProducts(response.data);
+      setIsLoading(false);
+    }, 10);
   };
 
-  const fetchProducts = (arg) => {
-    fetchProductsByFilter(arg).then((res) => {
-      setProducts(res.data);
-    });
+  const loadCategories = async () => {
+    try {
+      const response = await getCategories();
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // 1. load products by default on page load
+  const loadSubs = async () => {
+    try {
+      const response = await getSubs();
+      setSubs(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadProductsByFilter = async (filter) => {
+    try {
+      const response = await fetchProductsByFilter(filter);
+      setProducts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    loadAllProducts();
-    getCategories().then((res) => setCategories(res.data));
-    getSubs().then((res) => setSubs(res.data));
+    loadProducts();
+    loadCategories();
+    loadSubs();
   }, []);
 
   // 2. load products on user search input
   useEffect(() => {
     if (!text) {
-      loadAllProducts();
+      loadProducts();
     } else {
       const delayed = setTimeout(() => {
-        fetchProducts({ query: text });
+        loadProductsByFilter({ query: text });
       }, 300);
       return () => clearTimeout(delayed);
     }
@@ -75,7 +96,7 @@ const Shop = () => {
 
   // 3. load products based on filters
   useEffect(() => {
-    fetchProducts({
+    loadProductsByFilter({
       query: text ? text : "",
       price,
       category: categoryIds,
@@ -83,22 +104,15 @@ const Shop = () => {
       brand: brands,
       color: colors,
       shipping,
+      sortBy,
     });
-  }, [price, categoryIds, subIds, brands, colors, shipping, text]);
+  }, [price, categoryIds, subIds, brands, colors, shipping, sortBy, text]);
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
-  }, []);
-
-  // onChange handlers
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
     setCategoryIds((prevCategoryIds) =>
       prevCategoryIds.includes(categoryId)
-        ? // if  ID already exists remove it
-          prevCategoryIds.filter((id) => id !== categoryId)
+        ? prevCategoryIds.filter((id) => id !== categoryId)
         : [...prevCategoryIds, categoryId],
     );
   };
@@ -107,8 +121,7 @@ const Shop = () => {
     const subId = e.target.value;
     setSubIds((prevSubIds) =>
       prevSubIds.includes(subId)
-        ? // if  ID already exists remove it
-          prevSubIds.filter((id) => id !== subId)
+        ? prevSubIds.filter((id) => id !== subId)
         : [...prevSubIds, subId],
     );
   };
@@ -117,8 +130,7 @@ const Shop = () => {
     const brand = e.target.value;
     setBrands((prevBrands) =>
       prevBrands.includes(brand)
-        ? // if  ID already exists remove it
-          prevBrands.filter((id) => id !== brand)
+        ? prevBrands.filter((id) => id !== brand)
         : [...prevBrands, brand],
     );
   };
@@ -126,8 +138,7 @@ const Shop = () => {
     const color = e.target.value;
     setColors((prevColors) =>
       prevColors.includes(color)
-        ? // if  ID already exists remove it
-          prevColors.filter((id) => id !== color)
+        ? prevColors.filter((id) => id !== color)
         : [...prevColors, color],
     );
   };
@@ -139,6 +150,12 @@ const Shop = () => {
   const handleShippingchange = (value) => {
     setShipping(value);
   };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
 
   return (
     <>
@@ -171,11 +188,34 @@ const Shop = () => {
             handleColorChange={handleColorChange}
             handleShippingchange={handleShippingchange}
           />
-          <Box w="100%" overflowX="hidden" bg="#e9ecef">
+          <Flex direction="column" w="100%" overflowX="hidden" bg="#e9ecef">
+            <Heading size="lg" color="primary.500" px={10} pt={10}>
+              Products
+            </Heading>
+            <Flex>
+              <Select
+                w="unset"
+                mt={10}
+                mx={10}
+                bg="#fff"
+                borderColor="gray"
+                variant="outline"
+                cursor="pointer"
+                icon={<ArrowUpDownIcon h="10px" />}
+                focusBorderColor="primary.500"
+                iconSize={14}
+                _hover={{
+                  opacity: "0.8",
+                }}
+                onChange={(event) => setSortBy(event.target.value)}
+              >
+                <option value="">Sort by: all</option>
+                <option value="price:asc">price: cheaper</option>
+                <option value="price:desc">price: more expensive</option>
+              </Select>
+            </Flex>
+
             <Box overflowY="hidden">
-              <Heading size="lg" color="primary.500" p={10}>
-                Products
-              </Heading>
               {products?.length ? (
                 <SimpleGrid
                   minChildWidth={{
@@ -194,7 +234,7 @@ const Shop = () => {
                 <Text p={10}>No products found</Text>
               )}
             </Box>
-          </Box>
+          </Flex>
         </Flex>
         <Footer />
       </>
