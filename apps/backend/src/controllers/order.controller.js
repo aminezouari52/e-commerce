@@ -20,10 +20,10 @@ const createOrder = async (req, res) => {
     if (!user) {
       throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     }
-    newOrder["user"] = userId;
+    newOrder.user = userId;
   }
 
-  newOrder["ref"] = uniqueRef();
+  newOrder.ref = uniqueRef();
 
   const order = await Order.create(newOrder);
 

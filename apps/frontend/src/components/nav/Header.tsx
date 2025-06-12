@@ -1,0 +1,159 @@
+"use client";
+
+// HOOKS
+import { useRef, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDisclosure } from "@chakra-ui/react";
+
+// COMPONENTS
+import HeaderButton from "./HeaderButton";
+import HeaderDrawer from "./HeaderDrawer";
+import HeaderMenu from "./HeaderMenu";
+import CartDrawer from "./CartDrawer";
+
+// STYLE
+import { Box, Flex, Text, Image, Badge, IconButton } from "@chakra-ui/react";
+
+// ASSETS
+import CategoriesMenu from "./CategoriesMenu";
+import { IoCartOutline } from "react-icons/io5";
+import { IoCart } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
+import Link from "next/link";
+
+const Header = () => {
+  const cartButtonRef = useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = useSelector((state) => state.userReducer.user);
+  const guestCart = useSelector((state) => state.cartReducer.guestCart);
+  const userCart = useSelector((state) => state.cartReducer.userCart);
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      setProducts(userCart);
+    } else {
+      setProducts(guestCart);
+    }
+  }, [user, guestCart, userCart]);
+
+  return (
+    <Box position="sticky" top="0" zIndex="11">
+      <Flex
+        as="header"
+        justifyContent="space-between"
+        background="#fff"
+        h={{
+          sm: "header.sm",
+          md: "header.md",
+          lg: "header.lg",
+        }}
+        w="100%"
+        alignItems="center"
+        px={{ sm: "12px", md: "24px", lg: "56px" }}
+        shadow="md"
+      >
+        <Flex alignItems="center" gap="10px" height="100%">
+          <HeaderDrawer />
+          <HeaderButton pathname="/">
+            <Text fontSize={{ sm: "sm", lg: "md" }}>Home</Text>
+          </HeaderButton>
+          <HeaderButton pathname="/shop">
+            <Text fontSize={{ sm: "sm", lg: "md" }}>Shop</Text>
+          </HeaderButton>
+          <CategoriesMenu />
+        </Flex>
+
+        <Flex alignItems="center" justifyContent="center">
+          <Image
+            as={Link}
+            href="/"
+            src="/logo.png"
+            alt="logo"
+            h={{ sm: "35px", md: "35px", lg: "44px" }}
+            w={{ sm: "77px", md: "77px", lg: "96.8px" }}
+            cursor="pointer"
+            _hover={{
+              opacity: 0.8,
+            }}
+          />
+        </Flex>
+
+        <Flex
+          alignItems="center"
+          justifyContent="flex-end"
+          gap="10px"
+          height="100%"
+        >
+          <CartDrawer
+            isOpen={isOpen}
+            onClose={onClose}
+            cartButtonRef={cartButtonRef}
+          />
+
+          {user ? (
+            <HeaderMenu />
+          ) : (
+            <>
+              <IconButton
+                as={Link}
+                aria-label="login"
+                href="/auth/login"
+                icon={<FaRegUser />}
+                letterSpacing="1px"
+                color="#000"
+                variant="ghost"
+                size="md"
+                fontWeight="normal"
+                _hover={{
+                  bg: "lightgray",
+                }}
+              ></IconButton>
+            </>
+          )}
+          <Box pos="relative">
+            <IconButton
+              ref={cartButtonRef}
+              borderTopLeftRadius="md"
+              borderBottomLeftRadius="md"
+              colorScheme="white"
+              color="primary"
+              size="sm"
+              icon={
+                isOpen ? (
+                  <IoCart fontSize="16px" />
+                ) : (
+                  <IoCartOutline fontSize="18px" />
+                )
+              }
+              onClick={() => onOpen()}
+              _hover={{
+                bg: "lightgray",
+              }}
+            />
+            <Badge
+              display={products?.length === 0 ? "none" : "flex"}
+              pos="absolute"
+              top="0"
+              right="0"
+              w="13px"
+              h="13px"
+              fontSize="2xs"
+              justifyContent="center"
+              alignItems="center"
+              borderRadius="50%"
+              colorScheme="deepRed"
+              variant="solid"
+              p={0}
+            >
+              {products?.length}
+            </Badge>
+          </Box>
+        </Flex>
+      </Flex>
+    </Box>
+  );
+};
+
+export default Header;

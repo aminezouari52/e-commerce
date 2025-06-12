@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app"],
+  "extends": ["next", "next/eslint-config-next"],
   "rules": {
     "no-unused-vars": [
       "error",
